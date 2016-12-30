@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>mvt-styler2</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://getuikit.com/dist/js/uikit.min.js"></script>
+    <script src="http://getuikit.com/dist/js/components/sortable.min.js"></script>
+  </head>
+  <body>
+  <ul class="uk-sortable uk-list uk-list-space" data-uk-sortable="{handleClass:'uk-panel'}">
+    <li data-id="1">
+      <div class="uk-panel uk-panel-box">
+        <div class="uk-badge uk-badge-notification uk-panel-badge">0</div>
+        <strong>Item 1</strong>
+      </div>
+    </li>
+    <li data-id="2">
+      <div class="uk-panel uk-panel-box">
+        <div class="uk-badge uk-badge-notification uk-panel-badge">0</div>
+        <strong>Item 2</strong>
+      </div>
+    </li>
+    <li data-id="3">
+      <div class="uk-panel uk-panel-box">
+        <div class="uk-badge uk-badge-notification uk-panel-badge">0</div>
+        <strong>Item 3</strong>
+      </div>
+    </li>
+    <li data-id="4">
+      <div class="uk-panel uk-panel-box">
+        <div class="uk-badge uk-badge-notification uk-panel-badge">0</div>
+        <strong>Item 4</strong>
+      </div>
+    </li>
+    <li data-id="5">
+      <div class="uk-panel uk-panel-box">
+        <div class="uk-badge uk-badge-notification uk-panel-badge">0</div>
+        <strong>Item 5</strong>
+      </div>
+    </li>
+    <li data-id="6">
+      <div class="uk-panel uk-panel-box">
+        <div class="uk-badge uk-badge-notification uk-panel-badge">0</div>
+        <strong>Item 6</strong>
+      </div>
+    </li>
+  </ul>
+  <button type="button" class="uk-button uk-button-success">Save</button>
+  <script>
+	  (function ($) {
+		  $(document).on('ready', function () {
+			  var sortable = $('[data-uk-sortable]'),
+				  button = $('button');
+			  button.click(function () {
+				  saveOrdering(sortable, button);
+			  });
+			  sortable.on('stop.uk.sortable', function (e, el, type) {
+				  setOrdering(sortable, el);
+			  });
+			  setOrdering(sortable);
+		  });
+		  function setOrdering(sortable, activeEl) {
+			  var ordering = 1;
+			  sortable.find('>li').each(function () {
+				  var $ele = $(this);
+				  $ele.data('ordering', ordering);
+				  $ele.find('div.uk-badge').text(ordering);
+				  ordering++;
+			  });
+			  if (activeEl) {
+				  activeEl.find('div.uk-badge').addClass('uk-animation-scale-down');
+			  }
+		  }
+		  function saveOrdering (sortable, button) {
+			  var url = 'index.php',
+				  data = {
+					  task: 'saveOrdering',
+					  ordering: {}
+				  };
+			  sortable.find('>li').each(function () {
+				  data.ordering[$(this).data('id')] = $(this).data('ordering');
+			  });
+			  button.prop('disabled', true);
+			  console.log(data); //data going to server
+			  $.getJSON(url, data, function (result) {
+				  console.log(result); //json response from server
+				  button.prop('disabled', false);
+			  });
+			  setTimeout(function(){button.prop('disabled', false);},1000);//for testing only!
+		  }
+	  })(jQuery);
+  </script>
+  </body>
+</html>
