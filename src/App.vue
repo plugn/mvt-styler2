@@ -3,18 +3,21 @@
 
     <img src="./assets/logo.png">
     <!--<hello></hello>-->
-    <Editor>
+    <List />
+    <Editor />
   </div>
 </template>
 
 <script>
 import Hello from './components/Hello'
+import List from './components/List'
 import Editor from './components/Editor'
 
 export default {
   name: 'app',
   components: {
     Hello,
+    List,
     Editor
   },
   data(){
