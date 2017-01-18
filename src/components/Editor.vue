@@ -9,7 +9,6 @@
 	import 'lodash'
 
 
-console.log('lodash', _.identity)
 
 	export default{
 		data() {
