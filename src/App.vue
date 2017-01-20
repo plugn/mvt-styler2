@@ -3,7 +3,9 @@
 
     <img src="./assets/logo.png">
     <!--<hello></hello>-->
+    <Panes />
     <List />
+
     <Editor />
   </div>
 </template>
@@ -12,12 +14,14 @@
 import Hello from './components/Hello'
 import List from './components/List'
 import Editor from './components/Editor'
+import Panes from './components/Panes'
 
 export default {
   name: 'app',
   components: {
     Hello,
     List,
+    Panes,
     Editor
   },
   data(){
