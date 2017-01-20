@@ -30,12 +30,11 @@ div.item {
 </style>
 
 <script>
-	import VResize from './v-resize'
+	import resize from '../directives/resize'
 	export default {
 		directives: {
-			'resize': VResize
+			resize
 		},
-
 		data() {
 			return{
 			}
