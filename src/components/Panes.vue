@@ -1,17 +1,17 @@
 <template>
-	<div>
-		<div class="item" v-resize="">Element resizable</div>
-		<div class="el-resizer"></div>
+	<div >
+		<div class="item" v-resize="{h:false}">Element resizable</div>
+		<div class="el-resizer" ref="resizer"></div>
 
 		<div class="item">Block1</div>
 		<div class="item">Block2</div>
 	</div>
 </template>
 
-<style>
+<style scoped>
 .el-resizer {
 	background: #eee;
-	width:5px;
+	width: 10px;
 	position: static;
 	float: left;
 	height: 200px;
@@ -22,29 +22,21 @@ div.item {
 	position: relative;
 	float:left;
 	overflow: hidden;
-	background: blue;
+	background: #d0ddd0;
 	height: 200px;
 	width: 200px;
+	user-select: none;
 }
-/*
-#element {
-	position: relative;
-	overflow: hidden;
-	background: green;
-	height: 200px;
-	width: 200px;
-}
-*/
 </style>
 
 <script>
 	import VResize from './v-resize'
-	export default{
+	export default {
 		directives: {
-			'resize':VResize
+			'resize': VResize
 		},
 
-		data(){
+		data() {
 			return{
 			}
 		}
