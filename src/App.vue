@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import Hello from './components/Hello'
 import List from './components/List'
 import Editor from './components/Editor'
 import Panes from './components/Panes'
@@ -19,7 +18,6 @@ import Panes from './components/Panes'
 export default {
   name: 'app',
   components: {
-    Hello,
     List,
     Panes,
     Editor
@@ -39,7 +37,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: initial;
-  /*color: #2c3e50;*/
-  /*margin-top: 60px; */
 }
 </style>

@@ -6,10 +6,9 @@
 	import editor from 'vue2-ace'
 	import 'brace/mode/json'
 	import 'brace/theme/chrome'
-	import 'lodash'
+	// import _ from 'lodash'
 
-
-
+	// console.log('lodash', _.identity)
 	export default{
 		data() {
 			return {
