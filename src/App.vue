@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-
     <Panes />
-    <!--<List />-->
-
-    <!--<Editor />-->
   </div>
 </template>
 
