@@ -1,12 +1,10 @@
 <template>
   <div id="app">
 
-    <img src="./assets/logo.png">
-    <!--<hello></hello>-->
     <Panes />
-    <List />
+    <!--<List />-->
 
-    <Editor />
+    <!--<Editor />-->
   </div>
 </template>
 
@@ -18,9 +16,7 @@ import Panes from './components/Panes'
 export default {
   name: 'app',
   components: {
-    List,
-    Panes,
-    Editor
+    Panes
   },
   data(){
       return {
@@ -37,5 +33,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: initial;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 </style>
