@@ -2,6 +2,7 @@
 	<div class="panes">
 		<div class="item pane-right">
 			<List />
+			<Flex />
 		</div>
 		<div class="item pane-left" v-resize="{h:false}">
 			<Editor />
@@ -55,11 +56,14 @@ div.item {
 import resize from '../directives/resize'
 import List from './List'
 import Editor from './Editor'
+import Flex from './Flex'
+
 
 	export default {
 		components: {
 		    List,
-		    Editor
+		    Editor,
+		    Flex
 		},
 		directives: {
 			resize
