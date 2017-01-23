@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <img src="./assets/logo.png">
     <Panes />
   </div>
 </template>
@@ -8,6 +9,7 @@
 import List from './components/List'
 import Editor from './components/Editor'
 import Panes from './components/Panes'
+
 
 export default {
   name: 'app',
