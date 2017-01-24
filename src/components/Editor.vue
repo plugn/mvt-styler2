@@ -1,5 +1,5 @@
 <template>
-	<editor :content="content" :lang="lang" :theme="theme"></editor>
+	<editor :content="content" :lang="lang" :theme="theme" height="100%"></editor>
 </template>
 
 <script>

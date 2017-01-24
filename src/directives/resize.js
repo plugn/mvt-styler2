@@ -5,8 +5,8 @@ export default {
 	inserted (element, binding, vnode) {
 		// console.log('inserted', element, 'binding', binding, refs.resizer);
 		let resizer = vnode.context.$refs.resizer;
-		let resizeWidth = _.get(binding, 'value.w', true) !== false;
-		let resizeHeight = _.get(binding, 'value.h') !== false;
+		let resizeWidth = _.get(binding, 'value.width', true) !== false;
+		let resizeHeight = _.get(binding, 'value.height', true) !== false;
 		let resizeDirection = '' + (resizeHeight ? 's' : '') + (resizeWidth ? 'e' : '');
 
 		if (resizeDirection) {

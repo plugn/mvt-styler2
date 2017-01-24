@@ -1,0 +1,19 @@
+.panes {
+	box-sizing: border-box;
+	display: flex;
+	height: 100%;
+
+	> .pane {
+		flex-grow: 1;
+	}
+
+	> .el-resizer {
+		width: 3px;
+		background: #ccc;
+	}
+
+
+	> .resizable {
+		width: 150px;
+	}
+}
