@@ -4,7 +4,7 @@ var merge = require('webpack-merge')
 var utils = require('./utils')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var cssExtractConf = require('./cssExtract.conf')
+var cssExtractConf = require('./extract-css.conf')
 
 
 // add hot-reload related code to entry chunks
