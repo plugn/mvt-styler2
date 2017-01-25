@@ -23,8 +23,13 @@
 	}
 </style>
 <script>
+	import draggable from 'vuedraggable'
 	import treeData from './treeData'
 	export default {
+		components: {
+			draggable
+		},
+
 		data() {
 			return {
 				treeData

@@ -1,5 +1,5 @@
 <template>
-	<li>
+	<li class="movable">
 		<div
 				:class="{bold: isFolder}"
 				@click="toggle"
@@ -7,7 +7,7 @@
 			{{model.name}}
 			<span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
 		</div>
-		<ul v-show="open" v-if="isFolder">
+		<ul v-show="open" v-if="isFolder" class="movable">
 			<tree-item
 					class="tree-item"
 					v-for="model in model.children"
