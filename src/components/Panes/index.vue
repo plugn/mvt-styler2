@@ -1,11 +1,12 @@
 <template>
 	<div class="panes">
 		<div class="resizable" v-resize="{height:false}">
-			<List/>
+			<Tree />
+			<List />
 		</div>
 		<div class="el-resizer" ref="resizer"></div>
 		<div class="pane">
-			<Editor/>
+			<Editor />
 		</div>
 	</div>
 
