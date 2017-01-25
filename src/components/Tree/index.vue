@@ -1,5 +1,5 @@
 <template>
-	<ul id="demo">
+	<ul class="tree-root">
 		<tree-item
 				class="tree-item"
 				:model="treeData">
@@ -7,6 +7,9 @@
 	</ul>
 </template>
 <style scoped>
+	.tree-root {
+		user-select: none;
+	}
 	.tree-item {
 		cursor: pointer;
 	}
@@ -20,12 +23,8 @@
 	}
 </style>
 <script>
-	import TreeItem from '../TreeItem.vue'
 	import treeData from './treeData'
 	export default {
-		components: {
-			TreeItem
-		},
 		data() {
 			return {
 				treeData

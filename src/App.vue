@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 	import List from './components/List'
 	import Editor from './components/Editor'
 	import Panes from './components/Panes/index.vue'
@@ -15,10 +16,8 @@
 		components: {
 			Panes
 		},
-		data(){
-			return {
-				msg: '{"id":"MVT1"}'
-			}
+		data() {
+			return {}
 		},
 
 	}

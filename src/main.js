@@ -2,18 +2,15 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import TreeItem from './components/TreeItem.vue'
 
 
-// import editor from 'vue2-ace'
-
+Vue.component('TreeItem', TreeItem);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   template: '<App/>',
   components: {
     App
-  },
-  data: {
-    variable: '{"id":"my awesome id"}'
   }
-})
+});

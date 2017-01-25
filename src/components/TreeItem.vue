@@ -17,7 +17,10 @@
 		</ul>
 	</li>
 </template>
+
 <script>
+	import Vue from 'vue'
+
 	export default {
 		name: 'TreeItem',
 
