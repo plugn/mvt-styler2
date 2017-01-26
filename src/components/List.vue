@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<draggable :list="list1" :options="stOptions" @start="drag=true" @end="drag=false"  :move="onMove">
+		<draggable :list="list1" :options="stOptions" :move="onMove" @start="drag=true" @end="drag=false" >
 			<div v-for="element in list1">{{element.name}}</div>
 		</draggable>
 	</div>

@@ -1,21 +1,24 @@
 <template>
 	<ul class="tree-root">
-		<tree-item
+		<tree-drag-item
 				class="tree-item"
 				:model="treeData">
-		</tree-item>
+		</tree-drag-item>
 	</ul>
 </template>
 <style scoped>
 	.tree-root {
 		user-select: none;
 	}
+
 	.tree-item {
 		cursor: pointer;
 	}
+
 	.bold {
 		font-weight: bold;
 	}
+
 	ul {
 		padding-left: 1em;
 		line-height: 1.5em;
@@ -23,11 +26,12 @@
 	}
 </style>
 <script>
-	import draggable from 'vuedraggable'
 	import treeData from './treeData'
+	import TreeDragItem from '../TreeDragItem.vue'
+
 	export default {
 		components: {
-			draggable
+			TreeDragItem
 		},
 
 		data() {
