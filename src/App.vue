@@ -5,11 +5,7 @@
 </template>
 
 <script>
-
-	import List from './components/List'
-	import Editor from './components/Editor'
 	import Panes from './components/Panes/index.vue'
-
 
 	export default {
 		name: 'app',

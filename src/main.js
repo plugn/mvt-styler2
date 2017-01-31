@@ -4,10 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import TreeItem from './components/TreeItem.vue'
 import TreeDragItem from './components/TreeDragItem.vue'
+import vSortable from 'vue-sortable'
 
-
+Vue.use(vSortable);
 Vue.component('TreeItem', TreeItem);
 Vue.component('TreeDragItem', TreeDragItem);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

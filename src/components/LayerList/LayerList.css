@@ -1,0 +1,26 @@
+
+.tile {
+	margin: 10px 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.hidden:last-child {
+	display: list-item;
+	opacity: 0;
+}
+.hidden {
+	display: none;
+}
+
+.absent,
+.collapsed > ul {
+	display: none;
+}
+
+.tile__folder {
+	min-height: 30px;
+	background: aliceblue;
+}
