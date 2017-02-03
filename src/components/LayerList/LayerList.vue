@@ -8,6 +8,7 @@
 
 <script>
 	import sortable from '../../directives/sortable'
+	import * as utils from './utils'
 	import LayerListItem from './LayerListItem.vue'
 	import listData from './listData';
 
@@ -23,8 +24,20 @@
 
 		data() {
 			return {
-				options: {group:'layers'},
-				listData
+				listData,
+				options: {
+					group: 'layers',
+					onMove: function onMove( /**Event*/ evt, /**Event*/ originalEvent) {
+						let drag = evt.dragged;
+						let	rel = evt.related;
+
+						console.log(' onMove() ' + utils.descEl(drag) +'\n -> '+ utils.descEl(rel));
+						if (drag.matches('.tile__folder') && !rel.parentNode.matches('.tile__root')) {
+							return false;
+						}
+					}
+				}
+
 			}
 		},
 

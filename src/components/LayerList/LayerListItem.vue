@@ -30,7 +30,6 @@ export default {
 		return {
 			open: false,
 			drag: false,
-			xptions: {group:'layers'},
 
 			options: {
 				group: 'layers',
