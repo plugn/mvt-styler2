@@ -1,47 +1,38 @@
 <template>
-
-	<ul v-sortable="options" class="tile__root">
-		<li v-for="listItem in listData" >{{ listItem.name }}</li>
+	<ul class="tile__root" v-sortable="options">
+		<layer-list-item :model="listItem" v-for="listItem in listData"></layer-list-item>
 	</ul>
-
-<!--
-	<ul id="multi" class="tile__root" style="margin: 50px 20px;" v-sortable>
-		<li class="">group0 item2</li>
-		<li v-for="listItem in listData" >{{ listItem.name }}</li>
-		<li class="">group0 item2</li>
-
-		<li class="tile tile__folder">
-			<span class="tile__name">[ Group A ]</span>
-			<ul class="tile__list">
-				<li class="hidden"> </li>
-				<li>groupA item1</li>
-				<li>groupA item2</li>
-				<li>groupA item3</li>
-			</ul>
-		</li>
-
-		<li class="tile tile__folder">
-			<span class="tile__name">[ Group B ]</span>
-			<ul class="tile__list">
-				<li class="hidden"> </li>
-				<li>group B item1</li>
-				<li>group B item2</li>
-				<li>group B item3</li>
-			</ul>
-		</li>
-
-		<li class="tile tile__folder">
-			<span class="tile__name">[ Group C ]</span>
-			<ul class="tile__list">
-				<li class="hidden"> </li>
-				<li>group C item1</li>
-				<li>group C item2</li>
-			</ul>
-		</li>
--->
-
 </template>
 
 <style src="./LayerList.css" scoped></style>
 
-<script src="./LayerList.js"></script>
+<script>
+	import sortable from '../../directives/sortable'
+	import LayerListItem from './LayerListItem.vue'
+	import listData from './listData';
+
+	export default {
+
+		directives: {
+			sortable
+		},
+
+		components: {
+			LayerListItem
+		},
+
+		data() {
+			return {
+				options: {group:'layers'},
+				listData
+			}
+		},
+
+		methods: {
+			isFolder: function (item) {
+				return item.children && item.children.length;
+			}
+		},
+
+	}
+</script>

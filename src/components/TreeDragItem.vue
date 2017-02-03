@@ -54,10 +54,9 @@
 		},
 
 		created() {
-
-			console.log('@created this.model', this.model.children);
-
+//			console.log('@created this.model', this.model.children);
 		},
+
 		computed: {
 
 			isFolder: function () {
