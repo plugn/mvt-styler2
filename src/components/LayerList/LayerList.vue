@@ -1,7 +1,13 @@
 <template>
-	<ul id="multi" class="tile__root" style="margin: 50px 20px;">
-		<li v-for="listItem in listData">{{ listItem.name }}</li>
 
+	<ul v-sortable="options" class="tile__root">
+		<li v-for="listItem in listData" >{{ listItem.name }}</li>
+	</ul>
+
+<!--
+	<ul id="multi" class="tile__root" style="margin: 50px 20px;" v-sortable>
+		<li class="">group0 item2</li>
+		<li v-for="listItem in listData" >{{ listItem.name }}</li>
 		<li class="">group0 item2</li>
 
 		<li class="tile tile__folder">
@@ -32,8 +38,8 @@
 				<li>group C item2</li>
 			</ul>
 		</li>
+-->
 
-	</ul>
 </template>
 
 <style src="./LayerList.css" scoped></style>

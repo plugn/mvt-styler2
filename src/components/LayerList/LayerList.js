@@ -1,10 +1,14 @@
+import sortable from '../../directives/sortable'
 import listData from './listData';
 
 export default {
-	components: {},
+	directives: {
+		sortable
+	},
 
 	data() {
 		return {
+			options: {filter: '.filtered'},
 			listData
 		}
 	},

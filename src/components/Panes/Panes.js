@@ -1,12 +1,13 @@
 import resize from '../../directives/resize'
-import List from '../List'
-import Editor from '../Editor'
 import Tree from '../Tree'
-
+import List from '../List'
+import LayerList from '../LayerList/LayerList.vue'
+import Editor from '../Editor'
 
 export default {
 	components: {
 		List,
+		LayerList,
 		Editor,
 		Tree
 	},
