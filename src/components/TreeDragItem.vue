@@ -46,7 +46,7 @@
 				},
 
 				onMove: function (evt) {
-					console.log('Tree draggable::onMove() dragged: .'+evt.dragged.className+'('+ evt.dragged.innerText+')', ' \m->  ',
+					console.log('Tree draggable::onMove() dragged: .' + evt.dragged.className + '(' +  evt.dragged.innerText+')\m->  ',
 						'related: .'+evt.related.className+'('+evt.related.innerText+')');
 					//console.log('dragged', evt.draggedContext, '->', evt.relatedContext);
 				}
