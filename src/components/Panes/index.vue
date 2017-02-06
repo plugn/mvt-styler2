@@ -3,7 +3,6 @@
 		<div class="resizable" v-resize="{height:false}">
 			<LayerList />
 
-			<Tree />
 		</div>
 		<div class="el-resizer" ref="resizer"></div>
 		<div class="pane">
