@@ -36,6 +36,28 @@ export default {
 			open: true,
 			options: {
 				group: 'layers',
+				// Element is dropped into the list from another list
+				onAdd: function (/**Event*/evt) {
+					let itemEl = evt.item;  // dragged HTMLElement
+					let fromEl = evt.from;  // previous list
+					console.log('fromEl', fromEl, 'el', itemEl);
+
+					// + indexes from onEnd
+				},
+
+				// Changed sorting within list
+				onUpdate: function (/**Event*/evt) {
+					console.log(' onUpdate() el', evt.item, evt);
+				},
+
+				onChoose: function (evt) {
+					console.log('onChoose', evt);
+				},
+
+				onEnd: function (evt) {
+					console.log(' onEnd() old', evt.oldIndex, 'new' ,evt.newIndex);
+				},
+
 				onMove: function onMove( evt, originalEvent) {
 					let drag = evt.dragged;
 					let	rel = evt.related;
