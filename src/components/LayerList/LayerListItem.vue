@@ -5,8 +5,8 @@
 	</ul>
 
 	<li v-else-if="isFolder" class="tile tile__folder">
-		<span class="tile__name bold">[ {{ model.name }} ]</span>
-		<ul class="tile__list" v-sortable="options">
+		<span class="tile__name bold" @click.self="toggle">{{ model.name }} [ {{open ? '-' : '+'}} ]</span>
+		<ul v-show="open" class="tile__list" v-sortable="options" >
 			<li class="hidden"> </li>
 			<layer-list-item :model="listItem" v-for="listItem in model.children"></layer-list-item>
 		</ul>
@@ -17,9 +17,9 @@
 </template>
 
 
+
 <script>
 import sortable from '../../directives/sortable'
-import * as utils from './utils'
 
 export default {
 	name: 'LayerListItem',
@@ -33,15 +33,12 @@ export default {
 
 	data() {
 		return {
-			open: false,
-			drag: false,
-
+			open: true,
 			options: {
 				group: 'layers',
 				onMove: function onMove( evt, originalEvent) {
 					let drag = evt.dragged;
 					let	rel = evt.related;
-//					console.log(' onMove() ' + utils.descEl(drag) +'\n -> '+ utils.descEl(rel));
 					if (drag.matches('.tile__folder') && !rel.parentNode.matches('.tile__root')) {
 						return false;
 					}
@@ -60,21 +57,14 @@ export default {
 		}
 	},
 	methods: {
-		onStart: function() {
-			console.log('start');
-
-			this.drag = true;
-		},
-		onEnd: function() {
-			console.log('end');
-
-			this.drag = false;
-		},
 		toggle: function () {
+			console.log('toggle()', this.model.name +':'+ this.open);
+			
 			if (this.isFolder) {
 				this.open = !this.open
 			}
 		},
+/*
 		changeType: function () {
 			if (!this.isFolder) {
 				Vue.set(this.model, 'children', [])
@@ -87,6 +77,7 @@ export default {
 				name: 'new stuff'
 			})
 		}
+*/
 	}
 }
 
