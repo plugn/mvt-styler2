@@ -1,7 +1,5 @@
 <template>
-	<ul class="tile__root" v-sortable="options">
-		<layer-list-item :model="listItem" v-for="listItem in listData"></layer-list-item>
-	</ul>
+	<layer-list-item :model="listData"></layer-list-item>
 </template>
 
 <style src="./LayerList.css" scoped></style>

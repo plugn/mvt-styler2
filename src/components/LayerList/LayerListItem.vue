@@ -1,13 +1,18 @@
 <template>
-		<li v-if="isFolder" class="tile tile__folder">
-			<span class="tile__name bold">[ {{ model.name }} ]</span>
-			<ul class="tile__list" v-sortable="options">
-				<li class="hidden"> </li>
-				<layer-list-item :model="listItem" v-for="listItem in model.children"></layer-list-item>
-			</ul>
-		</li>
-		<li v-else>{{model.name}}</li>
 
+	<ul v-if="isRoot" class="tile__root" v-sortable="options">
+		<layer-list-item :model="listItem" v-for="listItem in model"></layer-list-item>
+	</ul>
+
+	<li v-else-if="isFolder" class="tile tile__folder">
+		<span class="tile__name bold">[ {{ model.name }} ]</span>
+		<ul class="tile__list" v-sortable="options">
+			<li class="hidden"> </li>
+			<layer-list-item :model="listItem" v-for="listItem in model.children"></layer-list-item>
+		</ul>
+	</li>
+
+	<li v-else>{{model.name}}</li>
 
 </template>
 
@@ -23,7 +28,7 @@ export default {
 	},
 
 	props: {
-		model: Object
+		model: [Object, Array]
 	},
 
 	data() {
@@ -33,11 +38,10 @@ export default {
 
 			options: {
 				group: 'layers',
-				onMove: function onMove( /**Event*/ evt, /**Event*/ originalEvent) {
+				onMove: function onMove( evt, originalEvent) {
 					let drag = evt.dragged;
 					let	rel = evt.related;
-
-					console.log(' onMove() ' + utils.descEl(drag) +'\n -> '+ utils.descEl(rel));
+//					console.log(' onMove() ' + utils.descEl(drag) +'\n -> '+ utils.descEl(rel));
 					if (drag.matches('.tile__folder') && !rel.parentNode.matches('.tile__root')) {
 						return false;
 					}
@@ -46,16 +50,13 @@ export default {
 		}
 	},
 
-/*
-	created() {
-		console.log('LLI created() model', this.model);
-	},
-*/
-
 	computed: {
 		isFolder: function () {
 			return this.model.children &&
 				this.model.children.length
+		},
+		isRoot: function () {
+			return Array.isArray(this.model);
 		}
 	},
 	methods: {
