@@ -1,14 +1,14 @@
 <template>
 
 	<ul v-if="isRoot" class="tile__root" v-sortable="options">
-		<layer-list-item :model="listItem" v-for="listItem in model"></layer-list-item>
+		<layer-list-item :model="listItem" v-bind:itemIndex="listKey" v-for="(listItem, listKey, listIndex) in model"></layer-list-item>
 	</ul>
 
 	<li v-else-if="isFolder" class="tile tile__folder">
 		<span class="tile__name bold" @click.self="toggle">{{ model.name }} [ {{open ? '-' : '+'}} ]</span>
 		<ul v-show="open" class="tile__list" v-sortable="options" >
 			<li class="hidden"> </li>
-			<layer-list-item :model="listItem" v-for="listItem in model.children"></layer-list-item>
+			<layer-list-item :model="listItem" v-bind:groupIndex="itemIndex" v-bind:itemIndex="listKey" v-for="(listItem, listKey, listIndex) in model.children"></layer-list-item>
 		</ul>
 	</li>
 
@@ -26,9 +26,10 @@ export default {
 	directives: {
 		sortable
 	},
-
 	props: {
-		model: [Object, Array]
+		model: [Object, Array],
+		groupIndex: [Number],
+		itemIndex: [Number]
 	},
 
 	data() {
@@ -67,6 +68,10 @@ export default {
 				}
 			}
 		}
+	},
+	
+	mounted: function() {
+//		console.log('mounted', this);
 	},
 
 	computed: {
