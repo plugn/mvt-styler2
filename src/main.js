@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 
+export const eventBus = new Vue();
+
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',

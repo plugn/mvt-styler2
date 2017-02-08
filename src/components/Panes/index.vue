@@ -5,13 +5,44 @@
 
 		</div>
 		<div class="el-resizer" ref="resizer"></div>
-		<div class="pane">
-			<Editor />
+		<div class="pane editor-pane">
+			<div class="toolbar" @click="trigger">[File] [Edit] [Help]</div>
+			<Editor class="body"></Editor>
 		</div>
 	</div>
 
 </template>
 
-<style lang="scss" src="./Panes.scss" scoped></style>
+<script>
+	import resize from '../../directives/resize'
+	import LayerList from '../LayerList/LayerList.vue'
+	import Editor from '../Editor'
+	import {eventBus} from '../../main';
 
-<script src="./Panes.js"></script>
+
+	export default {
+		components: {
+			LayerList,
+			Editor
+		},
+		directives: {
+			resize
+		},
+		methods: {
+			trigger: function () {
+				console.log('Panes.trigger()');
+
+				eventBus.$emit('ace:content.set', JSON.stringify({'newKey': 'newValue'}));
+			}
+
+		},
+
+		data() {
+			return {
+			}
+		}
+	}
+
+</script>
+
+<style lang="scss" src="./Panes.scss" scoped></style>
