@@ -17,13 +17,14 @@
 		</ul>
 	</li>
 
-	<li v-else :data-item="itemIndex">{{model.name}}</li>
+	<li v-else :data-item="itemIndex" class="tile">{{model.name}}</li>
 
 </template>
 
 
 <script>
 	import sortable from '../../directives/sortable'
+	import {eventBus} from '../../main';
 
 	export default {
 		name: 'LayerListItem',
@@ -40,20 +41,11 @@
 				open: true,
 				options: {
 					group: 'layers',
-					// Element is dropped into the list from another list
-					onAdd: function (/**Event*/evt) {
-
-						let itemEl = evt.item;  // dragged HTMLElement
-						let fromEl = evt.from;  // previous list
-						let toEl = evt.to; // target list
-						console.log('onAdd() :' + evt.type, 'fromEl', fromEl, ' toEl', toEl, 'itemEl', itemEl,  evt.oldIndex +'>'+ evt.newIndex);
+					onAdd: function (evt) {
+						eventBus.$emit('sortable:onAdd', evt);
 					},
-
-					// Changed sorting within list
-					// keep in mind hidden LI hack inside UL.folder
-					onUpdate: function (/**Event*/evt) {
-						console.log(' onUpdate() el', evt.item,  evt.oldIndex +'>'+ evt.newIndex, 'list:', evt.to);
-						this.$emit('data.updated', evt);
+					onUpdate: function (evt) {
+						eventBus.$emit('sortable:onUpdate', evt);
 					},
 					onMove: function onMove(evt, originalEvent) {
 						let drag = evt.dragged;
@@ -67,6 +59,7 @@
 		},
 
 		computed: {
+
 			isFolder: function () {
 				return this.model.children &&
 					this.model.children.length

@@ -19,7 +19,7 @@
 				theme: 'chrome',
 				onUpdate: function(v) {
 //					let j = (v.replace(/[\t\r\n]|\s{2,}/g, ''));
-					console.log('onUpdate()');
+//					console.log('onUpdate()', j);
 				}
 			}
 		},
@@ -28,7 +28,7 @@
 		},
 		created() {
 			eventBus.$on('ace:content.set', (value) => {
-				console.log('$on ace:content.set', value);
+//				console.log('$on ace:content.set', value);
 				this.content = value;
 			});
 		},

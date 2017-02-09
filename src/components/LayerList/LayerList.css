@@ -4,7 +4,7 @@ ul {
 	list-style-type: dot;
 }
 
-.tile__root {
+ul, li, li > span {
 	cursor: pointer;
 }
 
