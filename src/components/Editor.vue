@@ -18,23 +18,24 @@
 				lang: 'json',
 				theme: 'chrome',
 				onUpdate: function(v) {
-					console.log('onUpdate', v)
+//					let j = (v.replace(/[\t\r\n]|\s{2,}/g, ''));
+					console.log('onUpdate()');
 				}
 			}
 		},
 		components:{
 			editor
 		},
-		mounted () {
+		created() {
+			eventBus.$on('ace:content.set', (value) => {
+				console.log('$on ace:content.set', value);
+				this.content = value;
+			});
+		},
+
+		mounted() {
 			const vm = this;
 			vm.$on('editor-update', vm.onUpdate);
-
-			eventBus.$on('ace:content.set', function (value) {
-				console.log('$on ace:content.set', value);
-
-				vm.content = value;
-			});
-
 		}
 
 	}

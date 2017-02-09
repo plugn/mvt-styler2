@@ -53,6 +53,7 @@
 					// keep in mind hidden LI hack inside UL.folder
 					onUpdate: function (/**Event*/evt) {
 						console.log(' onUpdate() el', evt.item,  evt.oldIndex +'>'+ evt.newIndex, 'list:', evt.to);
+						this.$emit('data.updated', evt);
 					},
 					onMove: function onMove(evt, originalEvent) {
 						let drag = evt.dragged;
@@ -63,10 +64,6 @@
 					}
 				}
 			}
-		},
-
-		mounted: function () {
-//		console.log('mounted', this);
 		},
 
 		computed: {
