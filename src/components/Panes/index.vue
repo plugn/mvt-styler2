@@ -19,7 +19,6 @@
 	import Editor from '../Editor'
 	import {eventBus} from '../../main';
 
-
 	export default {
 		components: {
 			LayerList,
