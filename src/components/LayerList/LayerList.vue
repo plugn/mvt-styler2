@@ -38,17 +38,14 @@
 		},
 
 		methods: {
-			watchListData: function(newValue, oldValue) {
-				console.log('watch \nlistData:', newValue.map(v => v.name), '\nwas', oldValue.map(o => o.name));
-				let val = JSON.stringify(this.listData, ['name', 'children'], 2);
-				console.log('val', val);
-
-				eventBus.$emit('ace:content.set', val);
-
+			modelToString() {
+				return JSON.stringify(this.listData, ['name', 'children'], 2);
+			},
+			watchListData: function() {
+				eventBus.$emit('ace:content.set', this.modelToString());
 			},
 
 			push: function () {
-//				this.listData.push({name: ' +item'});
 				let grouplist = this.listData[2].children.slice();
 				grouplist.push({name: '==item=='});
 				this.$set(this.listData[2], 'children', grouplist);
@@ -57,15 +54,11 @@
 			pop: function () {
 				this.listData.pop();
 //				this.listData[4].children.pop();
-
-
 			},
 
 			splice: function() {
 				let fromIndex = 3, toIndex = 1;
-
-console.log(' splice ', fromIndex +' => '+ toIndex);
-
+//console.log(' splice ', fromIndex +' => '+ toIndex);
 				this.listData.splice(toIndex, 0, this.listData.splice(fromIndex, 1)[0]);
 			},
 
