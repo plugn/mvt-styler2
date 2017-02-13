@@ -28,25 +28,37 @@
 				listData: initialListData
 			}
 		},
-
+		created() {
+			this.$watch('listData', this.watchListData, {deep: true});
+		},
 		mounted() {
 			eventBus.$on('sortable:onUpdate', this.onUpdate);
 			eventBus.$on('sortable:onAdd', this.onAdd);
 			eventBus.$emit('ace:content.set', JSON.stringify(initialListData, null, 2));
 		},
-		watch: {
-			listData: function(newValue, oldValue) {
-				console.log('watch \nlistData:', newValue.map(v => v.name), '\nwas', oldValue.map(o => o.name));
-				eventBus.$on('ace:content.set', JSON.stringify(this.listData, null, 2));
-				
-			}
-		},
+
 		methods: {
+			watchListData: function(newValue, oldValue) {
+				console.log('watch \nlistData:', newValue.map(v => v.name), '\nwas', oldValue.map(o => o.name));
+				let val = JSON.stringify(this.listData, ['name', 'children'], 2);
+				console.log('val', val);
+
+				eventBus.$emit('ace:content.set', val);
+
+			},
+
 			push: function () {
-				this.listData.push({name: ' +item'});
+//				this.listData.push({name: ' +item'});
+				let grouplist = this.listData[2].children.slice();
+				grouplist.push({name: '==item=='});
+				this.$set(this.listData[2], 'children', grouplist);
+
 			},
 			pop: function () {
 				this.listData.pop();
+//				this.listData[4].children.pop();
+
+
 			},
 
 			splice: function() {
