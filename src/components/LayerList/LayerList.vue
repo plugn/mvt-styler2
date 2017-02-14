@@ -77,6 +77,11 @@
 					
 					groupList.splice(evt.newIndex - 1, 0, groupList.splice(evt.oldIndex - 1, 1)[0])
 
+//let go = JSON.parse(JSON.stringify(groupList, ['name', 'children']));
+//console.log('G', go);
+
+					this.$delete(this.listData[groupId], 'children');
+
 					this.$set(this.listData[groupId], 'children', groupList);
 				}
 /*
