@@ -64,30 +64,41 @@
 
 			// inside one list
 			onUpdate(evt) {
-				console.log('::onUpdate() ' + evt.type + '\n\
-					what:', evt.item, 'from: ', evt.from, ' to', evt.to, ' :', evt.oldIndex + '>' + evt.newIndex)
-				console.log('data-group:', evt.to.dataset.group);
+				var fromGroup = evt.from.dataset.group || 'root',
+					toGroup = evt.to.dataset.group || 'root';
+				console.log('::onUpdate() ' + evt.item.innerText)
+				console.log( `${evt.oldIndex}@${fromGroup}  > ${evt.newIndex}@${toGroup}`);
 				let groupId = evt.to.dataset.group,
 					list;
 
 				if (groupId) {
+					let groupList = this.listData[groupId].children.slice();
+					console.log('g', groupList);
+					
+					groupList.splice(evt.newIndex - 1, 0, groupList.splice(evt.oldIndex - 1, 1)[0])
+
+					this.$set(this.listData[groupId], 'children', groupList);
+				}
+/*
 					let list = this.listData[groupId].children;
 					if (list) {
 						list = list.slice();
 					}
 					console.log('===', list);
-
 					moveArrayItem(list, evt.from - 1, evt.to - 1);
 					console.log('after', list);
 
 					this.$set(this.listData[groupId], 'children', list)
-				}
+*/
 
 			},
 			// different lists
 			onAdd(evt) {
-				console.log('::onAdd() ' + evt.type + '\n\
-					what:', evt.item, 'from: ', evt.from, ' to', evt.to, ' :', evt.oldIndex + '>' + evt.newIndex, ' group:', evt.to.dataset.group)
+				var fromGroup = evt.from.dataset.group || 'root',
+					toGroup = evt.to.dataset.group || 'root';
+				console.log('::onAdd() ' + evt.item.innerText);
+				console.log( `${evt.oldIndex}@${fromGroup}  > ${evt.newIndex}@${toGroup}`);
+
 			}
 		}
 	}

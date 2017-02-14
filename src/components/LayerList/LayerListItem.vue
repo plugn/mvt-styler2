@@ -12,12 +12,11 @@
 					v-for="(listItem, listKey) in model.children"
 					:model="listItem"
 					:itemIndex="listKey"
-					:data-item="listKey"
 					:data-group="itemIndex"></layer-list-item>
 		</ul>
 	</li>
 
-	<li v-else :data-item="itemIndex" class="tile">{{model.name}}</li>
+	<li v-else class="tile">{{model.name}}</li>
 
 </template>
 
