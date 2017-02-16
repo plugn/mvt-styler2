@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>DnD</title>
+	<link rel="stylesheet" href="dnd.css">
+	<script src="https://cdn.jsdelivr.net/lodash/4/lodash.min.js"></script>
+	<script src="dnd-utils.js"></script>
+</head>
+<body>
+
+<div id="app">
+	<ul>
+		<li>item01</li>
+		<li>item02</li>
+		<li>item03</li>
+		<li><span>groupA</span>
+			<ul>
+				<li>itemA1</li>
+				<li>itemA2</li>
+				<li>itemA3</li>
+			</ul>
+		</li>
+		<li>item04</li>
+		<li>item05</li>
+		<li><span>groupB</span>
+			<ul>
+				<li>itemB1</li>
+				<li>itemB2</li>
+				<li>itemB3</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<script src="dnd.js"></script>
+</body>
+</html>
