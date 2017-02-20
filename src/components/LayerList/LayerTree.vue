@@ -91,13 +91,16 @@
 					// console.log('targetList: ', targetList, 'targetIndex', targetIndex, '@', targetGroupIndex);
 					console.log(targetIndex, '@', targetGroupIndex);
 
-
-					targetIndex = targetIndex === -1 ? targetList.length-1 : targetIndex;
-
+					let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
 					let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
-					let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
 
 					let takeOut = dataSource.splice(sourceIndex, 1)[0];
+					let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
+
+					targetIndex = targetIndex === -1
+						? targetList.length
+						: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
+
 					dataTarget.splice(targetIndex, 0, takeOut);
 
 				})
