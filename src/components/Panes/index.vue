@@ -1,7 +1,7 @@
 <template>
 	<div class="panes">
 		<div class="resizable" v-resize="{height:false}">
-			<LayerList />
+			<LayerTree />
 
 		</div>
 		<div class="el-resizer" ref="resizer"></div>
@@ -15,13 +15,15 @@
 
 <script>
 	import resize from '../../directives/resize'
-	import LayerList from '../LayerList/LayerList.vue'
+//	import LayerList from '../LayerList/LayerList.vue'
+	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor'
 	import {eventBus} from '../../main';
 
 	export default {
 		components: {
-			LayerList,
+//			LayerList,
+			LayerTree,
 			Editor
 		},
 		directives: {

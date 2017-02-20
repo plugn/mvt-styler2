@@ -1,18 +1,18 @@
 <template>
 
-	<ul v-if="isRoot" class="tile__root" v-sortable="options">
-		<layer-list-item :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></layer-list-item>
+	<ul v-if="isRoot" class="tile__root">
+		<layer-tree-item :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></layer-tree-item>
 	</ul>
 
 	<li v-else-if="isFolder" class="tile tile__folder">
 		<span class="tile__name bold" @click.self="toggle">{{ model.name }} [ {{open ? '-' : '+'}} ]</span>
-		<ul v-show="open" class="tile__list" v-sortable="options" :data-group="itemIndex">
-			<li class="hidden"></li>
-			<layer-list-item
+		<ul v-show="open" class="tile__list" :data-group="itemIndex">
+			<li hidden></li>
+			<layer-tree-item
 					v-for="(listItem, listKey) in model.children"
 					:model="listItem"
 					:itemIndex="listKey"
-					:data-group="itemIndex"></layer-list-item>
+					:data-group="itemIndex"></layer-tree-item>
 		</ul>
 	</li>
 
@@ -26,7 +26,7 @@
 	import {eventBus} from '../../main';
 
 	export default {
-		name: 'LayerListItem',
+		name: 'LayerTreeItem',
 		directives: {
 			sortable
 		},
@@ -37,23 +37,7 @@
 
 		data() {
 			return {
-				open: true,
-				options: {
-					group: 'layers',
-					onAdd: function (evt) {
-						eventBus.$emit('sortable:onAdd', evt);
-					},
-					onUpdate: function (evt) {
-						eventBus.$emit('sortable:onUpdate', evt);
-					},
-					onMove: function onMove(evt, originalEvent) {
-						let drag = evt.dragged;
-						let rel = evt.related;
-						if (drag.matches('.tile__folder') && !rel.parentNode.matches('.tile__root')) {
-							return false;
-						}
-					}
-				}
+				open: true
 			}
 		},
 
@@ -68,8 +52,7 @@
 		},
 		methods: {
 			toggle: function () {
-				console.log('toggle()', this.model.name + ':' + this.open);
-
+//				console.log('toggle()', this.model.name + ':' + this.open);
 				if (this.isFolder) {
 					this.open = !this.open
 				}
