@@ -9,6 +9,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "dragula": "^3.7.2",
     "normalize.css": "^5.0.0",
     "sortablejs": "^1.4.2",
     "uikit": "^2.27.2",
