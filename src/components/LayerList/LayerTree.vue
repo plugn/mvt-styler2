@@ -72,21 +72,32 @@
 						sourceIndex = sourceList.indexOf(el),
 						sourceGroupIndex = 0;
 					if (root !== source && root.contains(source)) {
-						console.log('root', root, 'contains source', source);
+//						console.log('root', root, 'contains source', source);
 
 						sourceGroupIndex = rootList.indexOf( source.closest('li') )
 					}
-					console.log('sourceList: ', sourceList, 'sourceIndex', sourceIndex, '@', sourceGroupIndex);
+
+					// console.log('sourceList: ', sourceList, 'sourceIndex');
+					console.log(sourceIndex, '@', sourceGroupIndex);
 
 					let targetList = utils.getList(target),
 						targetIndex = targetList.indexOf(sibling),
 						targetGroupIndex = 0;
 					if (root !== target && root.contains(target)) {
-						console.log('root', root, 'contains target', target);
+//						console.log('root', root, 'contains target', target);
 
 						targetGroupIndex = rootList.indexOf( target.closest('li') )
 					}
-					console.log('targetList: ', targetList, 'targetIndex', targetIndex, '@', targetGroupIndex);
+					// console.log('targetList: ', targetList, 'targetIndex', targetIndex, '@', targetGroupIndex);
+					console.log(targetIndex, '@', targetGroupIndex);
+
+					if (sourceGroupIndex === targetGroupIndex) {
+
+						this.listData.splice(targetIndex, 0, this.listData.splice(sourceIndex, 1)[0])
+					}
+					else {
+						// this.listData.splice(sourceIndex, 1)[0]
+					}
 
 
 
