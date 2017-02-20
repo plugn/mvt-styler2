@@ -22,14 +22,10 @@
 
 
 <script>
-	import sortable from '../../directives/sortable'
 	import {eventBus} from '../../main';
 
 	export default {
 		name: 'LayerTreeItem',
-		directives: {
-			sortable
-		},
 		props: {
 			model: [Object, Array],
 			itemIndex: [Number]
