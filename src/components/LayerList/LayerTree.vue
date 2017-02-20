@@ -91,21 +91,13 @@
 					// console.log('targetList: ', targetList, 'targetIndex', targetIndex, '@', targetGroupIndex);
 					console.log(targetIndex, '@', targetGroupIndex);
 
-					if (sourceGroupIndex === targetGroupIndex) {
+					targetIndex = targetIndex === -1 ? targetList.length : targetIndex - 1;
 
-						if (sourceGroupIndex === -1) {
-							this.listData.splice(targetIndex, 0, this.listData.splice(sourceIndex, 1)[0])
-						}
-						else {
-							this.listData[sourceGroupIndex].children.splice(targetIndex, 0, this.listData.splice(sourceIndex, 1)[0])
-						}
-					}
-					else {
-						// this.listData.splice(sourceIndex, 1)[0]
-					}
+					let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
+					let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
 
-
-
+					let takeOut = dataSource.splice(sourceIndex, 1)[0];
+					dataTarget.splice(targetIndex, 0, takeOut);
 
 				})
 
@@ -114,7 +106,7 @@
 
 			refreshContainers () {
 				if (!drake) { return; }
-				
+
 				let uls = utils.byQS('ul',this.$el);
 				// clear previous containers
 				drake.containers.splice(0);
