@@ -70,7 +70,7 @@
 
 					let sourceList =  utils.getList(source),
 						sourceIndex = sourceList.indexOf(el),
-						sourceGroupIndex = 0;
+						sourceGroupIndex = -1;
 					if (root !== source && root.contains(source)) {
 //						console.log('root', root, 'contains source', source);
 
@@ -82,7 +82,7 @@
 
 					let targetList = utils.getList(target),
 						targetIndex = targetList.indexOf(sibling),
-						targetGroupIndex = 0;
+						targetGroupIndex = -1;
 					if (root !== target && root.contains(target)) {
 //						console.log('root', root, 'contains target', target);
 
@@ -93,7 +93,12 @@
 
 					if (sourceGroupIndex === targetGroupIndex) {
 
-						this.listData.splice(targetIndex, 0, this.listData.splice(sourceIndex, 1)[0])
+						if (sourceGroupIndex === -1) {
+							this.listData.splice(targetIndex, 0, this.listData.splice(sourceIndex, 1)[0])
+						}
+						else {
+							this.listData[sourceGroupIndex].children.splice(targetIndex, 0, this.listData.splice(sourceIndex, 1)[0])
+						}
 					}
 					else {
 						// this.listData.splice(sourceIndex, 1)[0]
