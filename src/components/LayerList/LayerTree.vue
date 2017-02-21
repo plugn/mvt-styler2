@@ -55,8 +55,9 @@
 				let options = {
 					revertOnSpill: true,
 					accepts(el, target, source, sibling) {
-						if (!el.contains(target))
-							return true;
+						if (el.classList.contains('tile__folder') &&
+							!target.classList.contains('tile__root')) { return false; }
+						if (!el.contains(target)) { return true; }
 					}
 				};
 
