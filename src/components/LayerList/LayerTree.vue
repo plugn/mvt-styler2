@@ -109,7 +109,6 @@
 				let uls = utils.byQS('ul', this.$el);
 
 				drake.containers.splice(0);
-
 				utils.listFn(uls, 'forEach', function(ul) {
 					drake.containers.push(ul)
 				});
