@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<button @click="push">push</button>
+<!--
 		<button @click="pop">pop</button>
-		<button @click="splice">splice</button>
+-->
 		<layer-tree-item :model="listData"></layer-tree-item>
 	</div>
 </template>
@@ -30,11 +30,6 @@
 			this.$watch('listData', this.dataWatcher, {deep: true});
 		},
 		mounted() {
-			console.log('$el', this.$el);
-
-			eventBus.$on('sortable:onUpdate', this.onUpdate);
-			eventBus.$on('sortable:onAdd', this.onAdd);
-
 			this.initDnD();
 			// manually run watcher on init
 			this.dataWatcher();
@@ -46,8 +41,6 @@
 			},
 
 			dataWatcher() {
-//				console.log('dataWatcher', this.modelToString());
-				this.refreshContainers();
 				eventBus.$emit('ace:content.set', this.modelToString());
 			},
 
@@ -56,86 +49,71 @@
 					revertOnSpill: true,
 					accepts(el, target, source, sibling) {
 						if (el.classList.contains('tile__folder') &&
-							!target.classList.contains('tile__root')) { return false; }
+							!target.classList.contains('tile__root')) {
+							return false;
+						}
 						if (!el.contains(target)) { return true; }
+					},
+					isContainer(el) {
+						return el.tagName === 'ul';
 					}
 				};
 
-				drake = dragula([], options);
+				drake = dragula(options);
+				this.refreshContainers();
 
-				drake.on('drop', (el, target, source, sibling) => {
-					drake.cancel();
+				drake.on('drop', this.onDrop);
+			},
+			onDrop(el, target, source, sibling) {
+				drake.cancel();
 
-					let root = drake.containers[0],
-						rootList = utils.getList(drake.containers[0]);
+				let root = drake.containers[0],
+					rootList = utils.getList(drake.containers[0]);
 
-					let sourceList =  utils.getList(source),
-						sourceIndex = sourceList.indexOf(el),
-						sourceGroupIndex = -1;
-					if (root !== source && root.contains(source)) {
-//						console.log('root', root, 'contains source', source);
+				let sourceList =  utils.getList(source),
+					sourceIndex = sourceList.indexOf(el),
+					sourceGroupIndex = -1;
+				if (root !== source && root.contains(source)) {
+					sourceGroupIndex = rootList.indexOf( source.closest('li') )
+				}
 
-						sourceGroupIndex = rootList.indexOf( source.closest('li') )
-					}
+				console.log(sourceIndex, '@', sourceGroupIndex);
 
-					// console.log('sourceList: ', sourceList, 'sourceIndex');
-					console.log(sourceIndex, '@', sourceGroupIndex);
+				let targetList = utils.getList(target),
+					targetIndex = targetList.indexOf(sibling),
+					targetGroupIndex = -1;
+				if (root !== target && root.contains(target)) {
+					targetGroupIndex = rootList.indexOf( target.closest('li') )
+				}
+				console.log(targetIndex, '@', targetGroupIndex);
 
-					let targetList = utils.getList(target),
-						targetIndex = targetList.indexOf(sibling),
-						targetGroupIndex = -1;
-					if (root !== target && root.contains(target)) {
-//						console.log('root', root, 'contains target', target);
+				let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
+				let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
 
-						targetGroupIndex = rootList.indexOf( target.closest('li') )
-					}
-					// console.log('targetList: ', targetList, 'targetIndex', targetIndex, '@', targetGroupIndex);
-					console.log(targetIndex, '@', targetGroupIndex);
+				let takeOut = dataSource.splice(sourceIndex, 1)[0];
+				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
 
-					let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
-					let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
+				targetIndex = targetIndex === -1
+					? targetList.length
+					: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
 
-					let takeOut = dataSource.splice(sourceIndex, 1)[0];
-					let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
+				dataTarget.splice(targetIndex, 0, takeOut);
 
-					targetIndex = targetIndex === -1
-						? targetList.length
-						: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
-
-					dataTarget.splice(targetIndex, 0, takeOut);
-
-				})
-
+				setTimeout(this.refreshContainers.bind(this), 0);
 
 			},
 
 			refreshContainers () {
 				if (!drake) { return; }
 
-				let uls = utils.byQS('ul',this.$el);
-				// clear previous containers
+				let uls = utils.byQS('ul', this.$el);
+
 				drake.containers.splice(0);
-				// set new ones
-				utils.listFn(uls, 'forEach', (ul) => drake.containers.push(ul));
-				console.log('containers', drake.containers);
 
-			},
-
-			push () {
-				let grouplist = this.listData[2].children.slice();
-				grouplist.push({name: '==item=='});
-				this.$set(this.listData[2], 'children', grouplist);
-
-			},
-			pop () {
-				this.listData.pop();
-//				this.listData[4].children.pop();
-			},
-
-			splice() {
-				let fromIndex = 3, toIndex = 1;
-				this.listData.splice(toIndex, 0, this.listData.splice(fromIndex, 1)[0]);
-			},
+				utils.listFn(uls, 'forEach', function(ul) {
+					drake.containers.push(ul)
+				});
+			}
 
 		}
 	}
