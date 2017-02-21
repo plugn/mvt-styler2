@@ -99,7 +99,7 @@
 
 				dataTarget.splice(targetIndex, 0, takeOut);
 
-				setTimeout(this.refreshContainers.bind(this), 0);
+				setTimeout(this.refreshContainers.bind(this), 300);
 
 			},
 
