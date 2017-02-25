@@ -48,7 +48,15 @@
 			},
 
 			prepareStyle() {
-				console.log('mbStyle', mbStyle);
+				console.log(' =mbStyle', mbStyle);
+
+//				let gStyle = mbStyle.layers;
+				let gStyle = mbStyle.layers.map((layer)=>{
+					layer._group = _.get(layer, 'metadata[mapbox:group]','root');
+					return layer;
+				});
+				let zStyle = _.groupBy(gStyle, '_group');
+				console.log('zStyle', zStyle);
 
 //				console.log('lodash', _.get({'f':{'g':'FG'}}, 'f.g', '---'));
 
