@@ -13,6 +13,8 @@
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
+	import _ from 'lodash'
+	import mbStyle from '../../res/bright-v9.json'
 
 	let drake;
 
@@ -30,6 +32,7 @@
 			this.$watch('listData', this.dataWatcher, {deep: true});
 		},
 		mounted() {
+		    this.prepareStyle();
 			this.initDnD();
 			// manually run watcher on init
 			this.dataWatcher();
@@ -42,6 +45,13 @@
 
 			dataWatcher() {
 				eventBus.$emit('ace:content.set', this.modelToString());
+			},
+
+			prepareStyle() {
+				console.log('mbStyle', mbStyle);
+
+//				console.log('lodash', _.get({'f':{'g':'FG'}}, 'f.g', '---'));
+
 			},
 
 			initDnD() {
