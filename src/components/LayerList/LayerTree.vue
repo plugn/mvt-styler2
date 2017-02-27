@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="tree-view">
 <!--
 		<button @click="pop">pop</button>
 -->
@@ -128,4 +128,9 @@
 
 </script>
 
+<style>
+	.tree-view {
+		margin-left: 20px;
+	}
+</style>
 <style src="dragula/dist/dragula.css"></style>
