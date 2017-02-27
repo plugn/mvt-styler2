@@ -1,6 +1,6 @@
 <template>
 	<div class="panes">
-		<div class="resizable" v-resize="{height:false}">
+		<div class="resizable scrollable-y" v-resize="{height:false}">
 			<LayerTree />
 
 		</div>

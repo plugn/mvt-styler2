@@ -14,6 +14,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import _ from 'lodash'
+	import {buildTreeData} from './styleSync'
 	import mbStyle from '../../res/bright-v9.json'
 
 	let drake;
@@ -25,14 +26,15 @@
 
 		data() {
 			return {
-				listData: initialListData
+				listData: buildTreeData(mbStyle)
 			}
 		},
 		created() {
 			this.$watch('listData', this.dataWatcher, {deep: true});
 		},
 		mounted() {
-		    this.prepareStyle();
+//		    this.prepareStyle();
+
 			this.initDnD();
 			// manually run watcher on init
 			this.dataWatcher();
@@ -49,17 +51,6 @@
 
 			prepareStyle() {
 				console.log(' =mbStyle', mbStyle);
-
-//				let gStyle = mbStyle.layers;
-				let gStyle = mbStyle.layers.map((layer)=>{
-					layer._group = _.get(layer, 'metadata[mapbox:group]','root');
-					return layer;
-				});
-				let zStyle = _.groupBy(gStyle, '_group');
-				console.log('zStyle', zStyle);
-
-//				console.log('lodash', _.get({'f':{'g':'FG'}}, 'f.g', '---'));
-
 			},
 
 			initDnD() {

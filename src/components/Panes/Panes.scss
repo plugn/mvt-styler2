@@ -16,6 +16,10 @@
 	> .resizable {
 		width: 250px;
 	}
+
+	> .scrollable-y {
+		overflow-y: auto;
+	}
 }
 
 .editor-pane {

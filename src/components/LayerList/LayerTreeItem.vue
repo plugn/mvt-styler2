@@ -33,7 +33,7 @@
 
 		data() {
 			return {
-				open: true
+				open: false
 			}
 		},
 
