@@ -45,19 +45,13 @@ window.mbStyle = mbStyle;
 			modelToString() {
 				return JSON.stringify(this.listData, ['id', 'groupId', 'name', 'children'], '\t');
 			},
-			modelToString_0() {
-				let appFields = 'name|children|groupId',
-					glFields  = 'id|type|fill|line|symbol|circle|fill-extrusion|raster|background|paint',
-					fields = appFields.concat(glFields).split('|');
-				return JSON.stringify(this.listData, fields, '\t');
-			},
 
 			dataWatcher() {
 				let value = this.modelToString();
 
 window.treeData = JSON.parse(value);
 console.log('ace:content.set', window.treeData);
-				
+
 				eventBus.$emit('ace:content.set', value);
 			},
 
@@ -106,7 +100,10 @@ console.log('target', targetIndex, '@', targetGroupIndex);
 
 				let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
 				let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
-
+//				let mirrorSource = sourceGroupIndex === -1 ? mbStyle.layers : mbStyle.layers[sourceGroupIndex].children;
+//				let mirrorTarget = targetGroupIndex === -1 ? mbStyle.layers : mbStyle.layers[targetGroupIndex].children;
+//
+//				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 				let takeOut = dataSource.splice(sourceIndex, 1)[0];
 				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
 
@@ -114,6 +111,7 @@ console.log('target', targetIndex, '@', targetGroupIndex);
 					? targetList.length
 					: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
 
+//				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
 				dataTarget.splice(targetIndex, 0, takeOut);
 
 				setTimeout(this.refreshContainers.bind(this), 300);
