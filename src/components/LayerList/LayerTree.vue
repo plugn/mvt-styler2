@@ -26,14 +26,15 @@
 
 		data() {
 			return {
-				listData: buildTreeData(mbStyle)
+				listData: buildTreeData(_.cloneDeep(mbStyle))
 			}
 		},
 		created() {
 			this.$watch('listData', this.dataWatcher, {deep: true});
 		},
 		mounted() {
-//		    this.prepareStyle();
+
+window.mbStyle = mbStyle;
 
 			this.initDnD();
 			// manually run watcher on init
@@ -42,15 +43,22 @@
 
 		methods: {
 			modelToString() {
-				return JSON.stringify(this.listData, ['name', 'children'], 2);
+				return JSON.stringify(this.listData, ['id', 'groupId', 'name', 'children'], '\t');
+			},
+			modelToString_0() {
+				let appFields = 'name|children|groupId',
+					glFields  = 'id|type|fill|line|symbol|circle|fill-extrusion|raster|background|paint',
+					fields = appFields.concat(glFields).split('|');
+				return JSON.stringify(this.listData, fields, '\t');
 			},
 
 			dataWatcher() {
-				eventBus.$emit('ace:content.set', this.modelToString());
-			},
+				let value = this.modelToString();
 
-			prepareStyle() {
-				console.log(' =mbStyle', mbStyle);
+window.treeData = JSON.parse(value);
+console.log('ace:content.set', window.treeData);
+				
+				eventBus.$emit('ace:content.set', value);
 			},
 
 			initDnD() {
@@ -86,7 +94,7 @@
 					sourceGroupIndex = rootList.indexOf( source.closest('li') )
 				}
 
-				console.log(sourceIndex, '@', sourceGroupIndex);
+console.log('source', sourceIndex, '@', sourceGroupIndex);
 
 				let targetList = utils.getList(target),
 					targetIndex = targetList.indexOf(sibling),
@@ -94,7 +102,7 @@
 				if (root !== target && root.contains(target)) {
 					targetGroupIndex = rootList.indexOf( target.closest('li') )
 				}
-				console.log(targetIndex, '@', targetGroupIndex);
+console.log('target', targetIndex, '@', targetGroupIndex);
 
 				let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
 				let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;

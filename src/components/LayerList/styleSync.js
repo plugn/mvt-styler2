@@ -9,7 +9,7 @@ export function buildTreeData(mvtStyle) {
 	let currentGroup = null;
 
 	let grouped = _.reduce(mvtStyle.layers, reducer, []);
-	console.log('grouped', grouped);
+	// console.log('grouped', grouped);
 	return grouped;
 
 	function reducer(result, value, key) {
@@ -41,4 +41,8 @@ export function buildTreeData(mvtStyle) {
 		}
 		return result;
 	}
+}
+
+export function exportLayers(treeData) {
+	
 }
