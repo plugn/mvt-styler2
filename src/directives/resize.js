@@ -4,7 +4,12 @@ export default {
 
 	inserted (element, binding, vnode) {
 		// console.log('inserted', element, 'binding', binding, refs.resizer);
-		let resizer = vnode.context.$refs.resizer;
+		let handleRef = element.dataset.handle;
+		if (!handleRef) {
+			throw new Error('(!) handleRef: ', handleRef);
+		}
+
+		let resizer = vnode.context.$refs[handleRef];
 		let resizeWidth = _.get(binding, 'value.width', true) !== false;
 		let resizeHeight = _.get(binding, 'value.height', true) !== false;
 		let resizeDirection = '' + (resizeHeight ? 's' : '') + (resizeWidth ? 'e' : '');

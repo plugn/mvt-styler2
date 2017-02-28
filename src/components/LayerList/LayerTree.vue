@@ -79,6 +79,8 @@ window.mbStyle = mbStyle;
 window.gStyle = gStyle;
 
 				let newStyle = window.newStyle = exportStyle(vStyle, gStyle);
+				eventBus.$emit('map:style.set', newStyle);
+
 				let value = JSON.stringify(newStyle, null, '\t');
 
 				eventBus.$emit('ace:content.set', value);
@@ -168,7 +170,7 @@ console.log('onDrop gStyle', gStyle);
 
 </script>
 
-<style>
+<style scoped>
 	.tree-view {
 		margin-left: 20px;
 	}
