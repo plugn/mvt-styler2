@@ -9,7 +9,7 @@
 
 <script>
 	import LayerTreeItem from './LayerTreeItem.vue'
-	import initialListData from './listData'
+//	import initialListData from './listData'
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
@@ -17,7 +17,15 @@
 	import {buildTreeData} from './styleSync'
 	import mbStyle from '../../res/bright-v9.json'
 
+	// drag-and-drop instance
 	let drake;
+
+	// collection of plain virtual styles RAW
+	let vStyles = [];
+
+	// grouped virtual style RAW
+	let gStyles = [];
+
 
 	export default {
 		components: {
@@ -26,31 +34,57 @@
 
 		data() {
 			return {
+				// grouped style (Vue-model)
 				listData: buildTreeData(_.cloneDeep(mbStyle))
 			}
 		},
+
 		created() {
+			this.set_vStyle(mbStyle);
+			this.set_gStyle(mbStyle);
 			this.$watch('listData', this.dataWatcher, {deep: true});
 		},
-		mounted() {
 
+		mounted() {
 window.mbStyle = mbStyle;
 
 			this.initDnD();
-			// manually run watcher on init
 			this.dataWatcher();
+
+//			let vStyle1 = this.clone_vStyle();
+//			vStyle1.layers.unshift({name: 'cloned+unshifted'});
+//			this.set_vStyle( vStyle1 );
+//
+//console.log('vStyles', vStyles);
+//console.log('vStyle', this.get_vStyle());
+
+
 		},
 
 		methods: {
+			get_vStyle() {
+				return vStyles[vStyles.length-1];
+			},
+			get_gStyle() {
+				return gStyles[gStyles.length-1];
+			},
+			set_vStyle(newValue) {
+				vStyles.push( newValue );
+			},
+			set_gStyle(newValue) {
+				gStyles.push( buildTreeData(_.cloneDeep( newValue )) );
+			},
+
 			modelToString() {
 				return JSON.stringify(this.listData, ['id', 'groupId', 'name', 'children'], '\t');
 			},
 
 			dataWatcher() {
-				let value = this.modelToString();
+//				let value = this.modelToString();
+				let value = JSON.stringify(this.get_gStyle(),null,'\t');
 
-window.treeData = JSON.parse(value);
-console.log('ace:content.set', window.treeData);
+// window.treeData = JSON.parse(value);
+//console.log('ace:content.set', value);
 
 				eventBus.$emit('ace:content.set', value);
 			},
@@ -73,7 +107,7 @@ console.log('ace:content.set', window.treeData);
 				drake = dragula(options);
 				this.refreshContainers();
 
-				drake.on('drop', this.onDrop);
+				drake.on('drop', this.onDrop.bind(this));
 			},
 			onDrop(el, target, source, sibling) {
 				drake.cancel();
@@ -98,22 +132,26 @@ console.log('source', sourceIndex, '@', sourceGroupIndex);
 				}
 console.log('target', targetIndex, '@', targetGroupIndex);
 
+				let gStyle = this.get_gStyle();
+
+				let mirrorSource = sourceGroupIndex === -1 ? gStyle.layers : gStyle.layers[sourceGroupIndex].children;
+				let mirrorTarget = targetGroupIndex === -1 ? gStyle.layers : gStyle.layers[targetGroupIndex].children;
 				let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
 				let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
-//				let mirrorSource = sourceGroupIndex === -1 ? mbStyle.layers : mbStyle.layers[sourceGroupIndex].children;
-//				let mirrorTarget = targetGroupIndex === -1 ? mbStyle.layers : mbStyle.layers[targetGroupIndex].children;
-//
-//				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
-				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
 
+				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
 				targetIndex = targetIndex === -1
 					? targetList.length
 					: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
 
-//				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+				// data mutation
+				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
+				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+
+				let takeOut = dataSource.splice(sourceIndex, 1)[0];
 				dataTarget.splice(targetIndex, 0, takeOut);
 
+				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
 
 			},
