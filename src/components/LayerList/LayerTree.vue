@@ -81,7 +81,6 @@ window.mbStyle = mbStyle;
 
 			dataWatcher() {
 //				let value = this.modelToString();
-				let value = JSON.stringify(this.get_gStyle(),null,'\t');
 
 // window.treeData = JSON.parse(value);
 //console.log('ace:content.set', value);
@@ -133,9 +132,10 @@ console.log('source', sourceIndex, '@', sourceGroupIndex);
 console.log('target', targetIndex, '@', targetGroupIndex);
 
 				let gStyle = this.get_gStyle();
+console.log('onDrop gStyle', gStyle);
 
-				let mirrorSource = sourceGroupIndex === -1 ? gStyle.layers : gStyle.layers[sourceGroupIndex].children;
-				let mirrorTarget = targetGroupIndex === -1 ? gStyle.layers : gStyle.layers[targetGroupIndex].children;
+				let mirrorSource = sourceGroupIndex === -1 ? gStyle : gStyle[sourceGroupIndex].children;
+				let mirrorTarget = targetGroupIndex === -1 ? gStyle : gStyle[targetGroupIndex].children;
 				let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
 				let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
 
