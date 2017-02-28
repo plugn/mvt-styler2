@@ -5,7 +5,7 @@
 	</ul>
 
 	<li v-else-if="isFolder" class="tile tile__folder">
-		<span class="tile__name bold" @click.self="toggle">{{ model.name }} [ {{open ? '-' : '+'}} ]</span>
+		<span class="tile__name bold" @click.self="toggle">{{ model.id }} [ {{open ? '-' : '+'}} ]</span>
 		<ul v-show="open" class="tile__list" :data-group="itemIndex">
 			<li hidden></li>
 			<layer-tree-item
@@ -16,7 +16,7 @@
 		</ul>
 	</li>
 
-	<li v-else class="tile">{{model.name}}</li>
+	<li v-else class="tile">{{model.id}}</li>
 
 </template>
 
@@ -48,9 +48,8 @@
 		},
 		methods: {
 			toggle: function () {
-//				console.log('toggle()', this.model.name + ':' + this.open);
 				if (this.isFolder) {
-					this.open = !this.open
+					this.open = !this.open;
 				}
 			}
 		}

@@ -76,13 +76,14 @@ window.mbStyle = mbStyle;
 			},
 
 			modelToString() {
-				return JSON.stringify(this.listData, ['id', 'groupId', 'name', 'children'], '\t');
+				return JSON.stringify(this.listData, ['id', 'groupId', 'children'], '\t');
 			},
 
 			dataWatcher() {
-				let value = JSON.stringify(this.get_gStyle(), null, '\t');
+				let gStyle = this.get_gStyle();
+				let value = JSON.stringify(gStyle, null, '\t');
 //  console.log('ace:content.set', value);
-
+window.gStyle = gStyle;
 				eventBus.$emit('ace:content.set', value);
 			},
 

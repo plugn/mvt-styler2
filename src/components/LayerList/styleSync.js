@@ -8,13 +8,9 @@ export function buildTreeData(mvtStyle) {
 	let groupPath = ['metadata','mapbox:group'];
 	let currentGroup = null;
 
-	let grouped = _.reduce(mvtStyle.layers, reducer, []);
-	// console.log('grouped', grouped);
-	return grouped;
+	return _.reduce(mvtStyle.layers, reducer, []);
 
 	function reducer(result, value, key) {
-		value.name = value.id || value.name || ('#' + key);
-
 		let thisGroup = _.get(value, groupPath, null);
 		if (!thisGroup) {
 			result.push(value);
@@ -28,9 +24,8 @@ export function buildTreeData(mvtStyle) {
 		if (thisGroup !== currentGroup) {
 			currentGroup = thisGroup;
 			groupItem = {
-				groupId: thisGroup,
+				// groupId: thisGroup,
 				id: groupId,
-				name: groupId,
 				children: [value]
 			};
 			result.push(groupItem)
@@ -43,6 +38,22 @@ export function buildTreeData(mvtStyle) {
 	}
 }
 
-export function exportLayers(treeData) {
-	
+export function exportLayers(layersTree) {
+
+	return _.reduce(gStyle, reducer, []);
+
+	function reducer(result, value, key) {
+		if (_.has(value, 'children')) {
+			return _.reduce(value.children, reducer, result)
+		}
+
+		result.push(value);
+
+		return result;
+	}
+}
+
+export function exportStyle(oStyle, layersTree) {
+	oStyle.layers = exportLayers(layersTree);
+	return oStyle;
 }
