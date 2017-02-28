@@ -14,7 +14,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import _ from 'lodash'
-	import {buildTreeData} from './styleSync'
+	import {buildTreeData, exportStyle} from './styleSync'
 	import mbStyle from '../../res/bright-v9.json'
 
 	// drag-and-drop instance
@@ -50,15 +50,6 @@ window.mbStyle = mbStyle;
 
 			this.initDnD();
 			this.dataWatcher();
-
-//			let vStyle1 = this.clone_vStyle();
-//			vStyle1.layers.unshift({name: 'cloned+unshifted'});
-//			this.set_vStyle( vStyle1 );
-//
-//console.log('vStyles', vStyles);
-//console.log('vStyle', this.get_vStyle());
-
-
 		},
 
 		methods: {
@@ -80,10 +71,16 @@ window.mbStyle = mbStyle;
 			},
 
 			dataWatcher() {
+				let vStyle = this.get_vStyle();
+
 				let gStyle = this.get_gStyle();
-				let value = JSON.stringify(gStyle, null, '\t');
-//  console.log('ace:content.set', value);
+//				let value = JSON.stringify(gStyle, null, '\t');
+
 window.gStyle = gStyle;
+
+				let newStyle = window.newStyle = exportStyle(vStyle, gStyle);
+				let value = JSON.stringify(newStyle, null, '\t');
+
 				eventBus.$emit('ace:content.set', value);
 			},
 
