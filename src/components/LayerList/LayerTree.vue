@@ -80,10 +80,8 @@ window.mbStyle = mbStyle;
 			},
 
 			dataWatcher() {
-//				let value = this.modelToString();
-
-// window.treeData = JSON.parse(value);
-//console.log('ace:content.set', value);
+				let value = JSON.stringify(this.get_gStyle(), null, '\t');
+//  console.log('ace:content.set', value);
 
 				eventBus.$emit('ace:content.set', value);
 			},
