@@ -8,7 +8,9 @@
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
 
-	let map;
+	let map,
+		_initialStyle;
+
 	export default {
 		components: {
 		},
@@ -18,16 +20,22 @@
 		},
 
 		created() {
+			eventBus.$on('map:style.set', (value) => {
+				console.log('$on map:style.set');
+				if (map) {
+
+				    console.log('map.getStyle()', map.getStyle());
+					map.setStyle(value);
+				}
+				else {
+					_initialStyle = value;
+				}
+			});
 
 		},
 
 		mounted() {
 			this.initMap();
-
-			eventBus.$on('map:style.set', (value) => {
-				console.log('$on map:style.set');
-				map.setStyle(value);
-			});
 		},
 
 		methods: {
@@ -35,9 +43,12 @@
 				console.log('initMap()', this.$el);
 				map = new mapboxgl.Map({
 					container: this.$el,
-					// style: 'mapbox://styles/mapbox/streets-v9'
 				});
-				
+				if (_initialStyle) {
+				    map.setStyle(_initialStyle);
+				    _initialStyle = undefined;
+				}
+//window.map = map;
 			}
 		}
 	}
