@@ -1,8 +1,0 @@
-li {
-	box-sizing: border-box;
-	padding: 10px
-}
-#app [draggable=true] {
-	outline: 1px solid #eee;
-	margin: 5px 0;
-}
