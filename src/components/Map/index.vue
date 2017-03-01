@@ -45,7 +45,6 @@
 
 		methods: {
 			initMap() {
-				console.log('initMap()', this.$el);
 				map = new mapboxgl.Map({
 					container: this.$el,
 					center: [37, 55],

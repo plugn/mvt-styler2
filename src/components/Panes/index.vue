@@ -56,4 +56,4 @@
 
 </script>
 
-<style lang="scss" src="./Panes.scss" scoped></style>
+<style src="./Panes.scss" scoped></style>

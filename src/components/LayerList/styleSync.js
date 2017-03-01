@@ -40,7 +40,7 @@ export function buildTreeData(mvtStyle) {
 
 export function exportLayers(layersTree) {
 
-	return _.reduce(gStyle, reducer, []);
+	return _.reduce(layersTree, reducer, []);
 
 	function reducer(result, value, key) {
 		if (_.has(value, 'children')) {
