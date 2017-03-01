@@ -72,11 +72,9 @@ window.mbStyle = mbStyle;
 
 			dataWatcher() {
 				let vStyle = this.get_vStyle();
-
 				let gStyle = this.get_gStyle();
-//				let value = JSON.stringify(gStyle, null, '\t');
 
-window.gStyle = gStyle;
+//window.gStyle = gStyle;
 
 				let newStyle = window.newStyle = exportStyle(vStyle, gStyle);
 				eventBus.$emit('map:style.set', newStyle);

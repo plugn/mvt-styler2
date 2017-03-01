@@ -9,10 +9,10 @@
 		<div class="map-pane" v-resize="{height:false}" data-handle="map-resizer">
 			<MapGL></MapGL>
 		</div>
-		<div class="el-resizer" ref="map-resizer"></div>
+		<div class="el-resizer" ref="map-resizer" @mouseup="onResize"></div>
 
 		<div class="pane editor-pane">
-			<div class="toolbar" @click="trigger">[File] [Edit] [Help]</div>
+			<div class="toolbar gu-unselectable" @click="trigger">[File] [Edit] [Help]</div>
 			<Editor class="body"></Editor>
 		</div>
 	</div>
@@ -21,7 +21,6 @@
 
 <script>
 	import resize from '../../directives/resize'
-//	import LayerList from '../LayerList/LayerList.vue'
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor'
 	import MapGL from '../Map'
@@ -37,9 +36,14 @@
 			resize
 		},
 		methods: {
+			onResize: function () {
+				// console.log('onResize');
+				setTimeout( (function () {
+					eventBus.$emit('map:resize');
+				}), 100);
+			},
 			trigger: function () {
-				console.log('Panes.trigger()');
-				// eventBus.$emit('ace:content.set', JSON.stringify({'newKey': 'newValue'}));
+//	console.log('Panes.trigger()');
 			}
 
 		},

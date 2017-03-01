@@ -20,10 +20,15 @@
 		},
 
 		created() {
-			eventBus.$on('map:style.set', (value) => {
+			eventBus.$on('map:resize', function () {
+				console.log('@map:resize');
+				if (map) {
+					map.resize();
+				}
+			});
+			eventBus.$on('map:style.set', function (value) {
 				console.log('$on map:style.set');
 				if (map) {
-
 				    console.log('map.getStyle()', map.getStyle());
 					map.setStyle(value);
 				}
@@ -43,12 +48,18 @@
 				console.log('initMap()', this.$el);
 				map = new mapboxgl.Map({
 					container: this.$el,
+					center: [37, 55],
+					zoom: 5
 				});
+
+				let nav = new mapboxgl.NavigationControl();
+				map.addControl(nav, 'top-left');
+
 				if (_initialStyle) {
 				    map.setStyle(_initialStyle);
 				    _initialStyle = undefined;
 				}
-//window.map = map;
+
 			}
 		}
 	}
