@@ -26,16 +26,16 @@
 	}
 }
 
-.editor-pane {
+.pane {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+}
 
-	> .toolbar {
-		padding: 8px 12px;
-	}
+.toolbar {
+	padding: 8px 12px;
+}
 
-	> .body {
-		flex-grow: 1;
-	}
+.body {
+	flex-grow: 1;
 }

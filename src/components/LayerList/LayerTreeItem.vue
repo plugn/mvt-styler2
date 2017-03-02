@@ -16,12 +16,14 @@
 		</ul>
 	</li>
 
-	<li v-else class="tile">{{model.id}}</li>
+	<li v-else class="tile" @click.self="tweakLayer(model.id)">{{model.id}}</li>
 
 </template>
 
 
 <script>
+	import {eventBus} from '../../main'
+
 	export default {
 		name: 'LayerTreeItem',
 		props: {
@@ -49,6 +51,10 @@
 				if (this.isFolder) {
 					this.open = !this.open;
 				}
+			},
+			tweakLayer(layerId) {
+				console.log('tweakLayer()', layerId);
+				eventBus.$emit('tweakLayer', layerId);
 			}
 		}
 	}

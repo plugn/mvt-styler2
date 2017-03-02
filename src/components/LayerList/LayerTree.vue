@@ -14,7 +14,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import _ from 'lodash'
-	import {buildTreeData, exportStyle} from './styleSync'
+	import {buildTreeData, exportStyle, indexLayers} from './styleSync'
 	import mbStyle from '../../res/bright-v9.json'
 
 	// drag-and-drop instance
@@ -26,8 +26,11 @@
 	// grouped virtual style RAW
 	let gStyles = [];
 
+	// layerId : arrayIndex
+ 	let vLayersIndex = {};
 
 	export default {
+		name: 'LayerTree',
 		components: {
 			LayerTreeItem
 		},
@@ -46,13 +49,17 @@
 		},
 
 		mounted() {
-window.mbStyle = mbStyle;
-
 			this.initDnD();
 			this.dataWatcher();
 		},
 
 		methods: {
+			getLayer(layerId) {
+				let index = vLayersIndex[layerId];
+
+				return this.get_vStyle().layers[index];
+			},
+
 			get_vStyle() {
 				return vStyles[vStyles.length-1];
 			},
@@ -66,15 +73,16 @@ window.mbStyle = mbStyle;
 				gStyles.push( buildTreeData(_.cloneDeep( newValue )) );
 			},
 
-			modelToString() {
-				return JSON.stringify(this.listData, ['id', 'groupId', 'children'], '\t');
-			},
-
 			dataWatcher() {
 				let vStyle = this.get_vStyle();
 				let gStyle = this.get_gStyle();
 
-				let newStyle = window.newStyle = exportStyle(vStyle, gStyle);
+				let newStyle = exportStyle(vStyle, gStyle);
+				vLayersIndex = indexLayers(newStyle.layers);
+console.log('vLayersIndex', vLayersIndex);
+				this.set_vStyle(newStyle);
+
+
 				eventBus.$emit('map:style.set', newStyle);
 
 				let value = JSON.stringify(newStyle, null, '\t');

@@ -57,3 +57,11 @@ export function exportStyle(oStyle, layersTree) {
 	oStyle.layers = exportLayers(layersTree);
 	return oStyle;
 }
+
+export function indexLayers(layers) {
+	return _.reduce(layers, reducer, {});
+	function reducer (result, value, index) {
+		result[value.id] = index;
+		return result;
+	}
+}

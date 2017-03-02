@@ -1,19 +1,23 @@
 <template>
 	<div class="panes">
 
+
 		<div class="resizable scrollable-y" v-resize="{height:false}" data-handle="layers-resizer">
-			<LayerTree />
+			<div class="toolbar gu-unselectable" @click="trigger">
+				<span @click="setSideBar('tree')">Layers</span>
+				<span @click="setSideBar('code')">Code</span>
+			</div>
+
+			<LayerTree v-show="isActive('tree')"></LayerTree>
+			<Editor v-show="isActive('code')" class="body"></Editor>
+			<div v-show="isActive('tweakLayer')">
+				Tweak {{sideBar}} #{{layerId}}
+			</div>
 		</div>
 		<div class="el-resizer" ref="layers-resizer"></div>
 
-		<div class="map-pane" v-resize="{height:false}" data-handle="map-resizer">
+		<div class="pane">
 			<MapGL></MapGL>
-		</div>
-		<div class="el-resizer" ref="map-resizer" @mouseup="onResize"></div>
-
-		<div class="pane editor-pane">
-			<div class="toolbar gu-unselectable" @click="trigger">[File] [Edit] [Help]</div>
-			<Editor class="body"></Editor>
 		</div>
 	</div>
 
@@ -35,6 +39,23 @@
 		directives: {
 			resize
 		},
+		data() {
+			return {
+				sideBar: 'tree',
+				layerId: ''
+			}
+		},
+
+		created() {
+
+			eventBus.$on('tweakLayer', (layerId) => {
+				console.log('caught tweakLayer', layerId)
+				console.log('LayerTree', LayerTree.methods.getLayer(layerId));
+				this.layerId = layerId;
+				this.setSideBar('tweakLayer')
+			})
+		},
+
 		methods: {
 			onResize: function () {
 				// console.log('onResize');
@@ -44,14 +65,23 @@
 			},
 			trigger: function () {
 //	console.log('Panes.trigger()');
+			},
+			setSideBar(name) {
+console.log('name', name);
+				
+				this.sideBar = name;
+
+
+			},
+			isActive(name) {
+				return name === this.sideBar;
 			}
 
-		},
 
-		data() {
-			return {
-			}
 		}
+
+
+
 	}
 
 </script>
