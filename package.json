@@ -9,6 +9,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "dat-gui-light-theme": "git+https://git@github.com/plugn/dat-gui-light-theme.git",
+    "dat.gui": "^0.6.1",
     "dragula": "^3.7.2",
     "mapbox-gl": "^0.32.1",
     "normalize.css": "^5.0.0",

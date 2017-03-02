@@ -74,8 +74,6 @@ window.mbStyle = mbStyle;
 				let vStyle = this.get_vStyle();
 				let gStyle = this.get_gStyle();
 
-//window.gStyle = gStyle;
-
 				let newStyle = window.newStyle = exportStyle(vStyle, gStyle);
 				eventBus.$emit('map:style.set', newStyle);
 
@@ -117,7 +115,7 @@ window.mbStyle = mbStyle;
 					sourceGroupIndex = rootList.indexOf( source.closest('li') )
 				}
 
-console.log('source', sourceIndex, '@', sourceGroupIndex);
+//console.log('source', sourceIndex, '@', sourceGroupIndex);
 
 				let targetList = utils.getList(target),
 					targetIndex = targetList.indexOf(sibling),
@@ -125,10 +123,9 @@ console.log('source', sourceIndex, '@', sourceGroupIndex);
 				if (root !== target && root.contains(target)) {
 					targetGroupIndex = rootList.indexOf( target.closest('li') )
 				}
-console.log('target', targetIndex, '@', targetGroupIndex);
+//console.log('target', targetIndex, '@', targetGroupIndex);
 
 				let gStyle = this.get_gStyle();
-console.log('onDrop gStyle', gStyle);
 
 				let mirrorSource = sourceGroupIndex === -1 ? gStyle : gStyle[sourceGroupIndex].children;
 				let mirrorTarget = targetGroupIndex === -1 ? gStyle : gStyle[targetGroupIndex].children;
