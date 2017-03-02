@@ -62,16 +62,14 @@ console.log('dat', dat);
 				this.layerId = layerId;
 				this.setSideBar('tweakLayer');
 
+				let gui = new dat.gui.GUI({autoPlace: false});
 
-//				let dat1 = new dat.GUI({autoPlace: false});
-/*
-				let dat1 = new dat.GUI();
-				dat.add(data, 'id')
-				dat.add(data, 'interactive')
-*/
+//				gui.remember(data);
+				gui.add(data, 'id');
+				gui.add(data, 'interactive');
 
 //				console.log('dat', this.$refs.dat);
-//				(this.$refs.dat).appendChild(gui.domElement);
+				(this.$refs.dat).appendChild(gui.domElement);
 
 			})
 		},
@@ -88,7 +86,7 @@ console.log('dat', dat);
 			},
 			setSideBar(name) {
 console.log('name', name);
-				
+
 				this.sideBar = name;
 
 
