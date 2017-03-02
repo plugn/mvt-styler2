@@ -12,6 +12,11 @@
 			<Editor v-show="isActive('code')" class="body"></Editor>
 			<div v-show="isActive('tweakLayer')">
 				Tweak {{sideBar}} #{{layerId}}
+				<div ref="dat">
+					BLA
+
+
+				</div>
 			</div>
 		</div>
 		<div class="el-resizer" ref="layers-resizer"></div>
@@ -29,6 +34,8 @@
 	import Editor from '../Editor'
 	import MapGL from '../Map'
 	import {eventBus} from '../../main';
+	import dat from 'dat.gui/build/dat.gui';
+console.log('dat', dat);
 
 	export default {
 		components: {
@@ -46,13 +53,26 @@
 			}
 		},
 
-		created() {
+		mounted() {
 
 			eventBus.$on('tweakLayer', (layerId) => {
 				console.log('caught tweakLayer', layerId)
-				console.log('LayerTree', LayerTree.methods.getLayer(layerId));
+				let data = LayerTree.methods.getLayer(layerId);
+				console.log('LayerTree', data);
 				this.layerId = layerId;
-				this.setSideBar('tweakLayer')
+				this.setSideBar('tweakLayer');
+
+
+//				let dat1 = new dat.GUI({autoPlace: false});
+/*
+				let dat1 = new dat.GUI();
+				dat.add(data, 'id')
+				dat.add(data, 'interactive')
+*/
+
+//				console.log('dat', this.$refs.dat);
+//				(this.$refs.dat).appendChild(gui.domElement);
+
 			})
 		},
 
