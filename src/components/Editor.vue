@@ -6,6 +6,8 @@
 	import editor from 'vue2-ace'
 	import 'brace/mode/json'
 	import 'brace/theme/chrome'
+	import 'brace/theme/idle_fingers'
+
 	import { eventBus } from '../main';
 
 
@@ -16,7 +18,7 @@
 					poweredBy: 'Vue2Ace'
 				}),
 				lang: 'json',
-				theme: 'chrome',
+				theme: 'idle_fingers',
 				onUpdate: function(v) {
 //					let j = (v.replace(/[\t\r\n]|\s{2,}/g, ''));
 //					console.log('onUpdate()', j);
