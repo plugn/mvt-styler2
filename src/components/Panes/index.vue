@@ -3,7 +3,7 @@
 
 
 		<div class="resizable scrollable-y" v-resize="{height:false}" data-handle="layers-resizer">
-			<div class="toolbar gu-unselectable" @click="trigger">
+			<div class="toolbar gu-unselectable">
 				<span @click="setSideBar('tree')">Layers</span>
 				<span @click="setSideBar('code')">Code</span>
 			</div>
@@ -69,7 +69,9 @@ console.log('dat', dat);
 				gui.add(data, 'interactive');
 
 //				console.log('dat', this.$refs.dat);
-				(this.$refs.dat).appendChild(gui.domElement);
+				let container = this.$refs.dat
+				container.innerHTML = '';
+				container.appendChild(gui.domElement);
 
 			})
 		},
@@ -81,12 +83,7 @@ console.log('dat', dat);
 					eventBus.$emit('map:resize');
 				}), 100);
 			},
-			trigger: function () {
-//	console.log('Panes.trigger()');
-			},
 			setSideBar(name) {
-console.log('name', name);
-
 				this.sideBar = name;
 
 
