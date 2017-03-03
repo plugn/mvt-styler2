@@ -35,6 +35,9 @@
 	import MapGL from '../Map'
 	import {eventBus} from '../../main';
 	import dat from 'dat.gui/build/dat.gui';
+	import dgLightTheme from 'dat-gui-light-theme/dat-gui-light-theme.css'
+	import dgTweak from './dg-tweak.css'
+
 console.log('dat', dat);
 
 	export default {
@@ -69,9 +72,11 @@ console.log('dat', dat);
 				gui.add(data, 'interactive');
 
 //				console.log('dat', this.$refs.dat);
-				let container = this.$refs.dat
-				container.innerHTML = '';
-				container.appendChild(gui.domElement);
+				let container = this.$refs.dat;
+				if (container) {
+					container.innerHTML = '';
+					container.appendChild(gui.domElement);
+				}
 
 			})
 		},
@@ -102,3 +107,4 @@ console.log('dat', dat);
 </script>
 
 <style src="./Panes.scss" scoped></style>
+<!--<style src="dat-gui-light-theme/dat-gui-light-theme.css"></style>-->

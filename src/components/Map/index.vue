@@ -65,6 +65,7 @@
 
 </script>
 <style src="mapbox-gl/dist/mapbox-gl.css"></style>
+
 <style>
 	.map {
 		height: 100%;
