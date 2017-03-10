@@ -1,0 +1,50 @@
+.view {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: stretch;
+
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	background-color: #333;
+
+}
+
+.pane {
+	flex-grow: 1;
+	background-color: #bbb;
+}
+
+
+
+.sidebar {
+	position: relative;
+	min-width: 200px;
+	background-color: #555;
+}
+
+.toolbar {
+	color: #fff;
+	background-color: #222;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 20px;
+}
+
+.widget {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	top: 20px;
+	/*color: #777;*/
+	overflow: auto;
+}
