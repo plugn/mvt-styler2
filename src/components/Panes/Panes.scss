@@ -1,5 +1,4 @@
 .panes {
-	box-sizing: border-box;
 	display: flex;
 	height: 100%;
 
@@ -14,16 +13,17 @@
 
 
 	> .resizable {
-		width: 230px;
+		width: 350px;
 	}
 
-	> .scrollable-y {
-		overflow-y: auto;
-	}
 
 	> .map-pane {
 		width: 800px;
 	}
+}
+
+.scrollable-y {
+	overflow-y: auto;
 }
 
 .pane {
@@ -32,10 +32,17 @@
 	align-items: stretch;
 }
 
-.toolbar {
-	padding: 8px 12px;
-}
 
 .body {
 	flex-grow: 1;
+}
+.sidebar {
+	position: relative;
+
+	.toolbar {
+		padding: 8px 12px;
+	}
+	.content {
+		height: 100%;
+	}
 }

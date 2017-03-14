@@ -1,54 +1,32 @@
 <template>
-	<div class="panes">
-
-		<div class="view">
-			<div class="sidebar resizable"  v-resize="{height:false}" data-handle="layers-resizer">
-				<div class="toolbar gu-unselectable">
-					<span @click="setSideBar('tree')">Layers</span>
-					<span @click="setSideBar('code')">Code</span>
-				</div>
-				<div class="widget">
-					<LayerTree v-show="isActive('tree')"></LayerTree>
-
-					<Editor v-show="isActive('code')" class="body"></Editor>
-
-					<div v-show="isActive('tweakLayer')">
-						Tweak {{sideBar}} #{{layerId}}
-						<div ref="dat">
-							BLA
-						</div>
-					</div>
-
-				</div>
-			</div>
-			<div class="pane"></div>
-		</div>
-
-<!--
-		<div class="resizable scrollable-y" v-resize="{height:false}" data-handle="layers-resizer">
+	<div class="view">
+		<div class="sidebar resizable"  v-resize="{height:false}" data-handle="layers-resizer">
 			<div class="toolbar gu-unselectable">
 				<span @click="setSideBar('tree')">Layers</span>
 				<span @click="setSideBar('code')">Code</span>
 			</div>
+			<div class="widget">
+				<LayerTree v-show="isActive('tree')"></LayerTree>
 
-			<LayerTree v-show="isActive('tree')"></LayerTree>
-			<Editor v-show="isActive('code')" class="body"></Editor>
-			<div v-show="isActive('tweakLayer')">
-				Tweak {{sideBar}} #{{layerId}}
-				<div ref="dat">
-					BLA
+				<Editor v-show="isActive('code')" class="body"></Editor>
 
-
+				<div v-show="isActive('tweakLayer')">
+					Tweak {{sideBar}} #{{layerId}}
+					<div ref="dat">
+						BLA
+					</div>
 				</div>
+
 			</div>
 		</div>
--->
+
 		<div class="el-resizer" ref="layers-resizer"></div>
 
 		<div class="pane">
 			<MapGL></MapGL>
 		</div>
 	</div>
+
 
 </template>
 
@@ -130,5 +108,5 @@ console.log('dat', dat);
 
 </script>
 
-<style src="./Panes.css" scoped></style>
+<style src="./Panes0.css" scoped></style>
 <!--<style src="dat-gui-light-theme/dat-gui-light-theme.css"></style>-->

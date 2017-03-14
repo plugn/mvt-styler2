@@ -21,6 +21,10 @@
 	background-color: #bbb;
 }
 
+.el-resizer {
+	width: 3px;
+	background: #ccc;
+}
 
 
 .sidebar {

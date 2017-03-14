@@ -2,14 +2,17 @@
 	<div class="panes">
 
 
-		<div class="resizable scrollable-y" v-resize="{height:false}" data-handle="layers-resizer">
+		<div class="resizable sidebar" v-resize="{height:false}" data-handle="layers-resizer">
 			<div class="toolbar gu-unselectable">
 				<span @click="setSideBar('tree')">Layers</span>
 				<span @click="setSideBar('code')">Code</span>
 			</div>
 
-			<LayerTree v-show="isActive('tree')"></LayerTree>
-			<Editor v-show="isActive('code')" class="body"></Editor>
+			<div class="content scrollable-y">
+				<LayerTree v-show="isActive('tree')"></LayerTree>
+				<Editor v-show="isActive('code')" class="body"></Editor>
+			</div>
+			<!--<Editor v-show="isActive('code')" class="body"></Editor>-->
 			<div v-show="isActive('tweakLayer')">
 				Tweak {{sideBar}} #{{layerId}}
 				<div ref="dat">
