@@ -19,7 +19,6 @@
 	}
 </script>
 
-<!--<style src="./assets/flexgrid.css"></style>-->
 <style src="normalize.css"></style>
 <style>
 	#app {

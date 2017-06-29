@@ -9,6 +9,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap-vue": "^0.11.1",
     "dat-gui-light-theme": "git+https://git@github.com/plugn/dat-gui-light-theme.git",
     "dat.gui": "^0.6.1",
     "dragula": "^3.7.2",
