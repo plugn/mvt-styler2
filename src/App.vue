@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<Panes/>
+		<AppLayout />
 	</div>
 </template>
 
@@ -11,6 +11,7 @@
 	export default {
 		name: 'app',
 		components: {
+			AppLayout,
 			Panes
 		},
 		data() {
@@ -21,7 +22,10 @@
 </script>
 
 <!--<style src="./assets/flexgrid.css"></style>-->
-<style src="normalize.css"></style>
+<!--<style src="normalize.css"></style>-->
+
+<style src="./reset.css"></style>
+<style src="./components/FlexLayout.scss"></style>
 <style>
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;

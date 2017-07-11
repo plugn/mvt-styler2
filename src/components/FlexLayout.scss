@@ -1,14 +1,14 @@
 .flex-row {
 	display: flex;
 	flex-direction: row;
-	min-height: 0; //  FF flexbox overflow
+	min-height: 0;
 	width: 100%;
 }
-
+/* NEVER USE ONE LINE COMMENTS with POSTCSS */
 .flex-col {
 	display: flex;
 	flex-direction: column;
-	min-width: 0; //  FF flexbox overflow
+	min-width: 0;
 	height: 100%;
 }
 .flex-row,

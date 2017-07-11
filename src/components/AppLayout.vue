@@ -5,7 +5,24 @@
 		<div class="flex-row">
 			<div class="scroll">
 				<ul>
-					<li v-for="n in 50"> item {{ n }}</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
+					<li>item</li>
 				</ul>
 			</div>
 
@@ -23,9 +40,9 @@
 			</div>
 
 		<div class="stretch scroll"> stretchy content
-			<ul>
-				<li v-for="n in 50"> option {{ n }}</li>
-			</ul>
+			<!--<ul>-->
+				<!--<li v-for="n in 50"> option {{ n }}</li>-->
+			<!--</ul>-->
 		</div>
 
 	</div>
@@ -78,5 +95,5 @@
 	}
 </script>
 
-<style src="./FlexLayout.scss" scoped></style>
+
 <style src="./AppLayout.css"  scoped></style>
