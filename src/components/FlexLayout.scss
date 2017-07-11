@@ -1,0 +1,35 @@
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	min-height: 0; //  FF flexbox overflow
+	width: 100%;
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+	min-width: 0; //  FF flexbox overflow
+	height: 100%;
+}
+.flex-row,
+.flex-col {
+	> .flex-row,
+	> .flex-col {
+		flex: 1;
+	}
+
+	.stretch {
+		flex: 1;
+	}
+
+	.scroll {
+		overflow: auto;
+	}
+	.scroll-x {
+		overflow-x: auto;
+	}
+	.scroll-y {
+		overflow-y: auto;
+	}
+}
+

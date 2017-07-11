@@ -6,6 +6,7 @@
 
 <script>
 	import Panes from './components/Panes/index.vue'
+	import AppLayout from './components/AppLayout.vue'
 
 	export default {
 		name: 'app',

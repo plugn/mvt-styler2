@@ -68,11 +68,15 @@ module.exports = {
   },
   vue: {
     loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
-    postcss: [
-	  require('postcss-nested'),
-      require('autoprefixer')({
-        browsers: ['last 2 versions']
+    postcss: {
+      options: {
+        parser: require('postcss')
+      },
+      plugins:[
+        require('postcss-nested'),
+        require('autoprefixer')({
+          browsers: ['last 2 versions']
       })
-    ]
+    ]}
   }
 }

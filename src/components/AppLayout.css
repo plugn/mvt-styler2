@@ -1,0 +1,16 @@
+header,
+footer {
+	min-height: 50px;
+}
+
+li {
+	padding: 3rem;
+}
+
+.debug div, .debug li {
+	outline: 1px lightpink dashed;
+}
+
+.w1000 {
+	width: 1000px;
+}
