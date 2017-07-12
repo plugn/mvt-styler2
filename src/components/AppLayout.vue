@@ -3,28 +3,14 @@
 		<header>awesome site header</header>
 
 		<div class="flex-row">
+<!--
 			<div class="scroll">
-				<ul>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
-					<li>item</li>
+				<ul style="margin: 0 150px;">
+					<li v-for="n in 5"> option {{ n }}</li>
 				</ul>
 			</div>
+-->
+			<Dashboard />
 
 			<div class="flex-col">
 				<div class="stretch">1</div>
@@ -40,14 +26,14 @@
 			</div>
 
 		<div class="stretch scroll"> stretchy content
-			<!--<ul>-->
-				<!--<li v-for="n in 50"> option {{ n }}</li>-->
-			<!--</ul>-->
+			<ul>
+				<li v-for="n in 50"> option {{ n }}</li>
+			</ul>
 		</div>
 
 	</div>
 
-	<footer></footer>
+	<!--<footer></footer>-->
 	</div>
 
 </template>
@@ -59,9 +45,11 @@
 	import MapGL from './Map/index.vue'
 	import {eventBus} from '../main';
 	import dat from 'dat.gui/build/dat.gui';
+	import Dashboard from './mbst/index.vue';
 
 	export default {
 		components: {
+			Dashboard,
 			LayerTree,
 			MapGL,
 			Editor
