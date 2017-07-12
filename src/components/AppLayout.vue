@@ -1,13 +1,11 @@
 <template>
-	<div class="app-layout flex-col debug">
-		<header>awesome site header</header>
+	<div class="app-layout flex-col nodebug contain">
+		<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>
 
 		<div class="flex-row">
 <!--
 			<div class="scroll">
-				<ul style="margin: 0 150px;">
-					<li v-for="n in 5"> option {{ n }}</li>
-				</ul>
+				<ul style="margin: 0 150px;"><li v-for="n in 5"> option {{ n }}</li></ul>
 			</div>
 -->
 			<Dashboard />
@@ -16,7 +14,7 @@
 				<div class="stretch">1</div>
 				<div class="stretch">2</div>
 				<div class="flex-col scroll-x">
-					<div class="stretch w1000">
+					<div class="stretch">
 						BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE
 						BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA
 						BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA

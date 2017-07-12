@@ -26,14 +26,4 @@
 
 <style src="./reset.css"></style>
 <style src="./components/FlexLayout.scss"></style>
-<style>
-	#app {
-		font-family: 'Avenir', Helvetica, Arial, sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		text-align: initial;
-		position: absolute;
-		height: 100%;
-		width: 100%;
-	}
-</style>
+<style src="./App.css"></style>
