@@ -1,0 +1,142 @@
+.CodeMirror span.cm-m-javascript {
+	color: #CFCDC7
+}
+
+.CodeMirror span.cm-number {
+	color: #5E93CA
+}
+
+.CodeMirror span.cm-string {
+	color: #8AC498
+}
+
+.CodeMirror span.cm-property {
+	color: #EFB658
+}
+
+.CodeMirror span.cm-atom {
+	color: #C78DC3
+}
+
+.CodeMirror {
+	position: relative;
+	background: 0 0;
+	overflow: hidden;
+	height: 500px;
+	font-family: Menlo, Bitstream Vera Sans Mono, Monaco, Consolas, monospace;
+	font-weight: 700;
+	font-size: 11px
+}
+
+@media only screen and (max-height: 900px) {
+	.CodeMirror {
+		height: 400px
+	}
+}
+
+@media only screen and (max-height: 800px) {
+	.CodeMirror {
+		height: 300px
+	}
+}
+
+@media only screen and (max-height: 700px) {
+	.CodeMirror {
+		height: 200px
+	}
+}
+
+.CodeMirror-gutters {
+	border-right: 1px solid rgba(0, 0, 0, .25);
+	background-color: #404040;
+	white-space: nowrap
+}
+
+.CodeMirror-selected {
+	background: rgba(255, 255, 255, .1)
+}
+
+.CodeMirror-focused .CodeMirror-selected {
+	background: rgba(255, 255, 255, .2)
+}
+
+.CodeMirror-cursor {
+	border-left: 1px solid #fff
+}
+
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler {
+	background: #404040
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar, .CodeMirror-vscrollbar::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+	background: 0 0
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar:hover, .CodeMirror-vscrollbar::-webkit-scrollbar:hover {
+	background: 0 0
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-track, .CodeMirror-vscrollbar::-webkit-scrollbar-track {
+	background: 0 0
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-thumb, .CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, .18);
+	border-color: transparent;
+	width: 6px;
+	border-radius: 3px
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover, .CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, .25)
+}
+
+.CodeMirror-hscrollbar::-webkit-scrollbar-track:hover, .CodeMirror-vscrollbar::-webkit-scrollbar-track:hover {
+	background: 0 0
+}
+
+.dark .CodeMirror-hscrollbar::-webkit-scrollbar, .dark .CodeMirror-vscrollbar::-webkit-scrollbar {
+	width: 6px;
+	background: 0 0
+}
+
+.dark .CodeMirror-hscrollbar::-webkit-scrollbar-thumb, .dark .CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, .18);
+	border-color: transparent
+}
+
+.dark .CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover, .dark .CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, .25)
+}
+
+.dark .CodeMirror-hscrollbar::-webkit-scrollbar:hover, .dark .CodeMirror-vscrollbar::-webkit-scrollbar:hover {
+	background: 0 0
+}
+
+.geojson-error.CodeMirror-linebackground {
+	background: rgba(243, 116, 115, .5)
+}
+
+.geojson-error.CodeMirror-gutter-background {
+	background: rgba(243, 116, 115, .2)
+}
+
+.CodeMirror-gutter.geosjon-error-tooltip {
+	width: 12px
+}
+
+.CodeMirror-gutter-elt {
+	left: 0 !important
+}
+
+.CodeMirror-gutter-elt > .geojson-error-tooltip {
+	background: rgba(243, 116, 115, .2);
+	width: 16px;
+	height: 20px
+}
+
+.CodeMirror-gutter-elt > .geojson-error-tooltip:hover {
+	background: 0 0
+}

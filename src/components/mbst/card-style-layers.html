@@ -1,0 +1,691 @@
+	<div id="card-style-layers" class="pin-left space-left20 width32 flex-column flex shadow dark fill-dark">
+		<div class="contain small clearfix fill-lighten0">
+			<div class="pad1x pad0y">
+				<div class="col12 contain" data-test="layer-name">
+					<div class="space-top0 space-bottom0 pin-left noevents"
+						 style="width: 2px; background: rgba(255, 204, 68, 0.75);"></div>
+					<div class="strong small pin-topleft pad0 icon line"></div>
+					<div class="strong space-left3">
+						<div class="contain col12 pointer">
+							<div class="small pad0y truncate space-right2 strong"><span data-test="layer-name-text">road_major</span>
+								<button data-test="trigger-layer-rename"
+										class="a pin-right pad0y icon pencil show-in-hover animate"></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
+		</div>
+		<div class="fill-lighten0 pad1x col12 micro strong">
+			<button data-test="style-tab-button"
+					class="a icon paint inline animate pad0 keyline-bottom  active keyline-white"
+					style="padding-bottom: 4px;">Style
+			</button>
+			<span class="space-left0">
+				<button data-test="data-tab-button" class="a icon tileset inline animate pad0 keyline-bottom keyline-transparent" style="padding-bottom: 4px;">Select data</button>
+			</span></div>
+		<div class="scroll-styled pin-left col12 space-top7" data-popover-repositioner="true">
+			<div class="space-bottom1">
+				<div>
+					<div>
+						<div class="flex flex-center" style="margin: 10px 10px 0px;">
+							<div class="strong quiet micro">Basics</div>
+							<div class="flex-1 space-left1 keyline-bottom keyline-lighten0"></div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-color"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Color
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-color">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.25);">
+														<div class="flex flex-center">
+															<div class="flex-1"><input type="text"
+																					   class="clean transparent stretch micro code short"
+																					   data-test="color_property_input-line-color"
+																					   value="#fff" spellcheck="false"
+																					   style="padding-top: 0px; padding-bottom: 0px; line-height: 30px;">
+															</div>
+															<div class="space-right1">
+																<div class="noevents micro swatch dot fill-canvas">
+																	<div class="micro swatch dot"
+																		 style="background-color: rgb(255, 255, 255);"></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-color"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-pattern"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">
+											Pattern
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-pattern">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.25);">
+														<div class="flex flex-center">
+															<div class="flex-1"><input type="text"
+																					   class="clean transparent stretch micro code short dim"
+																					   data-test="image_property_input-line-pattern"
+																					   value="" placeholder="none"
+																					   spellcheck="false"
+																					   style="padding-top: 0px; padding-bottom: 0px; line-height: 30px;">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-pattern"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-opacity"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">
+											Opacity
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-opacity">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.25);">
+														<div class="flex flex-center">
+															<div class="flex-1"><input type="text"
+																					   data-test="number_property_input-line-opacity"
+																					   spellcheck="false"
+																					   class="stretch clean transparent stretch micro code short dim"
+																					   value="1"></div>
+															<div class="space-right0 flex-shrink-0"
+																 style="width: 40px;"><input type="range" step="0.01"
+																							 min="0" max="1"
+																							 class="animate editor-range col12"
+																							 tabindex="-1" value="1">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-opacity"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-width"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Width
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<button class="col12 round contain button-minimal pointer">
+											<div class="fill-lighten0 round-left space-right5 contain value-in-function-nub">
+												<div class="contain">
+													<div title="0.9489422397536742 px" class="truncate micro pad0 code">
+														<div class="flex">
+															<div class="truncate">0.95</div>
+															<div class="quiet" style="padding-left: 3px;">px</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-top0 pin-topright" data-test="number-button-minimal"
+												 style="height: 20px; width: 44px; padding-left: 3px;">
+												<svg width="43" height="24" class="code">
+													<g transform="translate(4, 4)">
+														<path stroke="#787878" stroke-width="1.4" stroke-linecap="round"
+															  fill="none"
+															  d="M0,12 L0,12 L0.7045454545454546,12 L1.4090909090909092,12 L2.1136363636363638,12 L2.8181818181818183,12 L3.522727272727273,12 L4.2272727272727275,12 L4.931818181818182,12 L5.636363636363637,12 L6.340909090909092,12 L7.045454545454546,12 L7.75,12 L8.454545454545455,12 L9.15909090909091,11.980034597560035 L9.863636363636363,11.95641121481273 L10.568181818181818,11.928459651396778 L11.272727272727273,11.895386915550551 L11.977272727272728,11.85625472676822 L12.681818181818183,11.809952896583502 L13.386363636363637,11.755167832288238 L14.090909090909092,11.690345270029633 L14.795454545454547,11.613646180016264 L15.5,11.522894592854216 L16.204545454545457,11.415515866835499 L16.90909090909091,11.288463644808633 L17.613636363636363,11.138133428382428 L18.31818181818182,10.960260317544817 L19.022727272727273,10.74979801454813 L19.727272727272727,10.500775659375472 L20.431818181818183,10.206128435180112 L21.136363636363637,9.857497137938392 L21.840909090909093,9.444991024064887 L22.545454545454547,8.956907207926479 L23.25,8.37939864850357 L23.954545454545457,7.696081305909802 L24.65909090909091,6.887569322717729 L25.363636363636367,5.930925043086453 L26.06818181818182,4.79900826661755 L26.772727272727273,3.4597062751337635 L27.47727272727273,1.8750227880773025 L28.181818181818183,0 L28.886363636363637,0 L29.590909090909093,0 L30.295454545454547,0 L31,0"></path>
+														<g transform="translate(12.576494336308711, 6.81737942789681)">
+															<path d="M0.272,0l4.421,0c0.15,0,0.272,0.11,0.272,0.245v2.992c0,0.063-0.027,0.124-0.076,0.17l-2.21,2.08 c-0.107,0.101-0.286,0.101-0.393,0l-2.21-2.08C0.027,3.361,0,3.301,0,3.237l0-2.992C0,0.11,0.122,0,0.272,0z"
+																  transform="translate(-2, 0)" fill="#e4e4e4"
+																  stroke="#404040" stroke-width="0.5"></path>
+														</g>
+													</g>
+												</svg>
+											</div>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-cap"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Cap
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-cap">
+											<div class="flex-1" style="min-width: 0px;">
+												<div class="space-top0">
+													<div class="dark fill-dark">
+														<div class="text-right col12 flex pill">
+															<button data-test="enum_property_input-line-cap-butt"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon cap-butt"
+																	style="padding: 0px;"></button>
+															<button data-test="enum_property_input-line-cap-round"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon cap-round active"
+																	style="padding: 0px;"></button>
+															<button data-test="enum_property_input-line-cap-square"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon cap-square"
+																	style="padding: 0px;"></button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-cap"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-join"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Join
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-join">
+											<div class="flex-1" style="min-width: 0px;">
+												<div class="space-top0">
+													<div class="dark fill-dark">
+														<div class="text-right col12 flex pill">
+															<button data-test="enum_property_input-line-join-bevel"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon join-bevel"
+																	style="padding: 0px;"></button>
+															<button data-test="enum_property_input-line-join-round"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon join-round active"
+																	style="padding: 0px;"></button>
+															<button data-test="enum_property_input-line-join-miter"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon join-miter"
+																	style="padding: 0px;"></button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-join"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-round-limit"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Round
+											limit
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-round-limit">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.4);">
+														<div class="flex flex-center">
+															<div class="flex-1"><input type="text"
+																					   data-test="number_property_input-line-round-limit"
+																					   spellcheck="false"
+																					   class="stretch clean transparent stretch micro code short dim"
+																					   value="1.05"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-round-limit"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div class="block sentence-case micro pad0y truncate">Miter limit</div>
+									</div>
+									<div class="flex-1 contain dimmer cursor-na" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-miter-limit">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.25);">
+														<div class="flex flex-center">
+															<div class="flex-1"><input type="text"
+																					   data-test="number_property_input-line-miter-limit"
+																					   disabled="" spellcheck="false"
+																					   class="stretch clean transparent stretch micro code short dim disabled"
+																					   value="2"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-miter-limit"
+															class="button micro quiet icon step-ramp disabled"
+															tabindex="-1" style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div>
+						<div class="flex flex-center" style="margin: 10px 10px 0px;">
+							<div class="strong quiet micro">Options</div>
+							<div class="flex-1 space-left1 keyline-bottom keyline-lighten0"></div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-dasharray"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Dash
+											Array
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-dasharray">
+											<div class="flex-1" style="min-width: 0px;">
+												<div>
+													<div>
+														<div tabindex="-1">
+															<div class="contain round dark"
+																 style="background-color: rgba(0, 0, 0, 0.25);">
+																<div class="flex flex-center">
+																	<div class="flex-1">
+																		<div class="contain col12"><input type="text"
+																										  data-test="dash_array_property_input-line-dasharray-0"
+																										  spellcheck="false"
+																										  class="stretch clean transparent stretch micro code short"
+																										  value="1"
+																										  style="padding-top: 0px; padding-bottom: 0px; line-height: 30px; padding-right: 10px;">
+																			<div class="pin-topleft noevents micro quiet pad0x"
+																				 style="line-height: 30px; left: 9px;"></div>
+																		</div>
+																	</div>
+																	<div class="micro quiet flex flex-center">
+																		<div class="noevents">dash</div>
+																		<button class="a icon trash quiet"
+																				data-test="dash_array_property_input-line-dasharray-destroy-0"></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="keyline-top keyline-dark">
+														<div tabindex="-1">
+															<div class="contain round dark"
+																 style="background-color: rgba(0, 0, 0, 0.25);">
+																<div class="flex flex-center">
+																	<div class="flex-1">
+																		<div class="contain col12"><input type="text"
+																										  data-test="dash_array_property_input-line-dasharray-1"
+																										  spellcheck="false"
+																										  class="stretch clean transparent stretch micro code short"
+																										  value="0"
+																										  style="padding-top: 0px; padding-bottom: 0px; line-height: 30px; padding-right: 10px;">
+																			<div class="pin-topleft noevents micro quiet pad0x"
+																				 style="line-height: 30px; left: 9px;"></div>
+																		</div>
+																	</div>
+																	<div class="micro quiet flex flex-center">
+																		<div class="noevents">gap</div>
+																		<button class="a icon trash quiet"
+																				data-test="dash_array_property_input-line-dasharray-destroy-1"></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<button class="a strong inline quiet micro space-top0 icon plus"
+															data-test="dash_array_property_input-line-dasharray-add">
+														<!-- react-text: 513 -->Add <!-- /react-text -->
+														<!-- react-text: 514 -->dash<!-- /react-text --></button>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-dasharray"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-gap-width"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Gap
+											width
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<button class="col12 round contain button-minimal pointer">
+											<div class="fill-lighten0 round-left space-right5 contain value-in-function-nub">
+												<div class="contain">
+													<div title="0 px" class="truncate micro pad0 code">
+														<div class="flex">
+															<div class="truncate">0</div>
+															<div class="quiet" style="padding-left: 3px;">px</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-top0 pin-topright" data-test="number-button-minimal"
+												 style="height: 20px; width: 44px; padding-left: 3px;">
+												<svg width="43" height="24" class="code">
+													<g transform="translate(4, 4)">
+														<path stroke="#787878" stroke-width="1.4" stroke-linecap="round"
+															  fill="none"
+															  d="M0,12 L0,12 L0.7045454545454546,12 L1.4090909090909092,12 L2.1136363636363638,12 L2.8181818181818183,12 L3.522727272727273,12 L4.2272727272727275,12 L4.931818181818182,12 L5.636363636363637,12 L6.340909090909092,12 L7.045454545454546,12 L7.75,12 L8.454545454545455,12 L9.15909090909091,12 L9.863636363636363,12 L10.568181818181818,12 L11.272727272727273,12 L11.977272727272728,12 L12.681818181818183,12 L13.386363636363637,12 L14.090909090909092,12 L14.795454545454547,12 L15.5,12 L16.204545454545457,12 L16.90909090909091,12 L17.613636363636363,12 L18.31818181818182,12 L19.022727272727273,12 L19.727272727272727,12 L20.431818181818183,12 L21.136363636363637,12 L21.840909090909093,12 L22.545454545454547,12 L23.25,12 L23.954545454545457,12 L24.65909090909091,12 L25.363636363636367,12 L26.06818181818182,12 L26.772727272727273,12 L27.47727272727273,12 L28.181818181818183,12 L28.886363636363637,12 L29.590909090909093,12 L30.295454545454547,12 L31,12"></path>
+														<g transform="translate(12.576494336308711, 7)">
+															<path d="M0.272,0l4.421,0c0.15,0,0.272,0.11,0.272,0.245v2.992c0,0.063-0.027,0.124-0.076,0.17l-2.21,2.08 c-0.107,0.101-0.286,0.101-0.393,0l-2.21-2.08C0.027,3.361,0,3.301,0,3.237l0-2.992C0,0.11,0.122,0,0.272,0z"
+																  transform="translate(-2, 0)" fill="#e4e4e4"
+																  stroke="#404040" stroke-width="0.5"></path>
+														</g>
+													</g>
+												</svg>
+											</div>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-blur"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">Blur
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-blur">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.25);">
+														<div class="flex flex-center">
+															<div class="flex-1">
+																<div class="contain col12"><input type="text"
+																								  data-test="number_property_input-line-blur"
+																								  spellcheck="false"
+																								  class="stretch clean transparent stretch micro code short dim"
+																								  value="0"
+																								  style="padding-top: 0px; padding-bottom: 0px; line-height: 30px; padding-right: 21px;">
+																	<div class="pin-topleft noevents micro quiet pad0x"
+																		 style="line-height: 30px; left: 9px;">px
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-blur"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-offset"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">
+											Offset
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-offset">
+											<div class="flex-1" style="min-width: 0px;">
+												<div tabindex="-1">
+													<div class="contain round dark"
+														 style="background-color: rgba(0, 0, 0, 0.25);">
+														<div class="flex flex-center">
+															<div class="flex-1">
+																<div class="contain col12"><input type="text"
+																								  data-test="number_property_input-line-offset"
+																								  spellcheck="false"
+																								  class="stretch clean transparent stretch micro code short"
+																								  value="0"
+																								  style="padding-top: 0px; padding-bottom: 0px; line-height: 30px; padding-right: 21px;">
+																	<div class="pin-topleft noevents micro quiet pad0x"
+																		 style="line-height: 30px; left: 9px;">px
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-offset"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-translate"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">
+											Translate
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-translate">
+											<div class="flex-1" style="min-width: 0px;">
+												<div>
+													<div>
+														<div tabindex="-1">
+															<div class="contain round dark"
+																 style="background-color: rgba(0, 0, 0, 0.25);">
+																<div class="flex flex-center">
+																	<div class="flex-1">
+																		<div class="contain col12"><input type="text"
+																										  data-test="array_property_input-line-translate-0"
+																										  spellcheck="false"
+																										  class="stretch clean transparent stretch micro code short"
+																										  value="0"
+																										  style="padding-top: 0px; padding-bottom: 0px; line-height: 30px; padding-right: 21px;">
+																			<div class="pin-topleft noevents micro quiet pad0x"
+																				 style="line-height: 30px; left: 9px;">
+																				px
+																			</div>
+																		</div>
+																	</div>
+																	<div class="micro space-right1 quiet noevents">x
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="keyline-top keyline-dark">
+														<div tabindex="-1">
+															<div class="contain round dark"
+																 style="background-color: rgba(0, 0, 0, 0.25);">
+																<div class="flex flex-center">
+																	<div class="flex-1">
+																		<div class="contain col12"><input type="text"
+																										  data-test="array_property_input-line-translate-1"
+																										  spellcheck="false"
+																										  class="stretch clean transparent stretch micro code short"
+																										  value="0"
+																										  style="padding-top: 0px; padding-bottom: 0px; line-height: 30px; padding-right: 21px;">
+																			<div class="pin-topleft noevents micro quiet pad0x"
+																				 style="line-height: 30px; left: 9px;">
+																				px
+																			</div>
+																		</div>
+																	</div>
+																	<div class="micro space-right1 quiet noevents">y
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-translate"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="pad1x clearfix pad0y">
+								<div class="flex">
+									<div class="flex-shrink-0 width11" style="padding-right: 10px;">
+										<div data-test="property_form_label-line-translate-anchor"
+											 class="block sentence-case micro pad0y truncate force-default-cursor">
+											Translate anchor
+										</div>
+									</div>
+									<div class="flex-1 contain" style="min-width: 0px;">
+										<div class="flex" data-test="property_form-controls-line-translate-anchor">
+											<div class="flex-1" style="min-width: 0px;">
+												<div class="space-top0">
+													<div class="dark fill-dark">
+														<div class="text-right col12 flex pill">
+															<button data-test="enum_property_input-line-translate-anchor-map"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon globe active"
+																	style="padding: 0px;"></button>
+															<button data-test="enum_property_input-line-translate-anchor-viewport"
+																	tabindex="0"
+																	class="inline pad0y flex-1 button center animate quiet micro clip icon viewport"
+																	style="padding: 0px;"></button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="space-left1">
+												<div class="flex flex-center" style="height: 30px;">
+													<button data-test="property_form-advanced_trigger-line-translate-anchor"
+															class="button micro quiet icon step-ramp" tabindex="-1"
+															style="padding: 0px;"></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
