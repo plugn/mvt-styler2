@@ -1,6 +1,7 @@
 ul {
 	padding-left: 1em;
 	line-height: 1.5em;
+	font-size: .8rem;
 }
 
 ul, li, li > span {
@@ -18,7 +19,8 @@ ul, li, li > span {
 
 .tile__folder {
 	min-height: 30px;
-	background: aliceblue;
+	color: whitesmoke;
+	/*background: aliceblue;*/
 }
 
 .bold {

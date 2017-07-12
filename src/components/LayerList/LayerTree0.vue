@@ -175,8 +175,7 @@ console.log('vLayersIndex', vLayersIndex);
 
 <style scoped>
 	.tree-view {
-		padding-left: 1rem;
-		background-color: #313131;
+		margin-left: 20px;
 	}
 </style>
 <style src="dragula/dist/dragula.css"></style>

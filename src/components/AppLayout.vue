@@ -10,6 +10,12 @@
 -->
 			<Dashboard />
 
+
+			<div class="stretch fill-canvas">
+				<MapGL></MapGL>
+			</div>
+
+<!--
 			<div class="flex-col">
 				<div class="stretch">1</div>
 				<div class="stretch">2</div>
@@ -23,11 +29,15 @@
 				</div>
 			</div>
 
-		<div class="stretch scroll"> stretchy content
-			<ul>
-				<li v-for="n in 50"> option {{ n }}</li>
-			</ul>
-		</div>
+-->
+			<div class="scroll" style="width:300px;">
+				<LayerTree v-show="isActive('tree')"></LayerTree>
+<!--
+				<ul>
+					<li v-for="n in 50"> option {{ n }}</li>
+				</ul>
+-->
+			</div>
 
 	</div>
 

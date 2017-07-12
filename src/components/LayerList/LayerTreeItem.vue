@@ -1,6 +1,6 @@
 <template>
 
-	<ul v-if="isRoot" class="tile__root gu-unselectable">
+	<ul v-if="isRoot" class="tile__root gu-unselectable micro">
 		<layer-tree-item :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></layer-tree-item>
 	</ul>
 
