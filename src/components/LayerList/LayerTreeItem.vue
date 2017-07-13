@@ -16,16 +16,19 @@
 		</ul>
 	</li>
 
-	<li v-else class="tile" @click.self="tweakLayer(model.id)">{{model.id}}</li>
+	<ListItem v-else :itemLabel="model.id"></ListItem>
+	<!--<li v-else class="tile" @click.self="tweakLayer(model.id)">{{model.id}}</li>-->
 
 </template>
 
 
 <script>
 	import {eventBus} from '../../main'
+	import ListItem from  './ListItem.vue'
 
 	export default {
 		name: 'LayerTreeItem',
+		components: {ListItem},
 		props: {
 			model: [Object, Array],
 			itemIndex: [Number]
