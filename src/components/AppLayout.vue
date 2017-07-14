@@ -10,38 +10,15 @@
 -->
 			<Dashboard />
 
-
 			<div class="stretch fill-canvas">
-				<MapGL></MapGL>
+				<!--<MapGL></MapGL>-->
 			</div>
 
-<!--
-			<div class="flex-col">
-				<div class="stretch">1</div>
-				<div class="stretch">2</div>
-				<div class="flex-col scroll-x">
-					<div class="stretch">
-						BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE
-						BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA
-						BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA
-						BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA BLA BLA BLA BLE BLE FLA
-					</div>
-				</div>
-			</div>
-
--->
 			<div class="scroll-styled fill-dark dark" style="width:300px;">
 				<LayerTree v-show="isActive('tree')"></LayerTree>
-<!--
-				<ul>
-					<li v-for="n in 50"> option {{ n }}</li>
-				</ul>
--->
 			</div>
+		</div>
 
-	</div>
-
-	<!--<footer></footer>-->
 	</div>
 
 </template>

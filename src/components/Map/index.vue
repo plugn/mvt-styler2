@@ -20,9 +20,6 @@
 		},
 
 		created() {
-
-			console.log('Map created()');
-			
 			eventBus.$on('map:resize', function () {
 				console.log('@map:resize');
 				if (map) {

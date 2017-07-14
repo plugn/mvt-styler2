@@ -162,7 +162,7 @@ console.log('vLayersIndex', vLayersIndex);
 			refreshContainers () {
 				if (!drake) { return; }
 
-				let uls = utils.byQS('ul', this.$el);
+				let uls = utils.byQS('ul.draghost', this.$el);
 
 				drake.containers.splice(0);
 				utils.listFn(uls, 'forEach', function(ul) {
@@ -182,3 +182,4 @@ console.log('vLayersIndex', vLayersIndex);
 	}
 </style>
 <style src="dragula/dist/dragula.css"></style>
+<style src="./LayerList.css" scoped></style>

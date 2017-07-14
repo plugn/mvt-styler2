@@ -1,22 +1,23 @@
 <template>
 
-	<ul v-if="isRoot" class="tile__root gu-unselectable micro">
-		<layer-tree-item :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></layer-tree-item>
+	<ul v-if="isRoot" class="draghost tile__root gu-unselectable micro">
+		<LayerTreeItem :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></LayerTreeItem>
 	</ul>
 
 	<li v-else-if="isFolder" class="tile tile__folder">
 		<span class="tile__name bold" @click.self="toggle">{{ model.id }} [ {{open ? '-' : '+'}} ]</span>
-		<ul v-show="open" class="tile__list" :data-group="itemIndex">
+		<ul v-show="open" class="draghost tile__list" :data-group="itemIndex">
 			<li hidden></li>
-			<layer-tree-item
+			<LayerTreeItem
 					v-for="(listItem, listKey) in model.children"
 					:model="listItem"
 					:itemIndex="listKey"
-					:data-group="itemIndex"></layer-tree-item>
+					:data-group="itemIndex"></LayerTreeItem>
 		</ul>
 	</li>
 
-	<ListItem v-else :itemLabel="model.id"></ListItem>
+	<ListItem v-else :model="model"></ListItem>
+
 	<!--<li v-else class="tile" @click.self="tweakLayer(model.id)">{{model.id}}</li>-->
 
 </template>
@@ -36,7 +37,7 @@
 
 		data() {
 			return {
-				open: true
+				open: false
 			}
 		},
 
@@ -64,4 +65,3 @@
 
 </script>
 
-<style src="./LayerList.css" scoped></style>
