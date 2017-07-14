@@ -8,10 +8,10 @@
 				<ul style="margin: 0 150px;"><li v-for="n in 5"> option {{ n }}</li></ul>
 			</div>
 -->
-			<Dashboard />
+			<!--<Dashboard />-->
 
 			<div class="stretch fill-canvas">
-				<!--<MapGL></MapGL>-->
+				<MapGL></MapGL>
 			</div>
 
 			<div class="scroll-styled fill-dark dark" style="width:300px;">

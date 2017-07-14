@@ -7,12 +7,12 @@
 	<li v-else-if="isFolder" class="col12 clearfix contain dark">
 		<div class="animate false  draggable layer-group"><a
 				class="pin-topleft z1 icon caret-down pad00y"></a>
-			<div title="Group"
+			<div title="Group" @click="toggle"
 				 class="keyline-bottom keyline-dark2 layer-folder block pad0x pad00y pointer micro"><span
 					class="pin-topleft z1 icon inline folder" style="left: 12px; top: 2px;"></span>
 				<div class="pad0x micro" style="padding-left: 27px;">
 					<div class="contain col12 ">
-						<div class="truncate layer-folder-title"><span data-test="">{{ model.id }} {{open ? '-' : '+'}}</span><span
+						<div class="truncate layer-folder-title"><span data-test="">{{ model.id }}</span><span
 								class="quiet space-left0">{{model.children.length}} layers</span>
 							<button class="pin-topright animate icon"></button>
 						</div>
@@ -21,7 +21,7 @@
 				<span class="pin-topright z1 drag-handle animate"></span>
 			</div>
 		</div>
-		<ul>
+		<ul v-show="open">
 			<ListGroupItem
 					v-for="(listItem, listKey) in model.children"
 					:model="listItem"
@@ -30,6 +30,7 @@
 		</ul>
 	</li>
 
+<!--
 	<li v-else-if="0 && isFolder" class="tile tile__folder">
 		<span class="tile__name bold" @click.self="toggle">{{ model.id }} [ {{open ? '-' : '+'}} ]</span>
 		<ul v-show="open" class="draghost tile__list" :data-group="itemIndex">
@@ -41,6 +42,7 @@
 					:data-group="itemIndex"></LayerTreeItem>
 		</ul>
 	</li>
+-->
 
 
 
@@ -70,7 +72,7 @@
 
 		data() {
 			return {
-				open: true
+				open: false
 			}
 		},
 
