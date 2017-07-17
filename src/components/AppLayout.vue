@@ -15,7 +15,7 @@
 			</div>
 
 			<div class="scroll-styled fill-dark dark" style="width:300px;">
-				<LayerTree v-show="isActive('tree')"></LayerTree>
+				<LayerTree />
 			</div>
 		</div>
 

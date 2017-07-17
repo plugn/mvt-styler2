@@ -31,27 +31,7 @@
 		</ul>
 	</li>
 
-
-
-<!--
-	<li v-else-if="0 && isFolder" class="tile tile__folder">
-		<span class="tile__name bold" @click.self="toggle">{{ model.id }} [ {{open ? '-' : '+'}} ]</span>
-		<ul v-show="open" class="draghost" :data-group="itemIndex">
-			<li hidden></li>
-			<LayerTreeItem
-					v-for="(listItem, listKey) in model.children"
-					:model="listItem"
-					:itemIndex="listKey"
-					:data-group="itemIndex"></LayerTreeItem>
-		</ul>
-	</li>
--->
-
-
-
 	<ListItem v-else :model="model"></ListItem>
-
-	<!--<li v-else class="tile" @click.self="tweakLayer(model.id)">{{model.id}}</li>-->
 
 </template>
 
@@ -93,10 +73,6 @@
 				if (this.isFolder) {
 					this.open = !this.open;
 				}
-			},
-			tweakLayer(layerId) {
-				console.log('tweakLayer()', layerId);
-				eventBus.$emit('tweakLayer', layerId);
 			}
 		}
 	}

@@ -1,8 +1,5 @@
 <template>
 	<div class="tree-view">
-<!--
-		<button @click="pop">pop</button>
--->
 		<layer-tree-item :model="listData"></layer-tree-item>
 	</div>
 </template>
