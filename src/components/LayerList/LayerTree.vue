@@ -103,7 +103,7 @@ console.log('vLayersIndex', vLayersIndex);
 						if (!el.contains(target)) { return true; }
 					},
 					isContainer(el) {
-						return el.tagName === 'ul';
+						return el.matches('ul.draghost');
 					}
 				};
 
@@ -182,4 +182,3 @@ console.log('vLayersIndex', vLayersIndex);
 	}
 </style>
 <style src="dragula/dist/dragula.css"></style>
-<style src="./LayerList.css" scoped></style>

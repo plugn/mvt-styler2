@@ -1,10 +1,10 @@
 <template>
 
-	<ul v-if="isRoot" class="draghost tile__root gu-unselectable micro">
+	<ul v-if="isRoot" class="tile__root draghost gu-unselectable micro">
 		<LayerTreeItem :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></LayerTreeItem>
 	</ul>
 
-	<li v-else-if="isFolder" class="col12 clearfix contain dark">
+	<li v-else-if="isFolder" class="tile__folder col12 clearfix contain dark">
 		<div class="animate false  draggable layer-group"><a
 				class="pin-topleft z1 icon caret-down pad00y"></a>
 			<div title="Group" @click="toggle"
@@ -21,7 +21,7 @@
 				<span class="pin-topright z1 drag-handle animate"></span>
 			</div>
 		</div>
-		<ul v-show="open">
+		<ul v-show="open" class="draghost ">
 			<ListGroupItem
 					v-for="(listItem, listKey) in model.children"
 					:model="listItem"
@@ -33,7 +33,7 @@
 <!--
 	<li v-else-if="0 && isFolder" class="tile tile__folder">
 		<span class="tile__name bold" @click.self="toggle">{{ model.id }} [ {{open ? '-' : '+'}} ]</span>
-		<ul v-show="open" class="draghost tile__list" :data-group="itemIndex">
+		<ul v-show="open" class="draghost" :data-group="itemIndex">
 			<li hidden></li>
 			<LayerTreeItem
 					v-for="(listItem, listKey) in model.children"
