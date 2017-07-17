@@ -92,9 +92,14 @@ console.log('vLayersIndex', vLayersIndex);
 				eventBus.$emit('ace:content.set', value);
 			},
 
+
+
 			initDnD() {
 				let options = {
 					revertOnSpill: true,
+					moves: function (el, container, handle) {
+						return handle.classList.contains('drag-handle');
+					},
 					accepts(el, target, source, sibling) {
 						if (el.classList.contains('tile__folder') &&
 							!target.classList.contains('tile__root')) {
