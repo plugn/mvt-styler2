@@ -42,8 +42,8 @@
 	import _ from 'lodash'
 	import {buildTreeData, exportStyle, indexLayers} from './styleSync'
 //	import mbStyle from '../../res/standard/style.json'
-//	import mbStyle from '../../res/bright-v9.json'
-	import mbStyle from '../../res/sputnik2.json'
+	import mbStyle from '../../res/bright-v9.json'
+//	import mbStyle from '../../res/sputnik2.json'
 
 	// drag-and-drop instance
 	let drake;
