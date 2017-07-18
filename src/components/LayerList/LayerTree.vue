@@ -1,6 +1,36 @@
 <template>
-	<div class="tree-view">
-		<layer-tree-item :model="listData"></layer-tree-item>
+	<div class="pin-left width20 fill-dark2 dark space-bottom3">
+		<div class="contain col12 clearfix pad0y fill-dark">
+			<div>
+				<div data-test="rename-style" class="space-left1 strong small width10 space-right1 contain">
+					<div class="contain col12 pointer">
+						<div class="small pad0y truncate space-right2 strong"><span data-test="">StyleName</span>
+							<button class="a pin-right pad0y icon pencil show-in-hover animate"></button>
+						</div>
+					</div>
+				</div>
+				<div id="card-publish-style" class="pad00y pad1x fr">
+					<button class="round width5 pad0x pad00y micro button fill-denim">Publish</button>
+					<!--<button data-test="view-style" class="a inline space-left0 icon share pad00y align-top"></button>-->
+				</div>
+				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
+			</div>
+		</div>
+		<div class="micro clearfix col12 fill-dark"><a data-test="new-layer" class="inline micro pad0 strong "
+													   href="#"><span
+				class="icon plus"></span>New layer</a>
+			<div class="fr"><span class="space-right0"><button data-test="duplicate-layer"
+															   class="inline icon duplicate a pad0y align-top "></button></span><span
+					class="space-right0"><button class="inline icon nofolder a pad0y align-top "></button></span><span
+					class="space-right0"><button class="inline icon noeye a pad0y align-top "></button></span><span
+					class="space-right0"><button data-test="delete-layer"
+												 class="inline icon trash a pad0y align-top "></button></span></div>
+		</div>
+
+		<div class="tree-view">
+			<layer-tree-item :model="listData"></layer-tree-item>
+		</div>
+
 	</div>
 </template>
 
@@ -12,8 +42,8 @@
 	import * as utils from '../../utils'
 	import _ from 'lodash'
 	import {buildTreeData, exportStyle, indexLayers} from './styleSync'
-	import mbStyle from '../../res/standard/style.json'
-//	import mbStyle from '../../res/bright-v9.json'
+//	import mbStyle from '../../res/standard/style.json'
+	import mbStyle from '../../res/bright-v9.json'
 //	import mbStyle from '../../res/sputnik2.json'
 
 	// drag-and-drop instance
@@ -180,7 +210,7 @@ console.log('vLayersIndex', vLayersIndex);
 <style scoped>
 	.tree-view {
 		padding-left: 1rem;
-		background-color: #313131;
+		/*background-color: #313131;*/
 	}
 </style>
 <style src="dragula/dist/dragula.css"></style>

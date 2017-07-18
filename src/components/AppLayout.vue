@@ -3,20 +3,18 @@
 		<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>
 
 		<div class="flex-row">
-<!--
-			<div class="scroll">
-				<ul style="margin: 0 150px;"><li v-for="n in 5"> option {{ n }}</li></ul>
+			<div class="contain scroll-styled fill-dark2 dark" style="width:200px;">
+
+				<LayerTree />
+
 			</div>
--->
-			<!--<Dashboard />-->
 
 			<div class="stretch fill-canvas">
 				<MapGL></MapGL>
 			</div>
 
-			<div class="scroll-styled fill-dark dark" style="width:300px;">
-				<LayerTree />
-			</div>
+			<Dashboard />
+
 		</div>
 
 	</div>
