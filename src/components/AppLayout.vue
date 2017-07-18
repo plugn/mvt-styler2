@@ -3,17 +3,21 @@
 		<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>
 
 		<div class="flex-row">
-			<div class="contain scroll-styled fill-dark2 dark" style="width:200px;">
+			<div class="contain scroll-styled fill-dark2 dark" style="width:220px;">
 
 				<LayerTree />
 
 			</div>
 
+			<LayerEditor />
+
+
+
 			<div class="stretch fill-canvas">
 				<MapGL></MapGL>
 			</div>
 
-			<Dashboard />
+			<!--<Dashboard />-->
 
 		</div>
 
@@ -29,11 +33,13 @@
 	import {eventBus} from '../main';
 	import dat from 'dat.gui/build/dat.gui';
 	import Dashboard from './mbst/index.vue';
+	import LayerEditor from './LayerList/LayerEditor.vue'
 
 	export default {
 		components: {
 			Dashboard,
 			LayerTree,
+			LayerEditor,
 			MapGL,
 			Editor
 		},
@@ -65,6 +71,5 @@
 		}
 	}
 </script>
-
 
 <style src="./AppLayout.css"  scoped></style>

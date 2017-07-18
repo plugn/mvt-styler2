@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import {eventBus} from '../../main'
+
 export default {
 	name: 'ListGroupItem',
 	props: {
@@ -21,8 +23,7 @@ export default {
 	},
 	methods: {
 		tweakLayer(layerId) {
-			console.log('tweakLayer()', layerId);
-//			eventBus.$emit('tweakLayer', layerId);
+			eventBus.$emit('tweakLayer', layerId);
 		}
 	}
 

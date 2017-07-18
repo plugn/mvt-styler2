@@ -1,5 +1,5 @@
 <template>
-	<div class="pin-left width20 fill-dark2 dark space-bottom3">
+	<div class="pin-left col12 fill-dark2 dark space-bottom3">
 		<div class="contain col12 clearfix pad0y fill-dark">
 			<div>
 				<div data-test="rename-style" class="space-left1 strong small width10 space-right1 contain">
@@ -10,7 +10,7 @@
 					</div>
 				</div>
 				<div id="card-publish-style" class="pad00y pad1x fr">
-					<button class="round width5 pad0x pad00y micro button fill-denim">Publish</button>
+					<button class="round width5 pad0x pad00y micro button fill-denim">Save</button>
 					<!--<button data-test="view-style" class="a inline space-left0 icon share pad00y align-top"></button>-->
 				</div>
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
@@ -36,15 +36,14 @@
 
 <script>
 	import LayerTreeItem from './LayerTreeItem.vue'
-//	import initialListData from './listData'
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import _ from 'lodash'
 	import {buildTreeData, exportStyle, indexLayers} from './styleSync'
 //	import mbStyle from '../../res/standard/style.json'
-	import mbStyle from '../../res/bright-v9.json'
-//	import mbStyle from '../../res/sputnik2.json'
+//	import mbStyle from '../../res/bright-v9.json'
+	import mbStyle from '../../res/sputnik2.json'
 
 	// drag-and-drop instance
 	let drake;
@@ -108,15 +107,12 @@
 
 				let newStyle = exportStyle(vStyle, gStyle);
 				vLayersIndex = indexLayers(newStyle.layers);
-console.log('vLayersIndex', vLayersIndex);
+//console.log('vLayersIndex', vLayersIndex);
 				this.set_vStyle(newStyle);
-
 
 				eventBus.$emit('map:style.set', newStyle);
 
-				let value = JSON.stringify(newStyle, null, '\t');
-
-				eventBus.$emit('ace:content.set', value);
+				eventBus.$emit('ace:content.set', newStyle);
 			},
 
 
@@ -210,7 +206,6 @@ console.log('vLayersIndex', vLayersIndex);
 <style scoped>
 	.tree-view {
 		padding-left: 1rem;
-		/*background-color: #313131;*/
 	}
 </style>
 <style src="dragula/dist/dragula.css"></style>
