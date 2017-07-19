@@ -4,7 +4,6 @@ export default {
 
 	inserted (element, binding, vnode) {
 		// console.log('inserted', element, 'binding', binding);
-console.log('componentInstance ', vnode);
 		let handleRef = element.dataset.handle;
 		if (!handleRef) {
 			throw new Error('(!) handleRef: ', handleRef);
@@ -30,6 +29,10 @@ console.log('componentInstance ', vnode);
 			}
 			if (resizeHeight) {
 				element.style.height = (e.clientY - offsetTop) + 'px';
+			}
+
+			if (vnode.context && 'function' === typeof vnode.context.onAfterResize) {
+				vnode.context.onAfterResize();
 			}
 		}
 

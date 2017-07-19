@@ -69,19 +69,16 @@
 				this.codeTitle = data.name || this.codeTitle;
 			});
 			eventBus.$on('tweakLayer', (layerId) => {
-				console.log('on tweakLayer', layerId)
 				let data = LayerTree.methods.getLayer(layerId);
-				console.log('LayerTree', data);
 				eventBus.$emit('ace:content.set', data);
-
 				this.codeTitle = layerId || this.codeTitle;
 			})
 		},
 
-		mounted() {
-		},
-
 		methods: {
+			onAfterResize: _.debounce(function() {
+				eventBus.$emit('map:resize');
+			}, 500)
 		}
 	}
 

@@ -14,10 +14,6 @@
 
 			<LayerEditor />
 
-			<!--<div class="resizer"></div>-->
-
-
-
 			<div class="stretch fill-canvas">
 				<MapGL></MapGL>
 			</div>
@@ -36,9 +32,9 @@
 	import Editor from './Editor'
 	import MapGL from './Map/index.vue'
 	import {eventBus} from '../main';
-	import dat from 'dat.gui/build/dat.gui';
 	import Dashboard from './mbst/index.vue';
 	import LayerEditor from './LayerList/LayerEditor.vue'
+	import _ from 'lodash'
 
 	export default {
 		components: {
@@ -70,6 +66,9 @@
 			setSideBar(name) {
 				this.sideBar = name;
 			},
+			onAfterResize: _.debounce(function() {
+				eventBus.$emit('map:resize');
+			}, 500),
 			isActive(name) {
 				return name === this.sideBar;
 			}
