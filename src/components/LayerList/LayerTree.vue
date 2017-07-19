@@ -87,7 +87,12 @@
 			onLayerUpdated(layerId, code){
 				console.log('layer upd', layerId, code);
 				console.log('V', this.get_vStyle(), '\nG', this.get_gStyle() );
-
+                
+				let index = vLayersIndex[layerId];
+				
+				let newStyle = vStyles[vStyles.length-1];
+newStyle.layers[index]=code;
+				eventBus.$emit('map:style.set', newStyle);
 			},
 
 			getLayerIndex(layerId) {
