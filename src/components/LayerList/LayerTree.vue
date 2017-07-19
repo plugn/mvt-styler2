@@ -105,7 +105,7 @@
 
 				let newStyle = exportStyle(vStyle, gStyle);
 				vLayersIndex = indexLayers(newStyle.layers);
-//console.log('vLayersIndex', vLayersIndex);
+console.log('vLayersIndex', vLayersIndex);
 				this.set_vStyle(newStyle);
 
 				eventBus.$emit('map:style.set', newStyle);

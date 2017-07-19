@@ -3,6 +3,7 @@
 		<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>
 
 		<div class="flex-row">
+			<!-- TODO: scroll only LayerTree content -->
 			<div class="contain scroll-styled fill-dark2 dark"
 				 style="width:220px;"
 				 v-resize="{height:false}" data-handle="tree-resizer">
