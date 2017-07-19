@@ -1,23 +1,24 @@
 /**
  * Created by maxd on 27.02.17.
  */
-import _ from 'lodash'
+import {get, has, reduce} from 'lodash'
+
 
 export function buildTreeData(mvtStyle) {
 	let groupsPath = ['metadata','mapbox:groups'];
 	let groupPath = ['metadata','mapbox:group'];
 	let currentGroup = null;
 
-	return _.reduce(mvtStyle.layers, reducer, []);
+	return reduce(mvtStyle.layers, reducer, []);
 
 	function reducer(result, value, key) {
-		let thisGroup = _.get(value, groupPath, null);
+		let thisGroup = get(value, groupPath, null);
 		if (!thisGroup) {
 			result.push(value);
 			return result;
 		}
 
-		let groupId = _.get(mvtStyle, groupsPath.concat(thisGroup, 'name'), null);
+		let groupId = get(mvtStyle, groupsPath.concat(thisGroup, 'name'), null);
 		if (!groupId) { return result; }
 
 		let groupItem;
@@ -40,11 +41,11 @@ export function buildTreeData(mvtStyle) {
 
 export function exportLayers(layersTree) {
 
-	return _.reduce(layersTree, reducer, []);
+	return reduce(layersTree, reducer, []);
 
 	function reducer(result, value, key) {
-		if (_.has(value, 'children')) {
-			return _.reduce(value.children, reducer, result)
+		if (has(value, 'children')) {
+			return reduce(value.children, reducer, result)
 		}
 
 		result.push(value);
@@ -59,7 +60,7 @@ export function exportStyle(oStyle, layersTree) {
 }
 
 export function indexLayers(layers) {
-	return _.reduce(layers, reducer, {});
+	return reduce(layers, reducer, {});
 	function reducer (result, value, index) {
 		result[value.id] = index;
 		return result;

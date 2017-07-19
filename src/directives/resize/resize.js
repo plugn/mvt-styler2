@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import get from 'lodash/get';
 
 export default {
 
@@ -10,8 +10,8 @@ export default {
 		}
 
 		let resizer = vnode.context.$refs[handleRef];
-		let resizeWidth = _.get(binding, 'value.width', true) !== false;
-		let resizeHeight = _.get(binding, 'value.height', true) !== false;
+		let resizeWidth = get(binding, 'value.width', true) !== false;
+		let resizeHeight = get(binding, 'value.height', true) !== false;
 
 		resizer.addEventListener('mousedown', initResize, false);
 
@@ -30,15 +30,15 @@ export default {
 			if (resizeHeight) {
 				element.style.height = (e.clientY - offsetTop) + 'px';
 			}
-
-			if (vnode.context && 'function' === typeof vnode.context.onAfterResize) {
-				vnode.context.onAfterResize();
-			}
 		}
 
 		function stopResize(e) {
 			window.removeEventListener('mousemove', resize, false);
 			window.removeEventListener('mouseup', stopResize, false);
+
+			if (vnode.context && 'function' === typeof vnode.context.onAfterResize) {
+				vnode.context.onAfterResize();
+			}
 		}
 	}
 

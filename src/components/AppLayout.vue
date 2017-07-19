@@ -34,7 +34,6 @@
 	import {eventBus} from '../main';
 	import Dashboard from './mbst/index.vue';
 	import LayerEditor from './LayerList/LayerEditor.vue'
-	import _ from 'lodash'
 
 	export default {
 		components: {
@@ -66,9 +65,9 @@
 			setSideBar(name) {
 				this.sideBar = name;
 			},
-			onAfterResize: _.debounce(function() {
+			onAfterResize: function() {
 				eventBus.$emit('map:resize');
-			}, 500),
+			},
 			isActive(name) {
 				return name === this.sideBar;
 			}

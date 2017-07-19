@@ -42,7 +42,6 @@
 <script>
 	import {eventBus} from '../../main'
 	import * as utils from '../../utils'
-	import _ from 'lodash'
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor.vue'
 	import resize from '../../directives/resize/resize'
@@ -76,9 +75,9 @@
 		},
 
 		methods: {
-			onAfterResize: _.debounce(function() {
+			onAfterResize: function() {
 				eventBus.$emit('map:resize');
-			}, 500)
+			}
 		}
 	}
 

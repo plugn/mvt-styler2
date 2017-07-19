@@ -39,7 +39,7 @@
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
-	import _ from 'lodash'
+	import cloneDeep from 'lodash/cloneDeep';
 	import {buildTreeData, exportStyle, indexLayers} from './styleSync'
 	import mbStyle from '../../style.conf'
 
@@ -64,7 +64,7 @@
 		data() {
 			return {
 				// grouped style (Vue-model)
-				listData: buildTreeData(_.cloneDeep(mbStyle))
+				listData: buildTreeData(cloneDeep(mbStyle))
 			}
 		},
 
@@ -96,7 +96,7 @@
 				vStyles.push( newValue );
 			},
 			set_gStyle(newValue) {
-				gStyles.push( buildTreeData(_.cloneDeep( newValue )) );
+				gStyles.push( buildTreeData(cloneDeep( newValue )) );
 			},
 
 			dataWatcher() {
