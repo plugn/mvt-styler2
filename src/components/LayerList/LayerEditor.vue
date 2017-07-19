@@ -69,7 +69,7 @@
 			});
 			eventBus.$on('tweakLayer', (layerId) => {
 				let data = LayerTree.methods.getLayer(layerId);
-				eventBus.$emit('ace:content.set', data);
+				eventBus.$emit('ace:content.set', data, layerId);
 				this.codeTitle = layerId || this.codeTitle;
 			})
 		},

@@ -15,6 +15,7 @@
 	export default{
 		data() {
 			return {
+				layerId: undefined,
 				initialContent:'',
 				content:'',
 				lang:	'json',
@@ -35,6 +36,9 @@
 					if (code) {
 						this.content = value;
 						console.log('edited', code);
+						if (this.layerId) {
+							eventBus.$emit('ace:layer.updated', this.layerId, code);
+						}
 					}
 				}
 			}
@@ -43,7 +47,8 @@
 			editor
 		},
 		created() {
-			eventBus.$on('ace:content.set', (value) => {
+			eventBus.$on('ace:content.set', (value, layerId) => {
+				this.layerId = layerId;
 				this.initialContent = this.content = JSON.stringify(value, null, '\t');
 			});
 		},

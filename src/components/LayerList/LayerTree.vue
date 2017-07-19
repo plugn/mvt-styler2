@@ -72,6 +72,9 @@
 			this.set_vStyle(mbStyle);
 			this.set_gStyle(mbStyle);
 			this.$watch('listData', this.dataWatcher, {deep: true});
+			
+			
+			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 		},
 
 		mounted() {
@@ -80,6 +83,16 @@
 		},
 
 		methods: {
+
+			onLayerUpdated(layerId, code){
+				console.log('layer upd', layerId, code);
+				console.log('V', this.get_vStyle(), '\nG', this.get_gStyle() );
+
+			},
+
+			getLayerIndex(layerId) {
+				return vLayersIndex[layerId];
+			},
 			getLayer(layerId) {
 				let index = vLayersIndex[layerId];
 
