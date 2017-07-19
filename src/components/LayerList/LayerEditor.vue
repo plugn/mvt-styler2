@@ -8,7 +8,7 @@
 					<div class="strong small pin-topleft pad0 icon line"></div>
 					<div class="strong space-left3">
 						<div class="contain col12 pointer">
-							<div class="small pad0y truncate space-right2 strong"><span data-test="layer-name-text">{{layerId}}</span>
+							<div class="small pad0y truncate space-right2 strong"><span data-test="layer-name-text" >{{codeTitle}}</span>
 								<button data-test="trigger-layer-rename"
 										class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 							</div>
@@ -49,21 +49,27 @@
 
 		data() {
 			return {
-				layerId: ''
+				codeTitle: '?'
 			}
 		},
 
 		created() {
-		},
-
-		mounted() {
+			eventBus.$on('editor:set', (data) => {
+				console.log('on editor:set', data)
+				eventBus.$emit('ace:content.set', data);
+				this.codeTitle = data.name || this.codeTitle;
+			});
 			eventBus.$on('tweakLayer', (layerId) => {
 				console.log('on tweakLayer', layerId)
 				let data = LayerTree.methods.getLayer(layerId);
 				console.log('LayerTree', data);
 				eventBus.$emit('ace:content.set', data);
-				this.layerId = layerId;
+
+				this.codeTitle = layerId || this.codeTitle;
 			})
+		},
+
+		mounted() {
 		},
 
 		methods: {
