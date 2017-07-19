@@ -1,0 +1,11 @@
+.resizer {
+	background: #535353;
+	height: 100%;
+	width: 5px;
+	cursor: col-resize;
+	-webkit-flex-shrink: 0;
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+	position: relative;
+	z-index: 10;
+}

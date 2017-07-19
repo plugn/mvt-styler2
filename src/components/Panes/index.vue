@@ -28,7 +28,7 @@
 </template>
 
 <script>
-	import resize from '../../directives/resize'
+	import resize from '../../directives/resize/resize'
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor'
 	import MapGL from '../Map'
@@ -102,5 +102,5 @@
 
 </script>
 
-<style src="./Panes.scss" scoped></style>
+<!--<style src="./Panes.scss" scoped></style>-->
 <!--<style src="dat-gui-light-theme/dat-gui-light-theme.css"></style>-->

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-	import resize from '../../directives/resize'
+	import resize from '../../directives/resize/resize'
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor'
 	import MapGL from '../Map'

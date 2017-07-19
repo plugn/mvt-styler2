@@ -3,7 +3,8 @@ import _ from 'lodash';
 export default {
 
 	inserted (element, binding, vnode) {
-		// console.log('inserted', element, 'binding', binding, refs.resizer);
+		// console.log('inserted', element, 'binding', binding);
+console.log('componentInstance ', vnode);
 		let handleRef = element.dataset.handle;
 		if (!handleRef) {
 			throw new Error('(!) handleRef: ', handleRef);
@@ -12,11 +13,6 @@ export default {
 		let resizer = vnode.context.$refs[handleRef];
 		let resizeWidth = _.get(binding, 'value.width', true) !== false;
 		let resizeHeight = _.get(binding, 'value.height', true) !== false;
-		let resizeDirection = '' + (resizeHeight ? 's' : '') + (resizeWidth ? 'e' : '');
-
-		if (resizeDirection) {
-			resizer.style.cursor = resizeDirection + '-resize';
-		}
 
 		resizer.addEventListener('mousedown', initResize, false);
 
@@ -26,11 +22,14 @@ export default {
 		}
 
 		function resize(e) {
+			let {offsetLeft, offsetTop} = element;
+			// console.log('e.client', e.clientX+','+e.clientY, '; left, top:', offsetLeft+', '+offsetTop);
+
 			if (resizeWidth) {
-				element.style.width = (e.clientX - element.offsetLeft) + 'px';
+				element.style.width = (e.clientX - offsetLeft) + 'px';
 			}
 			if (resizeHeight) {
-				element.style.height = (e.clientY - element.offsetTop) + 'px';
+				element.style.height = (e.clientY - offsetTop) + 'px';
 			}
 		}
 

@@ -1,20 +1,16 @@
 <template>
 	<div id="app">
 		<AppLayout />
-		<!--<Panes />-->
-
 	</div>
 </template>
 
 <script>
-	import Panes from './components/Panes/index.vue'
 	import AppLayout from './components/AppLayout.vue'
 
 	export default {
 		name: 'app',
 		components: {
-			AppLayout,
-			Panes
+			AppLayout
 		},
 		data() {
 			return {}
@@ -24,5 +20,5 @@
 </script>
 
 <style src="./reset.css"></style>
-<style src="./components/FlexLayout.scss"></style>
+<style src="./FlexLayout.scss"></style>
 <style src="./App.css"></style>
