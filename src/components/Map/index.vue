@@ -22,22 +22,28 @@
 		},
 
 		created() {
+			// TODO: refactor to utility function
 			eventBus.$on('map:layer.update', function(layerId, values) {
-				console.log('update', layerId, 'values', values);
-				let caught = 0;
+//console.log('update', layerId, 'values', values);
+
+
 				forOwn(values, function (value, name) {
-					console.log('forOwn', name, '=>', value);
-
-					try {
-						map.setLayoutProperty(layerId, name, value);
-					} catch (e) {
-						console.log('(!) EEEE', e);
-
-						caught++;
+//console.log('forOwn', name, '=>', value);
+					if ('filter' === name) {
+						map.setFilter(layerId, value);
 					}
+					else if ('layout' === name) {
+						forOwn(value, function(v, k){
+							map.setLayoutProperty(layerId, k, v);
+						});
+					} else if ('paint' === name) {
+						forOwn(value, function(v, k){
+							map.setPaintProperty(layerId, k, v);
+						});
+					}
+
 				});
-				console.log('caught', caught);
-				
+
 			});
 			eventBus.$on('map:resize', function () {
 				console.log('@map:resize');

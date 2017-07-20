@@ -54,7 +54,7 @@
 
 		mounted() {
 			const vm = this;
-			vm.$on('editor-update', debounce(vm.onUpdate, 1500));
+			vm.$on('editor-update', debounce(vm.onUpdate, 2500, {trailing: true}));
 		}
 
 	}

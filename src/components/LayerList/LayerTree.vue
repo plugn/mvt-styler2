@@ -95,15 +95,14 @@
 				layerNewStyle = {...layerNewStyle, id: layerId};
 
 				let diffObj = utils.objectDiff(layerNewStyle, layerLastStyle);
-
-				console.log('diffObj', diffObj.update);
+// console.log('diffObj', diffObj.update);
 
 				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
 				newStyle.layers[index] = layerNewStyle;
 				this.set_vStyle(newStyle);
 
-//				eventBus.$emit('map:style.set', newStyle);
+				// eventBus.$emit('map:style.set', newStyle);
 			},
 
 			getLayer(layerId) {
