@@ -16,13 +16,13 @@
 		data() {
 			return {
 				layerId: undefined,
-				initialContent:'',
+				validContent:'',
 				content:'',
 				lang:	'json',
 				theme:	'idle_fingers',
 				onUpdate: function(value) {
 					// new session case
-					if (value === this.content) {
+					if (value === this.validContent) {
 //						console.log('just new session');
 						return;
 					}
@@ -34,8 +34,7 @@
 						console.warn(' (!) JSON crash', e);
 					}
 					if (code) {
-						this.content = value;
-						console.log('edited', code);
+						this.validContent = value;
 						if (this.layerId) {
 							eventBus.$emit('ace:layer.updated', this.layerId, code);
 						}
@@ -49,13 +48,13 @@
 		created() {
 			eventBus.$on('ace:content.set', (value, layerId) => {
 				this.layerId = layerId;
-				this.initialContent = this.content = JSON.stringify(value, null, '\t');
+				this.validContent = this.content = JSON.stringify(value, null, '\t');
 			});
 		},
 
 		mounted() {
 			const vm = this;
-			vm.$on('editor-update', debounce(vm.onUpdate, 1200));
+			vm.$on('editor-update', debounce(vm.onUpdate, 1500));
 		}
 
 	}
