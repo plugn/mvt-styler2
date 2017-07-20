@@ -91,16 +91,12 @@
 				let index = vLayersIndex[layerId];
 				
 				let newStyle = vStyles[vStyles.length-1];
-newStyle.layers[index]=code;
+				newStyle.layers[index]=code;
 				eventBus.$emit('map:style.set', newStyle);
 			},
 
-			getLayerIndex(layerId) {
-				return vLayersIndex[layerId];
-			},
 			getLayer(layerId) {
 				let index = vLayersIndex[layerId];
-
 				return this.get_vStyle().layers[index];
 			},
 
