@@ -1,3 +1,5 @@
+import { keys, difference, pickBy, isEqual } from 'lodash'
+
 /**
  * moves element from fromIndex and place it at toIndex in given list
  * @param list {Array}
@@ -12,12 +14,32 @@ export function moveArrayItem(list, fromIndex, toIndex) {
 export function byQS (qs, ctx) { return (ctx || document).querySelectorAll(qs); }
 
 export function listFn (nodeList, fn, arg) {
-	return Array.prototype[fn].call(nodeList, arg)
+	return Array.prototype[fn].call(nodeList, arg);
 }
 
 export function getList(listEl) {
-	if (!listEl || !listEl.childNodes) { return }
-	return listFn(listEl.childNodes, 'filter', function(node){
-		return node.tagName && !node.hidden
+	if (!listEl || !listEl.childNodes) { return; }
+	return listFn(listEl.childNodes, 'filter', function(node) {
+		return node.tagName && !node.hidden;
 	});
 }
+
+export function objectDiff(curr, last) {
+	let keysLast = keys(last),
+		keysCurr = keys(curr),
+		drop = difference(keysLast, keysCurr),
+		append = difference(keysCurr, keysLast);
+
+	let update = pickBy(curr, function(v, k) {
+		// console.log('k,v,last[k] = ' + k + ',' + v + ',' + last[k]);
+		return !isEqual(last[k], v);
+		// return last[k] !== v;
+	});
+
+	return {
+		drop,
+		append,
+		update
+	};
+}
+
