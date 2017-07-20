@@ -84,24 +84,25 @@
 
 		methods: {
 
-			onLayerUpdated(layerId, layerNewStyle){
+			onLayerUpdated(layerId, layerNewStyle) {
 				console.log('layer upd', layerId, layerNewStyle);
-				console.log('V', this.get_vStyle(), '\nG', this.get_gStyle() );
-                
+
 				let newStyle = vStyles[vStyles.length-1];
-				let layerLastStyle = newStyle.layers[ vLayersIndex[layerId] ];
+				let index = vLayersIndex[layerId];
+				let layerLastStyle = newStyle.layers[index];
+
+				// Avoid changing layerId by user
+				layerNewStyle = {...layerNewStyle, id: layerId};
 
 				let diffObj = utils.objectDiff(layerNewStyle, layerLastStyle);
-				console.log('curr', layerNewStyle, '\n last', layerLastStyle);
 
 				console.log('diffObj', diffObj.update);
 
+				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
+				newStyle.layers[index] = layerNewStyle;
+				this.set_vStyle(newStyle);
 
-
-
-
-//				newStyle.layers[index] = layerNewStyle;
 //				eventBus.$emit('map:style.set', newStyle);
 			},
 

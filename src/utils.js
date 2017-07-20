@@ -1,4 +1,4 @@
-import { keys, difference, pickBy, isEqual } from 'lodash'
+import { keys, difference, pick, pickBy, isEqual } from 'lodash'
 
 /**
  * moves element from fromIndex and place it at toIndex in given list
@@ -27,18 +27,15 @@ export function getList(listEl) {
 export function objectDiff(curr, last) {
 	let keysLast = keys(last),
 		keysCurr = keys(curr),
-		drop = difference(keysLast, keysCurr),
-		append = difference(keysCurr, keysLast);
+		dropKeys = difference(keysLast, keysCurr);
 
 	let update = pickBy(curr, function(v, k) {
 		// console.log('k,v,last[k] = ' + k + ',' + v + ',' + last[k]);
 		return !isEqual(last[k], v);
-		// return last[k] !== v;
 	});
 
 	return {
-		drop,
-		append,
+		dropKeys,
 		update
 	};
 }

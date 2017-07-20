@@ -3,7 +3,9 @@
 </template>
 
 <script>
+
 	import {eventBus} from '../../main';
+	import forOwn from 'lodash/forOwn'
 
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
@@ -20,6 +22,23 @@
 		},
 
 		created() {
+			eventBus.$on('map:layer.update', function(layerId, values) {
+				console.log('update', layerId, 'values', values);
+				let caught = 0;
+				forOwn(values, function (value, name) {
+					console.log('forOwn', name, '=>', value);
+
+					try {
+						map.setLayoutProperty(layerId, name, value);
+					} catch (e) {
+						console.log('(!) EEEE', e);
+
+						caught++;
+					}
+				});
+				console.log('caught', caught);
+				
+			});
 			eventBus.$on('map:resize', function () {
 				console.log('@map:resize');
 				if (map) {
