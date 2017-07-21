@@ -1,6 +1,7 @@
 <template>
+	<!--<div id="layers" class="col12 scroll-styled space-top7 pin-left pad0y keyline-bottom">-->
 
-	<ul v-if="isRoot" class="tile__root draghost gu-unselectable micro">
+	<ul v-if="isRoot" class="tile__root scroll-styled draghost gu-unselectable micro" style="height: 100%;">
 		<LayerTreeItem :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></LayerTreeItem>
 	</ul>
 
@@ -11,7 +12,7 @@
 			<div title="Group"
 				 class="keyline-bottom keyline-dark2 layer-folder block pad0x pad00y pointer micro"><span
 					class="pin-topleft z1 icon inline folder" style="left: 12px; top: 2px;"></span>
-				<div class="pad0x micro" style="padding-left: 27px;">
+				<div @click="toggle" class="pad0x micro" style="padding-left: 27px;">
 					<div class="contain col12 ">
 						<div class="truncate layer-folder-title"><span data-test="">{{ model.id }}</span><span
 								class="quiet space-left0">{{model.children.length}} layers</span>
@@ -79,3 +80,8 @@
 
 </script>
 
+<style scoped>
+	.tile__root {
+		padding-left: .5rem;
+	}
+</style>

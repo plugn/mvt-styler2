@@ -27,9 +27,7 @@
 												 class="inline icon trash a pad0y align-top "></button></span></div>
 		</div>
 
-		<div class="tree-view">
-			<layer-tree-item :model="listData"></layer-tree-item>
-		</div>
+		<LayerTreeItem :model="listData"></LayerTreeItem>
 
 	</div>
 </template>
@@ -148,7 +146,7 @@
 						if (!el.contains(target)) { return true; }
 					},
 					isContainer(el) {
-						return el.matches('ul.draghost');
+						return el.matches('.draghost');
 					}
 				};
 
@@ -207,7 +205,7 @@
 			refreshContainers () {
 				if (!drake) { return; }
 
-				let uls = utils.byQS('ul.draghost', this.$el);
+				let uls = utils.byQS('.draghost', this.$el);
 
 				drake.containers.splice(0);
 				utils.listFn(uls, 'forEach', function(ul) {
@@ -220,9 +218,4 @@
 
 </script>
 
-<style scoped>
-	.tree-view {
-		padding-left: 1rem;
-	}
-</style>
 <style src="dragula/dist/dragula.css"></style>
