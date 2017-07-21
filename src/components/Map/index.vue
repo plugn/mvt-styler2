@@ -5,7 +5,7 @@
 <script>
 
 	import {eventBus} from '../../main';
-	import forOwn from 'lodash/forOwn'
+	import {updateMapLayer, prettifyMapLayer} from '../LayerList/styleSync'
 
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
@@ -24,33 +24,19 @@
 		created() {
 			// TODO: refactor to utility function
 			eventBus.$on('map:layer.update', function(layerId, values) {
-//console.log('update', layerId, 'values', values);
-
-
-				forOwn(values, function (value, name) {
-//console.log('forOwn', name, '=>', value);
-					if ('filter' === name) {
-						map.setFilter(layerId, value);
-					}
-					else if ('layout' === name) {
-						forOwn(value, function(v, k){
-							map.setLayoutProperty(layerId, k, v);
-						});
-					} else if ('paint' === name) {
-						forOwn(value, function(v, k){
-							map.setPaintProperty(layerId, k, v);
-						});
-					}
-
-				});
-
+				let unhandledParams = updateMapLayer(layerId, values, map);
+console.log('not applied with update:', unhandledParams);
+				let layerCode = prettifyMapLayer(map.getLayer(layerId));
+console.log('map.getLayer('+layerId+') :', layerCode);
 			});
+
 			eventBus.$on('map:resize', function () {
 				console.log('@map:resize');
 				if (map) {
 					map.resize();
 				}
 			});
+
 			eventBus.$on('map:style.set', function (value) {
 				console.log('$on map:style.set');
 				if (map) {

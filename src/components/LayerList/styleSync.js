@@ -1,7 +1,8 @@
 /**
  * Created by maxd on 27.02.17.
+ * style utilities
  */
-import {get, has, reduce} from 'lodash'
+import {get, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase } from 'lodash'
 
 
 export function buildTreeData(mvtStyle) {
@@ -65,4 +66,66 @@ export function indexLayers(layers) {
 		result[value.id] = index;
 		return result;
 	}
+}
+
+export function objectDiff(curr, last) {
+	let keysLast = keys(last),
+		keysCurr = keys(curr),
+		dropKeys = difference(keysLast, keysCurr);
+
+	let update = pickBy(curr, function(v, k) {
+		// console.log('k,v,last[k] = ' + k + ',' + v + ',' + last[k]);
+		return !isEqual(last[k], v);
+	});
+
+	return {
+		dropKeys,
+		update
+	};
+}
+
+
+export function updateMapLayer(layerId, params, map) {
+
+	if (has(params, 'minzoom') && has(params, 'maxzoom')) {
+		map.setLayerZoomRange(layerId, params.minzoom, params.maxzoom);
+	}
+	let procParams = omit(params, ['minzoom', 'maxzoom','id', 'metadata']);
+
+	let unhandledParams = {};
+
+	forOwn(procParams, function (value, name) {
+
+//console.log('forOwn', name, '=>', value);
+		if ('filter' === name) {
+			map.setFilter(layerId, value);
+		}
+		else if ('layout' === name) {
+			forOwn(value, function(v, k){
+				map.setLayoutProperty(layerId, k, v);
+			});
+		} else if ('paint' === name) {
+			forOwn(value, function(v, k){
+				map.setPaintProperty(layerId, k, v);
+			});
+		} else {
+			unhandledParams[name] = value;
+		}
+
+
+	});
+
+	return unhandledParams;
+}
+
+export function prettifyMapLayer(obj) {
+	return _.chain(obj)
+		.pickBy(function(v, k) {
+			let typeOfValue = typeof v;
+			return '_' !== k.charAt(0) && 'undefined' !== typeOfValue  && 'function' !== typeOfValue;
+		})
+		.transform(function(res, v, k){
+			return res[kebabCase(k)] = v;
+		}, {})
+		.value();
 }

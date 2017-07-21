@@ -1,5 +1,3 @@
-import { keys, difference, pick, pickBy, isEqual } from 'lodash'
-
 /**
  * moves element from fromIndex and place it at toIndex in given list
  * @param list {Array}
@@ -23,20 +21,3 @@ export function getList(listEl) {
 		return node.tagName && !node.hidden;
 	});
 }
-
-export function objectDiff(curr, last) {
-	let keysLast = keys(last),
-		keysCurr = keys(curr),
-		dropKeys = difference(keysLast, keysCurr);
-
-	let update = pickBy(curr, function(v, k) {
-		// console.log('k,v,last[k] = ' + k + ',' + v + ',' + last[k]);
-		return !isEqual(last[k], v);
-	});
-
-	return {
-		dropKeys,
-		update
-	};
-}
-

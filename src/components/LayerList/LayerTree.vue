@@ -40,7 +40,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import cloneDeep from 'lodash/cloneDeep';
-	import {buildTreeData, exportStyle, indexLayers} from './styleSync'
+	import {buildTreeData, exportStyle, indexLayers, objectDiff} from './styleSync'
 	import mbStyle from '../../style.conf'
 
 	// drag-and-drop instance
@@ -72,8 +72,7 @@
 			this.set_vStyle(mbStyle);
 			this.set_gStyle(mbStyle);
 			this.$watch('listData', this.dataWatcher, {deep: true});
-			
-			
+
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 		},
 
@@ -94,9 +93,7 @@
 				// Avoid changing layerId by user
 				layerNewStyle = {...layerNewStyle, id: layerId};
 
-				let diffObj = utils.objectDiff(layerNewStyle, layerLastStyle);
-// console.log('diffObj', diffObj.update);
-
+				let diffObj = objectDiff(layerNewStyle, layerLastStyle);
 				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
 				newStyle.layers[index] = layerNewStyle;
