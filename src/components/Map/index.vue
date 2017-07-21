@@ -24,10 +24,13 @@
 		created() {
 			// TODO: refactor to utility function
 			eventBus.$on('map:layer.update', function(layerId, values) {
+console.log('map:layer.update', layerId, values);
+
 				let unhandledParams = updateMapLayer(layerId, values, map);
 console.log('not applied with update:', unhandledParams);
-				let layerCode = prettifyMapLayer(map.getLayer(layerId));
-console.log('map.getLayer('+layerId+') :', layerCode);
+
+//				let layerCode = prettifyMapLayer(map.getLayer(layerId));
+//console.log('map.getLayer('+layerId+') :', layerCode);
 			});
 
 			eventBus.$on('map:resize', function () {
