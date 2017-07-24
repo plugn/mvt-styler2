@@ -5,7 +5,6 @@
 <script>
 	import editor from 'vue2-ace'
 	import 'brace/mode/json'
-	import 'brace/theme/chrome'
 	import 'brace/theme/idle_fingers'
 	import debounce from 'lodash/debounce'
 
