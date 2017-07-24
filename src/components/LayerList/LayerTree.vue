@@ -11,7 +11,7 @@
 				</div>
 				<div id="card-publish-style" class="pad00y pad1x fr">
 					<button class="round width5 pad0x pad00y micro button fill-denim">Save</button>
-					<!--<button data-test="view-style" class="a inline space-left0 icon share pad00y align-top"></button>-->
+					<!--<button class="a inline space-left0 icon share pad00y align-top"></button>-->
 				</div>
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
 			</div>
