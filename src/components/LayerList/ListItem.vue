@@ -24,6 +24,7 @@ export default {
 	},
 	methods: {
 		tweakLayer(layerId) {
+			this.$store.commit('activeLayerId', layerId);
 			eventBus.$emit('tweakLayer', layerId);
 		}
 	}

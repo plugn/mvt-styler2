@@ -39,7 +39,7 @@
 	import {eventBus} from '../../main'
 	import ListItem from  './ListItem.vue'
 	import ListGroupItem from './ListGroupItem.vue'
-
+	import {mapGetters} from 'vuex';
 
 	export default {
 		name: 'LayerTreeItem',
@@ -59,16 +59,25 @@
 		},
 
 		computed: {
-			isFolder: function () {
+
+			...mapGetters({
+				activeLayerId: 'activeLayerId'
+			}),
+
+			isActive: function() {
+				return this.model.id === this.activeLayerId
+			},
+
+			isFolder: function() {
 				return this.model.children &&
 					this.model.children.length
 			},
-			isRoot: function () {
+			isRoot: function() {
 				return Array.isArray(this.model);
 			}
 		},
 		methods: {
-			toggle: function () {
+			toggle() {
 				if (this.isFolder) {
 					this.open = !this.open;
 				}
