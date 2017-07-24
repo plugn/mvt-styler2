@@ -44,11 +44,12 @@
 	// drag-and-drop instance
 	let drake;
 
-	// collection of plain virtual styles RAW
-	let vStyles = [];
+	//  {object} GL Style
+	let vStyle = null;
 
-	// grouped virtual style RAW
-	let gStyles = [];
+	// {array} GL Style grouped Layers
+	// array of regular items {object} and/or groups {id:groupId, children: [{object}, ...]}
+	let gLayers = null;
 
 	// layerId : arrayIndex
  	let vLayersIndex = {};
@@ -84,7 +85,7 @@
 			onLayerUpdated(layerId, layerNewStyle) {
 				console.log('layer upd', layerId, layerNewStyle);
 
-				let newStyle = vStyles[vStyles.length-1];
+				let newStyle = this.get_vStyle();
 				let index = vLayersIndex[layerId];
 				let layerLastStyle = newStyle.layers[index];
 
@@ -106,16 +107,16 @@
 			},
 
 			get_vStyle() {
-				return vStyles[vStyles.length-1];
-			},
-			get_gStyle() {
-				return gStyles[gStyles.length-1];
+				return vStyle;
 			},
 			set_vStyle(newValue) {
-				vStyles.push( newValue );
+				vStyle = newValue;
+			},
+			get_gStyle() {
+				return gLayers;
 			},
 			set_gStyle(newValue) {
-				gStyles.push( buildTreeData(cloneDeep( newValue )) );
+				gLayers = buildTreeData(cloneDeep( newValue ));
 			},
 
 			dataWatcher() {
