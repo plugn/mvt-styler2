@@ -3,9 +3,8 @@
 		<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>
 
 		<div class="flex-row">
-			<!-- TODO: scroll only LayerTree content -->
 			<div class="contain fill-dark2 dark"
-				 style="width:220px;"
+				 style="width:220px; min-width: 190px;"
 				 v-resize="{height:false}" data-handle="tree-resizer">
 
 				<LayerTree />

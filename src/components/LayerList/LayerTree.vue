@@ -1,5 +1,5 @@
 <template>
-	<div class="pin-left col12 fill-dark2 dark space-bottom3">
+	<div class="pin-left col12 fill-dark2 dark xpace-bottom3">
 		<div class="contain col12 clearfix pad0y fill-dark">
 			<div>
 				<div data-test="rename-style" class="space-left1 strong small width10 space-right1 contain">

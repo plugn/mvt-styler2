@@ -1,7 +1,5 @@
 <template>
-	<!--<div id="layers" class="col12 scroll-styled space-top7 pin-left pad0y keyline-bottom">-->
-
-	<ul v-if="isRoot" class="tile__root scroll-styled draghost gu-unselectable micro" style="height: 100%;">
+	<ul v-if="isRoot" class="tile__root pin-bottom pin-top space-top7 scroll-styled draghost gu-unselectable micro">
 		<LayerTreeItem :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></LayerTreeItem>
 	</ul>
 
