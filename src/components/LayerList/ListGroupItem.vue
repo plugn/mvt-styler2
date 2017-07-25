@@ -16,29 +16,10 @@
 import {eventBus} from '../../main'
 import * as types from '../../store/mutation-types'
 import {mapState, mapMutations} from 'vuex'
+import ListItem from './ListItem.vue'
 
 export default {
-	name: 'ListGroupItem',
-	props: {
-		model: [Object]
-	},
-	computed: {
-		...mapState([
-			'currentLayerId'
-		]),
-		isCurrent() {
-			return this.model.id === this.currentLayerId
-		},
-	},
-	methods: {
-		...mapMutations([
-			types.SET_CURRENT_LAYER,
-		]),
-
-		tweakLayer(layerId) {
-			this[types.SET_CURRENT_LAYER](layerId);
-			eventBus.$emit('tweakLayer', layerId);
-		}
-	}
+	name:		'ListGroupItem',
+	'extends':	ListItem
 }
 </script>
