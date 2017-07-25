@@ -6,7 +6,7 @@
 			 style="margin-left: 20px; width: 2px; background: rgba(255, 153, 119, 0.75);"></div>
 		<button title="admin_country" data-test="layer_item-admin_country"
 				class="a col12 layer-title animate pad00y pad00x block quiet truncate micro"><span
-				class="line icon inline" ></span>{{ model.id }} {{ isActive ? ' * ' : ''}}</button>
+				class="line icon inline" ></span>{{ model.id }} {{ isCurrent ? ' * ' : ''}}</button>
 		<div class="pin-right drag-handle animate"></div>
 	</div>
 
@@ -14,29 +14,32 @@
 
 <script>
 import {eventBus} from '../../main'
-import {mapGetters} from 'vuex'
+import * as types from '../../store/mutation-types'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
 	name: 'ListGroupItem',
 	props: {
 		model: [Object],
-		// isActive: [Boolean, Number],
 		itemIndex: [Number]
 	},
 	computed: {
-		...mapGetters({
-			activeLayerId: 'activeLayerId'
-		}),
+		...mapState([
+			'currentLayerId',
+		]),
 
-		isActive: function() {
-			return this.model.id === this.activeLayerId
+		isCurrent() {
+			return this.model.id === this.currentLayerId
 		},
 
 	},
 	methods: {
+		...mapMutations([
+			types.SET_CURRENT_LAYER,
+		]),
 
 		tweakLayer(layerId) {
-			this.$store.commit('activeLayerId', layerId);
+			this[types.SET_CURRENT_LAYER](layerId);
 			eventBus.$emit('tweakLayer', layerId);
 		}
 	}

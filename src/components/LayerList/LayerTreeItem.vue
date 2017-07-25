@@ -39,7 +39,6 @@
 	import {eventBus} from '../../main'
 	import ListItem from  './ListItem.vue'
 	import ListGroupItem from './ListGroupItem.vue'
-	import {mapGetters} from 'vuex';
 
 	export default {
 		name: 'LayerTreeItem',
@@ -59,15 +58,6 @@
 		},
 
 		computed: {
-
-			...mapGetters({
-				activeLayerId: 'activeLayerId'
-			}),
-
-			isActive: function() {
-				return this.model.id === this.activeLayerId
-			},
-
 			isFolder: function() {
 				return this.model.children &&
 					this.model.children.length
