@@ -128,7 +128,6 @@
 				this.set_vStyle(newStyle);
 
 				eventBus.$emit('map:style.set', newStyle);
-				eventBus.$emit('editor:set', newStyle);
 			},
 
 
@@ -209,7 +208,7 @@
 				let uls = utils.byQS('.draghost', this.$el);
 
 				drake.containers.splice(0);
-				utils.listFn(uls, 'forEach', function(ul) {
+				Array.from(uls).forEach(function(ul) {
 					drake.containers.push(ul)
 				});
 			}

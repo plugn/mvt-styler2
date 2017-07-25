@@ -11,13 +11,10 @@ export function moveArrayItem(list, fromIndex, toIndex) {
 }
 export function byQS (qs, ctx) { return (ctx || document).querySelectorAll(qs); }
 
-export function listFn (nodeList, fn, arg) {
-	return Array.prototype[fn].call(nodeList, arg);
-}
-
 export function getList(listEl) {
 	if (!listEl || !listEl.childNodes) { return; }
-	return listFn(listEl.childNodes, 'filter', function(node) {
+
+	return Array.from(listEl.childNodes).filter(function(node) {
 		return node.tagName && !node.hidden;
 	});
 }

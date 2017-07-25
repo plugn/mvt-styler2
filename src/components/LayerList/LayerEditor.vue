@@ -45,6 +45,7 @@
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor.vue'
 	import resize from '../../directives/resize/resize'
+	import {mapState} from 'vuex'
 
 	export default {
 		name: 'LayerEditor',
@@ -60,6 +61,11 @@
 				codeTitle: '?'
 			}
 		},
+		computed: {
+			...mapState([
+				'currentLayerId'
+			])
+		},
 
 		created() {
 			eventBus.$on('editor:set', (data) => {
@@ -67,11 +73,14 @@
 				eventBus.$emit('ace:content.set', data);
 				this.codeTitle = data.name || this.codeTitle;
 			});
-			eventBus.$on('tweakLayer', (layerId) => {
+		},
+		watch: {
+			currentLayerId: function(layerId) {
+//				console.log('LayerEditor watch', layerId);
 				let data = LayerTree.methods.getLayer(layerId);
 				eventBus.$emit('ace:content.set', data, layerId);
 				this.codeTitle = layerId || this.codeTitle;
-			})
+			}
 		},
 
 		methods: {

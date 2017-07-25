@@ -1,6 +1,6 @@
 
 <template>
-	<div @click="tweakLayer(model.id)" class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark fill-dark2  "
+	<div @click="setCurrentLayer(model.id)" class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark fill-dark2  "
 		 style="padding-left: 20px;">
 		<div class="space-top0 space-bottom0 pin-left noevents"
 			 style="margin-left: 20px; width: 2px; background: rgba(255, 153, 119, 0.75);"></div>

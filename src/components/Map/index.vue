@@ -41,9 +41,8 @@ console.log('not applied with update:', unhandledParams);
 			});
 
 			eventBus.$on('map:style.set', function (value) {
-				console.log('$on map:style.set');
+//				console.log('$on map:style.set');
 				if (map) {
-				    console.log('map.getStyle()');
 					map.setStyle(value);
 				}
 				else {

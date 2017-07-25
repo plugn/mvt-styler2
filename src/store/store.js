@@ -8,12 +8,11 @@ export const store = new Vuex.Store({
 	state: {
 		vStyle: {},
 		gLayers: [],
-		currentLayerId: 5
+		currentLayerId: null
 	},
 	mutations: {
 		[types.SET_CURRENT_LAYER](state, payload) {
 			state.currentLayerId = payload;
-			console.log('currentLayerId', payload);
 		}
 	}
 });

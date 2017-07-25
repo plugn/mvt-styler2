@@ -12,7 +12,7 @@
 			</div>
 			<div class="resizer" ref="tree-resizer"></div>
 
-			<LayerEditor />
+			<LayerEditor v-show="currentLayerId" />
 
 			<div class="stretch fill-canvas">
 				<MapGL></MapGL>
@@ -34,6 +34,7 @@
 	import {eventBus} from '../main';
 	import Dashboard from './mbst/index.vue';
 	import LayerEditor from './LayerList/LayerEditor.vue'
+	import {mapState} from 'vuex'
 
 	export default {
 		components: {
@@ -53,7 +54,11 @@
 			}
 		},
 
-		// mounted() {},
+		computed: {
+			...mapState([
+				'currentLayerId'
+			])
+		},
 
 		methods: {
 			onResize: function () {
