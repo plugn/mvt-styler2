@@ -20,18 +20,15 @@ import {mapState, mapMutations} from 'vuex'
 export default {
 	name: 'ListGroupItem',
 	props: {
-		model: [Object],
-		itemIndex: [Number]
+		model: [Object]
 	},
 	computed: {
 		...mapState([
-			'currentLayerId',
+			'currentLayerId'
 		]),
-
 		isCurrent() {
 			return this.model.id === this.currentLayerId
 		},
-
 	},
 	methods: {
 		...mapMutations([
@@ -43,6 +40,5 @@ export default {
 			eventBus.$emit('tweakLayer', layerId);
 		}
 	}
-
 }
 </script>

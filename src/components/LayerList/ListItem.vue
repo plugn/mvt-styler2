@@ -22,7 +22,7 @@ import {mapState, mapMutations} from 'vuex'
 export default {
 	name: 'ListItem',
 	props: {
-		model: [Object],
+		model: [Object]
 	},
 	computed: {
 		...mapState([
