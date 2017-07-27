@@ -101,6 +101,7 @@
 					console.log('toggleVisibility', layerId, updateObj);
 					eventBus.$emit('map:layer.update', layerId, updateObj);
 					this.setLayer(layerId, layerNewStyle);
+					eventBus.$emit('ace:content.set', layerNewStyle, layerId);
 				}
 			},
 
