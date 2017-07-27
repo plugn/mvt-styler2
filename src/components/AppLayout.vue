@@ -47,12 +47,6 @@
 		directives: {
 			resize
 		},
-		data() {
-			return {
-				sideBar: 'tree',
-				layerId: ''
-			}
-		},
 
 		computed: {
 			...mapState([
@@ -61,20 +55,8 @@
 		},
 
 		methods: {
-			onResize: function () {
-				// console.log('onResize');
-				setTimeout( (function () {
-					eventBus.$emit('map:resize');
-				}), 100);
-			},
-			setSideBar(name) {
-				this.sideBar = name;
-			},
 			onAfterResize: function() {
 				eventBus.$emit('map:resize');
-			},
-			isActive(name) {
-				return name === this.sideBar;
 			}
 		}
 	}
