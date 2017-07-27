@@ -22,7 +22,7 @@
 			<div class="fr"><span class="space-right0"><button data-test="duplicate-layer"
 															   class="inline icon duplicate a pad0y align-top "></button></span><span
 					class="space-right0"><button class="inline icon nofolder a pad0y align-top "></button></span><span
-					class="space-right0"><button class="inline icon noeye a pad0y align-top "></button></span><span
+					class="space-right0"><button @click="toggleVisibility" class="inline icon noeye a pad0y align-top "></button></span><span
 					class="space-right0"><button data-test="delete-layer"
 												 class="inline icon trash a pad0y align-top "></button></span></div>
 		</div>
@@ -33,11 +33,12 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex'
 	import LayerTreeItem from './LayerTreeItem.vue'
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
-	import cloneDeep from 'lodash/cloneDeep';
+	import {cloneDeep, get, set, pick} from 'lodash'
 	import {buildTreeData, exportStyle, indexLayers, objectDiff} from './styleSync'
 	import mbStyle from '../../style.conf'
 
@@ -67,6 +68,12 @@
 			}
 		},
 
+		computed: {
+			...mapState([
+				'currentLayerId'
+			])
+		},
+
 		created() {
 			this.set_vStyle(mbStyle);
 			this.set_gStyle(mbStyle);
@@ -81,29 +88,51 @@
 		},
 
 		methods: {
+			toggleVisibility() {
+				if (this.currentLayerId) {
+
+					let layerId = this.currentLayerId,
+						layerStyle = this.getLayer(layerId),
+						layerNewStyle = cloneDeep(layerStyle),
+						before = get(layerStyle, 'layout.visibility', 'visible'),
+						current = 'visible' === before ? 'none' : 'visible';
+					set(layerNewStyle, 'layout.visibility', current);
+					let updateObj = pick(layerNewStyle, 'layout');
+					console.log('toggleVisibility', layerId, updateObj);
+					eventBus.$emit('map:layer.update', layerId, updateObj);
+					this.setLayer(layerId, layerNewStyle);
+				}
+			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
 				console.log('layer upd', layerId, layerNewStyle);
 
 				let newStyle = this.get_vStyle();
 				let index = vLayersIndex[layerId];
-				let layerLastStyle = newStyle.layers[index];
+				let layerStyle = newStyle.layers[index];
 
 				// Avoid changing layerId by user
 				layerNewStyle = {...layerNewStyle, id: layerId};
 
-				let diffObj = objectDiff(layerNewStyle, layerLastStyle);
+				let diffObj = objectDiff(layerNewStyle, layerStyle);
 				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
-				newStyle.layers[index] = layerNewStyle;
-				this.set_vStyle(newStyle);
 
-				// eventBus.$emit('map:style.set', newStyle);
+				newStyle.layers[index] = layerNewStyle;
+				// whether this needed ?
+				this.set_vStyle(newStyle);
 			},
 
 			getLayer(layerId) {
 				let index = vLayersIndex[layerId];
 				return this.get_vStyle().layers[index];
+			},
+			setLayer(layerId, value) {
+				let index = vLayersIndex[layerId];
+				let newStyle = this.get_vStyle();
+				newStyle.layers[index] = value;
+				// whether this needed ?
+				this.set_vStyle(newStyle);
 			},
 
 			get_vStyle() {
