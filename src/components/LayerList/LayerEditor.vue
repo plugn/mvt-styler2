@@ -67,13 +67,6 @@
 			])
 		},
 
-		created() {
-			eventBus.$on('editor:set', (data) => {
-				console.log('on editor:set', data)
-				eventBus.$emit('ace:content.set', data);
-				this.codeTitle = data.name || this.codeTitle;
-			});
-		},
 		watch: {
 			currentLayerId: function(layerId) {
 //				console.log('LayerEditor watch', layerId);
