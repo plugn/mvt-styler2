@@ -2,7 +2,7 @@
  * Created by maxd on 27.02.17.
  * style utilities
  */
-import {get, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase } from 'lodash'
+import {get, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase, cloneDeep } from 'lodash'
 
 
 export function buildTreeData(mvtStyle) {
@@ -13,9 +13,10 @@ export function buildTreeData(mvtStyle) {
 	return reduce(mvtStyle.layers, reducer, []);
 
 	function reducer(result, value, key) {
+		let _value = {id: value.id};
 		let thisGroup = get(value, groupPath, null);
 		if (!thisGroup) {
-			result.push(value);
+			result.push(_value);
 			return result;
 		}
 
@@ -26,21 +27,20 @@ export function buildTreeData(mvtStyle) {
 		if (thisGroup !== currentGroup) {
 			currentGroup = thisGroup;
 			groupItem = {
-				// groupId: thisGroup,
 				id: groupId,
-				children: [value]
+				children: [_value]
 			};
 			result.push(groupItem)
 		}
 		else {
 			groupItem = result[result.length-1];
-			groupItem.children.push(value);
+			groupItem.children.push(_value);
 		}
 		return result;
 	}
 }
 
-export function exportLayers(layersTree) {
+export function exportLayers(layersTree, vLayers, vIndex) {
 
 	return reduce(layersTree, reducer, []);
 
@@ -48,16 +48,21 @@ export function exportLayers(layersTree) {
 		if (has(value, 'children')) {
 			return reduce(value.children, reducer, result)
 		}
+		if (!value.id) throw new Error(' couldnt find value.id', value.id);
 
-		result.push(value);
+		let layer = vLayers[ vIndex[ value.id ] ];
+		result.push(layer);
 
 		return result;
 	}
 }
 
-export function exportStyle(oStyle, layersTree) {
-	oStyle.layers = exportLayers(layersTree);
-	return oStyle;
+export function exportStyle(vStyle, layersTree) {
+	let vIndex = indexLayers(vStyle.layers),
+		nextStyle = cloneDeep(pickBy(vStyle, (v, k) => k !== 'layers'));
+
+	nextStyle.layers = exportLayers(layersTree, vStyle.layers, vIndex);
+	return nextStyle;
 }
 
 export function indexLayers(layers) {
