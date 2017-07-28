@@ -2,29 +2,32 @@
 	<div class="pin-left col12 fill-dark2 dark xpace-bottom3">
 		<div class="contain col12 clearfix pad0y fill-dark">
 			<div>
-				<div data-test="rename-style" class="space-left1 strong small width10 space-right1 contain">
+				<div class="space-left1 strong small width10 space-right1 contain">
 					<div class="contain col12 pointer">
-						<div class="small pad0y truncate space-right2 strong"><span data-test="">StyleName</span>
+						<div class="small pad0y truncate space-right2 strong"><span>StyleName</span>
 							<button class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 						</div>
 					</div>
 				</div>
 				<div id="card-publish-style" class="pad00y pad1x fr">
-					<button class="round width5 pad0x pad00y micro button fill-denim">Save</button>
+					<button @click="save" class="round width5 pad0x pad00y micro button fill-denim">Save</button>
 					<!--<button class="a inline space-left0 icon share pad00y align-top"></button>-->
 				</div>
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
 			</div>
 		</div>
-		<div class="micro clearfix col12 fill-dark"><a data-test="new-layer" class="inline micro pad0 strong "
+		<div class="micro clearfix col12 fill-dark"><a class="inline micro pad0 strong "
 													   href="#"><span
 				class="icon plus"></span>New layer</a>
-			<div class="fr"><span class="space-right0"><button data-test="duplicate-layer"
-															   class="inline icon duplicate a pad0y align-top "></button></span><span
-					class="space-right0"><button class="inline icon nofolder a pad0y align-top "></button></span><span
-					class="space-right0"><button @click="toggleVisibility" class="inline icon noeye a pad0y align-top "></button></span><span
-					class="space-right0"><button data-test="delete-layer"
-												 class="inline icon trash a pad0y align-top "></button></span></div>
+			<div class="fr"><span class="space-right0"><button class="inline icon duplicate a pad0y align-top "
+					:class="{'dim noevents': !currentLayerId}"></button></span><span
+					class="space-right0"><button class="inline icon nofolder a pad0y align-top "
+					:class="{'dim noevents': !currentLayerId}"></button></span><span
+					class="space-right0"><button
+					@click="toggleVisibility" class="inline icon a pad0y align-top "
+					:class="[{'dim noevents': !currentLayerId}, icon.eye]"></button></span><span
+					class="space-right0"><button class="inline icon trash a pad0y align-top "
+					:class="{'dim noevents': !currentLayerId}"></button></span></div>
 		</div>
 
 		<LayerTreeItem :model="listData"></LayerTreeItem>
@@ -63,7 +66,10 @@
 
 		data() {
 			return {
-				// grouped style (Vue-model)
+				icon: {
+					eye: 'noeye'
+				},
+				// grouped (tree structure)
 				listData: buildTreeData(cloneDeep(mbStyle))
 			}
 		},
@@ -72,6 +78,12 @@
 			...mapState([
 				'currentLayerId'
 			])
+		},
+
+		watch: {
+			currentLayerId: function(layerId) {
+				this.setEyeIcon();
+			}
 		},
 
 		created() {
@@ -88,21 +100,42 @@
 		},
 
 		methods: {
-			toggleVisibility() {
-				if (this.currentLayerId) {
+			save() {
+				console.log('RESULT', JSON.stringify(this.get_vStyle()));
+				
+			},
+			getEyeIcon() {
+				let v8y = this.getCurrentLayerVisibility();
+				return ('visible' === v8y ? 'noeye' : 'eye');
+			},
 
-					let layerId = this.currentLayerId,
-						layerStyle = this.getLayer(layerId),
-						layerNewStyle = cloneDeep(layerStyle),
-						before = get(layerStyle, 'layout.visibility', 'visible'),
-						current = 'visible' === before ? 'none' : 'visible';
-					set(layerNewStyle, 'layout.visibility', current);
-					let updateObj = pick(layerNewStyle, 'layout');
-					console.log('toggleVisibility', layerId, updateObj);
-					eventBus.$emit('map:layer.update', layerId, updateObj);
-					this.setLayer(layerId, layerNewStyle);
-					eventBus.$emit('ace:content.set', layerNewStyle, layerId);
-				}
+			setEyeIcon() {
+				this.$set(this.icon, 'eye', this.getEyeIcon());
+			},
+
+			getCurrentLayerVisibility() {
+				if (!this.currentLayerId) return 'visible';
+				let layerId = this.currentLayerId,
+					layerStyle = this.getLayer(layerId);
+				return get(layerStyle, 'layout.visibility', 'visible');
+			},
+
+			toggleVisibility() {
+				if (!this.currentLayerId) { return; }
+
+				let layerId = this.currentLayerId,
+					layerStyle = this.getLayer(layerId),
+					layerNewStyle = cloneDeep(layerStyle),
+					before = get(layerStyle, 'layout.visibility', 'visible'),
+					current = 'visible' === before ? 'none' : 'visible';
+				set(layerNewStyle, 'layout.visibility', current);
+				let updateObj = pick(layerNewStyle, 'layout');
+//					console.log('toggleVisibility', layerId, updateObj);
+				eventBus.$emit('map:layer.update', layerId, updateObj);
+				this.setLayer(layerId, layerNewStyle);
+				eventBus.$emit('ace:content.set', layerNewStyle, layerId);
+
+				this.setEyeIcon();
 			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
@@ -133,7 +166,7 @@
 				let newStyle = this.get_vStyle();
 				newStyle.layers[index] = value;
 				// whether this needed ?
-				this.set_vStyle(newStyle);
+				// this.set_vStyle(newStyle);
 			},
 
 			get_vStyle() {

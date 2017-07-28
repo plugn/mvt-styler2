@@ -1,6 +1,6 @@
 <template>
 	<ul v-if="isRoot" class="tile__root pin-bottom pin-top space-top7 scroll-styled draghost gu-unselectable micro">
-		<LayerTreeItem :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model"></LayerTreeItem>
+		<LayerTreeItem :model="listItem" :itemIndex="listKey" v-for="(listItem, listKey) in model" :key="listItem.id"></LayerTreeItem>
 	</ul>
 
 	<li v-else-if="isFolder" class="tile__folder col12 clearfix contain dark">
@@ -24,6 +24,7 @@
 		<ul v-show="open" class="draghost ">
 			<ListGroupItem
 					v-for="(listItem, listKey) in model.children"
+					:key="listItem.id"
 					:model="listItem"
 					:itemIndex="listKey"
 					:data-group="itemIndex"></ListGroupItem>
