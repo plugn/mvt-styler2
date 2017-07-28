@@ -1,9 +1,9 @@
 <template>
-	<editor :content="content" :lang="lang" :theme="theme" :sync="true" height="100%"></editor>
+	<editor :content="content" :session="layerId" :lang="lang" :theme="theme" :sync="true" height="100%"></editor>
 </template>
 
 <script>
-	import editor from 'vue2-ace'
+	import editor from './acevue/index'
 	import 'brace/mode/json'
 	import 'brace/theme/idle_fingers'
 	import debounce from 'lodash/debounce'
@@ -14,7 +14,7 @@
 	export default{
 		data() {
 			return {
-				layerId: undefined,
+				layerId: '',
 				validContent:'',
 				content:'',
 				lang:	'json',
@@ -54,6 +54,8 @@
 		mounted() {
 			const vm = this;
 			vm.$on('editor-update', debounce(vm.onUpdate, 2500, {trailing: true}));
+			console.log('editor:', editor.methods.getEditor());
+			
 		}
 
 	}

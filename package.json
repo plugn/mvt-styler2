@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-style-spec": "^9.0.0",
+    "brace": "^0.8.0",
     "dat-gui-light-theme": "git+https://git@github.com/plugn/dat-gui-light-theme.git",
     "dat.gui": "^0.6.1",
     "dragula": "^3.7.2",
