@@ -68,9 +68,7 @@ module.exports = {
 		session: function (value) {
 			const vm = this;
 			if (vm.session) {
-				console.log(' * vm.session : ', vm.session);
-				
-				
+				// console.log(' * vm.session : ', vm.session);
 				vm.editor.getSession(value).setMode('ace/mode/' + vm.lang);
 			}
 		},

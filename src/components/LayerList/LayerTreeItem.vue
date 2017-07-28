@@ -5,7 +5,7 @@
 
 	<li v-else-if="isFolder" class="tile__folder col12 clearfix contain dark">
 		<div class="animate draggable layer-group"><a @click="toggle"
-				v-bind:class="{'caret-right': !open, 'caret-down': open}"
+				:class="{'caret-right': !open, 'caret-down': open}"
 				class="pin-topleft z1 icon pad00y"></a>
 			<div title="Group"
 				 class="keyline-bottom keyline-dark2 layer-folder block pad0x pad00y pointer micro"><span
