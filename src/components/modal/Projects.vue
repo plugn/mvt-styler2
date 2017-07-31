@@ -2,7 +2,6 @@
 	<div data-type="modal" class="modal" v-if="show" style="z-index: 200;">
 		<div @click.self="toggleShow" class="modal-underlay scroll-v" style="position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px;">
 			<div class="modal-entity publish-modal space-bottom4 width52 fill-white pin-top contain">
-				<!--<div class="pad2y fill-white"><h3 class="space-bottom2 pad4x quiet">Projects</h3>-->
 				<div class="pad4x space-top2 space-bottom2 prose-big">Projects</div>
 
 					<div class="pad4x space-bottom3">
@@ -11,7 +10,7 @@
 								<div class="pad1y contain">
 									<a class="rcon pin-right pad1y dark-link caret-right"></a>
 									<span class="code strong strong truncate">{{proj.name}}</span>
-									<span class="quiet code space-right2">({{proj.id}})</span>
+									<!--<span class="quiet code space-right2">#{{proj.id}}</span>-->
 								</div>
 							</div>
 						</div>
@@ -52,10 +51,9 @@ export default {
 			toggleShow: types.TOGGLE_MODAL
 		}),
 		setProjects(data){
-			console.log(' * setProjects data() : ', data);
-			const vm = this;
 			try {
-				vm.projects = JSON.parse(data.response);
+				this.projects = JSON.parse(data.response);
+				console.log(' * setProjects data() : ', this.projects);
 			} catch (e) {
 				console.warn(' (!) modal/projects ', e);
 			}
