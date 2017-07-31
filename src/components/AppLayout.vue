@@ -1,6 +1,7 @@
 <template>
+<div style="height: inherit;">
 	<div class="app-layout flex-col nodebug contain">
-		<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>
+		<!--<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>-->
 
 		<div class="flex-row">
 			<div class="contain fill-dark2 dark"
@@ -21,9 +22,11 @@
 			<!--<Dashboard />-->
 
 		</div>
-
 	</div>
 
+	<ModalProjects :show="modalProjectsShow"></ModalProjects>
+
+</div>
 </template>
 
 <script>
@@ -34,7 +37,9 @@
 	import {eventBus} from '../main';
 	import Dashboard from './mbst/index.vue';
 	import LayerEditor from './LayerList/LayerEditor.vue'
+	import ModalProjects from '../components/modal/Projects.vue'
 	import {mapState} from 'vuex'
+
 
 	export default {
 		components: {
@@ -42,7 +47,8 @@
 			LayerTree,
 			LayerEditor,
 			MapGL,
-			Editor
+			Editor,
+			ModalProjects
 		},
 		directives: {
 			resize
@@ -50,7 +56,8 @@
 
 		computed: {
 			...mapState([
-				'currentLayerId'
+				'currentLayerId',
+				'modalProjectsShow'
 			])
 		},
 

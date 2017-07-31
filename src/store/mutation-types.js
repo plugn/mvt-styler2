@@ -1,1 +1,2 @@
 export const SET_CURRENT_LAYER = 'SET_CURRENT_LAYER'
+export const TOGGLE_MODAL = 'TOGGLE_MODAL'

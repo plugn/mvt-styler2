@@ -11,7 +11,7 @@
 				</div>
 				<div id="card-publish-style" class="pad00y pad1x fr">
 					<button @click="save" class="round width5 pad0x pad00y micro button fill-denim">Save</button>
-					<!--<button class="a inline space-left0 icon share pad00y align-top"></button>-->
+					<button @click="toggleStyleModal" class="a inline space-left0 icon cloud pad00y align-top"></button>
 				</div>
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
 			</div>
@@ -44,6 +44,9 @@
 	import {cloneDeep, get, set, pick} from 'lodash'
 	import {buildTreeData, exportStyle, indexLayers, objectDiff} from './styleSync'
 	import mbStyle from '../../style.conf'
+	import * as types from '../../store/mutation-types'
+	import {mapMutations} from 'vuex';
+
 
 	// drag-and-drop instance
 	let drake;
@@ -100,6 +103,10 @@
 		},
 
 		methods: {
+			...mapMutations({
+				toggleStyleModal: types.TOGGLE_MODAL
+			}),
+
 			save() {
 				console.log('RESULT', JSON.stringify(this.get_vStyle()));
 				
