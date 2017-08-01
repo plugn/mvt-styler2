@@ -23,6 +23,7 @@ function xhr(url, data, callback, method) {
 	instance.open(method, url);
 
 	if (method !== 'GET') {
+		// instance.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		instance.setRequestHeader('Content-Type', 'application/json');
 	}
 
