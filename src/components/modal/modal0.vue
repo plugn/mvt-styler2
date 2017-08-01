@@ -2,7 +2,7 @@
 	<div id="modal-content" class="animate modal modal-content active">
 		<form id="modal-name" class="modal-popup" method="post">
 			<div class="col6 modal-body fill-white contain">
-				<a href=""#close" class="quiet pad1 icon fr close dark"></a>
+				<a href="#close" class="quiet pad1 icon fr close dark"></a>
 				<div class="fill-blue dark pad2y">
 					<div class="pad4x center">
 						<h2>Favorite dog name?</h2>
