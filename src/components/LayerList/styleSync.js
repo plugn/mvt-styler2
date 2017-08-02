@@ -2,12 +2,12 @@
  * Created by maxd on 27.02.17.
  * style utilities
  */
-import {get, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase, cloneDeep } from 'lodash'
+import {get, set, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase, cloneDeep } from 'lodash'
 
+const groupsPath = ['metadata','mapbox:groups'];
+const groupPath = ['metadata','mapbox:group'];
 
 export function buildTreeData(mvtStyle) {
-	let groupsPath = ['metadata','mapbox:groups'];
-	let groupPath = ['metadata','mapbox:group'];
 	let currentGroup = null;
 
 	return reduce(mvtStyle.layers, reducer, []);
@@ -40,17 +40,45 @@ export function buildTreeData(mvtStyle) {
 	}
 }
 
-export function exportLayers(layersTree, vLayers, vIndex) {
+export function getGroupIdByName(vStyle) {
+	return _.reduce(_.get(vStyle,groupsPath), function(acc, v, k){
+		// console.log(`${k} :`,v, acc)
+		acc[v.name] = k;
+		return acc;
+	},{});
+}
+
+export function exportLayers(layersTree, vStyle, vIndex) {
+	let groupMapIdByName = getGroupIdByName(vStyle);
+	let vLayers = vStyle.layers;
+	let groupId = null;
+
 
 	return reduce(layersTree, reducer, []);
 
 	function reducer(result, value, key) {
 		if (has(value, 'children')) {
-			return reduce(value.children, reducer, result)
+			groupId = groupMapIdByName[value.id];
+			console.log(' * value.id : ', value.id, ' => ', groupId);
+
+
+			if (!groupId) throw new Error('(!) not found ', value.id, ' in ', groupMapIdByName);
+
+			let children = map(value.children,  child => set(child, 'groupId', groupId));
+
+			// console.log(' * children : ', children);
+
+
+			return reduce(children, reducer, result)
 		}
+
 		if (!value.id) throw new Error(' couldnt find value.id', value.id);
 
 		let layer = vLayers[ vIndex[ value.id ] ];
+		let groupId = get(value, 'groupId');
+		if (groupId) {
+			set(layer, groupPath, groupId)
+		}
 		result.push(layer);
 
 		return result;
@@ -61,7 +89,7 @@ export function exportStyle(vStyle, layersTree) {
 	let vIndex = indexLayers(vStyle.layers),
 		nextStyle = cloneDeep(pickBy(vStyle, (v, k) => k !== 'layers'));
 
-	nextStyle.layers = exportLayers(layersTree, vStyle.layers, vIndex);
+	nextStyle.layers = exportLayers(layersTree, vStyle, vIndex);
 	return nextStyle;
 }
 
