@@ -9,6 +9,7 @@ function ensureString(value) {
 }
 
 const API_HOST = 'http://dev-maps-2.dev.search.km:3000';
+// const API_HOST = 'http://styler.km:3000';
 
 let store = {}; // { name: style }
 let style;
