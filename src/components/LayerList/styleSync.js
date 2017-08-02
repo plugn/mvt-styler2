@@ -51,12 +51,12 @@ export function getGroupIdByName(vStyle) {
 export function exportLayers(layersTree, vStyle, vIndex) {
 	let groupMapIdByName = getGroupIdByName(vStyle);
 	let vLayers = vStyle.layers;
-	let groupId = null;
 
 
 	return reduce(layersTree, reducer, []);
 
 	function reducer(result, value, key) {
+		let groupId;
 		if (has(value, 'children')) {
 			groupId = groupMapIdByName[value.id];
 			if (!groupId) throw new Error('(!) not found ', value.id, ' in ', groupMapIdByName);
@@ -67,7 +67,7 @@ export function exportLayers(layersTree, vStyle, vIndex) {
 		if (!value.id) throw new Error(' couldnt find value.id', value.id);
 
 		let layer = vLayers[ vIndex[ value.id ] ];
-		let groupId = get(value, 'groupId');
+		groupId = get(value, 'groupId');
 		if (groupId) {
 			set(layer, groupPath, groupId);
 			unset(value, 'groupId');
