@@ -61,7 +61,8 @@ console.log('not applied with update:', unhandledParams);
 				map = new mapboxgl.Map({
 					container: this.$el,
 					center: [37, 55],
-					zoom: 5
+					zoom: 5,
+					hash: true // display current zoom and coordinates as a part of URL
 				});
 
 				let nav = new mapboxgl.NavigationControl();
