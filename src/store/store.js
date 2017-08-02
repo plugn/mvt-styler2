@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
 		gLayers: [],
 
 		currentLayerId: null,
+		currentLayer: null,
 		modalProjectsShow: false
 	},
 	mutations: {
@@ -18,6 +19,9 @@ export const store = new Vuex.Store({
 		},
 		[types.TOGGLE_MODAL](state) {
 			state.modalProjectsShow = !state.modalProjectsShow;
+		},
+		[types.SET_STYLE](state, payload) {
+			state.vStyle = payload;
 		}
 	}
 });

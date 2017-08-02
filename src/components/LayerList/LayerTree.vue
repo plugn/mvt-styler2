@@ -4,7 +4,7 @@
 			<div>
 				<div class="space-left1 strong small width10 space-right1 contain">
 					<div class="contain col12 pointer">
-						<div class="small pad0y truncate space-right2 strong"><span>StyleName</span>
+						<div class="small pad0y truncate space-right2 strong"><span>{{vStyle.name || 'style'}} </span>
 							<button class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 						</div>
 					</div>
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
 	import LayerTreeItem from './LayerTreeItem.vue'
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
@@ -45,14 +44,14 @@
 	import {buildTreeData, exportStyle, indexLayers, objectDiff} from './styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
-	import {mapMutations} from 'vuex';
+	import {mapMutations, mapState} from 'vuex';
 
 
 	// drag-and-drop instance
 	let drake;
 
 	//  {object} GL Style
-	let vStyle = null;
+//	let vStyle = null;
 
 	// {array} GL Style grouped Layers
 	// array of regular items {object} and/or groups {id:groupId, children: [{object}, ...]}
@@ -79,7 +78,8 @@
 
 		computed: {
 			...mapState([
-				'currentLayerId'
+				'currentLayerId',
+				'vStyle'
 			])
 		},
 
@@ -104,7 +104,8 @@
 
 		methods: {
 			...mapMutations({
-				toggleStyleModal: types.TOGGLE_MODAL
+				toggleStyleModal: types.TOGGLE_MODAL,
+				setStyle: types.SET_STYLE
 			}),
 
 			save() {
@@ -166,21 +167,24 @@
 
 			getLayer(layerId) {
 				let index = vLayersIndex[layerId];
+if (!this.vStyle) {
+	console.log('HAVE TO USE VUEX');
+
+}
 				return this.get_vStyle().layers[index];
 			},
 			setLayer(layerId, value) {
 				let index = vLayersIndex[layerId];
 				let newStyle = this.get_vStyle();
 				newStyle.layers[index] = value;
-				// whether this needed ?
-				// this.set_vStyle(newStyle);
 			},
 
 			get_vStyle() {
-				return vStyle;
+				return this.vStyle;
+
 			},
 			set_vStyle(newValue) {
-				vStyle = newValue;
+				this.setStyle(newValue)
 			},
 			get_gStyle() {
 				return gLayers;
