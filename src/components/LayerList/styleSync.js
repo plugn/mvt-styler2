@@ -2,7 +2,7 @@
  * Created by maxd on 27.02.17.
  * style utilities
  */
-import {get, set, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase, cloneDeep } from 'lodash'
+import {get, set, unset, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase, cloneDeep } from 'lodash'
 
 const groupsPath = ['metadata','mapbox:groups'];
 const groupPath = ['metadata','mapbox:group'];
@@ -69,7 +69,10 @@ export function exportLayers(layersTree, vStyle, vIndex) {
 		let layer = vLayers[ vIndex[ value.id ] ];
 		let groupId = get(value, 'groupId');
 		if (groupId) {
-			set(layer, groupPath, groupId)
+			set(layer, groupPath, groupId);
+			unset(value, 'groupId');
+		} else {
+			unset(layer, 'metadata');
 		}
 		result.push(layer);
 
