@@ -7,9 +7,8 @@ function ensureObject(value) {
 function ensureString(value) {
 	return 'object' === typeof value ? JSON.stringify(value) : '' + value;
 }
-// const API_HOST = '';
-// const API_HOST = 'http://dev-maps-2.dev.search.km:3000';
-const API_HOST = 'http://styler.km:3000';
+
+const API_HOST = 'http://dev-maps-2.dev.search.km:3000';
 
 let store = {}; // { name: style }
 let style;
@@ -19,7 +18,6 @@ let projectCommit = -1;
 let baseProjectPath;
 
 let storage = {
-
 	'set': function _set(contents) {
 		style = ensureObject(contents);
 	},
