@@ -59,16 +59,8 @@ export function exportLayers(layersTree, vStyle, vIndex) {
 	function reducer(result, value, key) {
 		if (has(value, 'children')) {
 			groupId = groupMapIdByName[value.id];
-			console.log(' * value.id : ', value.id, ' => ', groupId);
-
-
 			if (!groupId) throw new Error('(!) not found ', value.id, ' in ', groupMapIdByName);
-
 			let children = map(value.children,  child => set(child, 'groupId', groupId));
-
-			// console.log(' * children : ', children);
-
-
 			return reduce(children, reducer, result)
 		}
 
