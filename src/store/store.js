@@ -8,10 +8,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state: {
 		vStyle: {},  // virtual style
-		vLayersIndex: {}, // layers index in sync with vStyle.layers
 
+		vLayersIndex: {}, // layers index in sync with vStyle.layers
 		currentLayerId: null,
-		modalProjectsShow: false
+
+		modalProjectsShow: false,
+		projectId: -1
 	},
 	getters: {
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
@@ -36,5 +38,8 @@ export const store = new Vuex.Store({
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, value);
 		},
+		[types.SET_PROJECT_ID](state, id) {
+			state.projectId = id;
+		}
 	}
 });

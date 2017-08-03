@@ -1,4 +1,5 @@
 import xhr from './xhr';
+import {extend} from 'lodash';
 
 function ensureObject(value) {
 	return 'string' === typeof value ? JSON.parse(value) : value;
@@ -26,7 +27,7 @@ let storage = {
 		return style;
 	},
 	'update': function _update(obj) {
-		_.extend(style, ensureObject(obj));
+		extend(style, ensureObject(obj));
 	},
 
 	// get projects list

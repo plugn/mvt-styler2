@@ -2,10 +2,28 @@
  * Created by maxd on 27.02.17.
  * style utilities
  */
-import {get, set, unset, has, reduce, keys, difference, pickBy, isEqual, forOwn, omit, map, kebabCase, cloneDeep } from 'lodash'
+import {
+	cloneDeep,
+	chain,
+	difference,
+	forOwn,
+	get,
+	has,
+	isEqual,
+	kebabCase,
+	keys,
+	map,
+	omit,
+	pickBy,
+	reduce,
+	set,
+	transform,
+	unset,
+	value
+} from 'lodash'
 
-const groupsPath = ['metadata','mapbox:groups'];
-const groupPath = ['metadata','mapbox:group'];
+const groupsPath = ['metadata', 'mapbox:groups'];
+const groupPath = ['metadata', 'mapbox:group'];
 
 export function buildTreeData(mvtStyle) {
 	let currentGroup = null;
@@ -21,7 +39,9 @@ export function buildTreeData(mvtStyle) {
 		}
 
 		let groupId = get(mvtStyle, groupsPath.concat(thisGroup, 'name'), null);
-		if (!groupId) { return result; }
+		if (!groupId) {
+			return result;
+		}
 
 		let groupItem;
 		if (thisGroup !== currentGroup) {
@@ -33,7 +53,7 @@ export function buildTreeData(mvtStyle) {
 			result.push(groupItem)
 		}
 		else {
-			groupItem = result[result.length-1];
+			groupItem = result[result.length - 1];
 			groupItem.children.push(_value);
 		}
 		return result;
@@ -41,11 +61,11 @@ export function buildTreeData(mvtStyle) {
 }
 
 export function getGroupIdByName(vStyle) {
-	return _.reduce(_.get(vStyle,groupsPath), function(acc, v, k){
+	return reduce(get(vStyle, groupsPath), function (acc, v, k) {
 		// console.log(`${k} :`,v, acc)
 		acc[v.name] = k;
 		return acc;
-	},{});
+	}, {});
 }
 
 export function exportLayers(layersTree, vStyle, vIndex) {
@@ -60,13 +80,13 @@ export function exportLayers(layersTree, vStyle, vIndex) {
 		if (has(value, 'children')) {
 			groupId = groupMapIdByName[value.id];
 			if (!groupId) throw new Error('(!) not found ', value.id, ' in ', groupMapIdByName);
-			let children = map(value.children,  child => set(child, 'groupId', groupId));
+			let children = map(value.children, child => set(child, 'groupId', groupId));
 			return reduce(children, reducer, result)
 		}
 
 		if (!value.id) throw new Error(' couldnt find value.id', value.id);
 
-		let layer = vLayers[ vIndex[ value.id ] ];
+		let layer = vLayers[vIndex[value.id]];
 		groupId = get(value, 'groupId');
 		if (groupId) {
 			set(layer, groupPath, groupId);
@@ -90,7 +110,8 @@ export function exportStyle(vStyle, layersTree) {
 
 export function indexLayers(layers) {
 	return reduce(layers, reducer, {});
-	function reducer (result, value, index) {
+
+	function reducer(result, value, index) {
 		result[value.id] = index;
 		return result;
 	}
@@ -101,7 +122,7 @@ export function objectDiff(curr, last) {
 		keysCurr = keys(curr),
 		dropKeys = difference(keysLast, keysCurr);
 
-	let update = pickBy(curr, function(v, k) {
+	let update = pickBy(curr, function (v, k) {
 		// console.log('k,v,last[k] = ' + k + ',' + v + ',' + last[k]);
 		return !isEqual(last[k], v);
 	});
@@ -118,7 +139,7 @@ export function updateMapLayer(layerId, params, map) {
 	if (has(params, 'minzoom') && has(params, 'maxzoom')) {
 		map.setLayerZoomRange(layerId, params.minzoom, params.maxzoom);
 	}
-	let procParams = omit(params, ['minzoom', 'maxzoom','id', 'metadata']);
+	let procParams = omit(params, ['minzoom', 'maxzoom', 'id', 'metadata']);
 
 	let unhandledParams = {};
 
@@ -127,13 +148,12 @@ export function updateMapLayer(layerId, params, map) {
 //console.log('forOwn', name, '=>', value);
 		if ('filter' === name) {
 			map.setFilter(layerId, value);
-		}
-		else if ('layout' === name) {
-			forOwn(value, function(v, k){
+		} else if ('layout' === name) {
+			forOwn(value, function (v, k) {
 				map.setLayoutProperty(layerId, k, v);
 			});
 		} else if ('paint' === name) {
-			forOwn(value, function(v, k){
+			forOwn(value, function (v, k) {
 				map.setPaintProperty(layerId, k, v);
 			});
 		} else {
@@ -147,12 +167,12 @@ export function updateMapLayer(layerId, params, map) {
 }
 
 export function prettifyMapLayer(obj) {
-	return _.chain(obj)
-		.pickBy(function(v, k) {
+	return chain(obj)
+		.pickBy(function (v, k) {
 			let typeOfValue = typeof v;
-			return '_' !== k.charAt(0) && 'undefined' !== typeOfValue  && 'function' !== typeOfValue;
+			return '_' !== k.charAt(0) && 'undefined' !== typeOfValue && 'function' !== typeOfValue;
 		})
-		.transform(function(res, v, k){
+		.transform(function (res, v, k) {
 			return res[kebabCase(k)] = v;
 		}, {})
 		.value();

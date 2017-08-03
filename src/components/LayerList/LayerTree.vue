@@ -4,7 +4,7 @@
 			<div>
 				<div class="space-left1 strong small width10 space-right1 contain">
 					<div class="contain col12 pointer">
-						<div class="small pad0y truncate space-right2 strong"><span>{{vStyle.name || 'style'}} </span>
+						<div class="small pad0y truncate space-right2 strong"><span>{{vStyle.name || ''}} </span>
 							<button class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 						</div>
 					</div>
@@ -75,6 +75,7 @@
 
 		computed: {
 			...mapState([
+				'projectId',
 				'currentLayerId',
 				'vStyle'
 			]),
@@ -85,8 +86,12 @@
 		},
 
 		watch: {
-			currentLayerId: function(layerId) {
+			currentLayerId(layerId) {
 				this.setEyeIcon();
+			},
+			projectId(projectId) {
+				console.log(' * projectId : ', projectId);
+
 			}
 		},
 
@@ -146,7 +151,6 @@
 				eventBus.$emit('ace:content.set', layerNewStyle, layerId);
 
 				this.setEyeIcon();
-
 			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
