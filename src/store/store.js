@@ -7,11 +7,10 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
-		vStyle: {},  // virtual style (moving to vuex)
+		vStyle: {},  // virtual style
 		vLayersIndex: {}, // layers index in sync with vStyle.layers
 
 		currentLayerId: null,
-		currentLayer: null,
 		modalProjectsShow: false
 	},
 	getters: {
