@@ -5,7 +5,7 @@
 <script>
 
 	import {eventBus} from '../../main';
-	import {updateMapLayer, prettifyMapLayer} from '../LayerList/styleSync'
+	import {updateMapLayer, prettifyMapLayer} from '../../util/styleSync'
 
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';

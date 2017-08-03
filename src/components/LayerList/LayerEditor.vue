@@ -45,7 +45,7 @@
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor.vue'
 	import resize from '../../directives/resize/resize'
-	import {mapState} from 'vuex'
+	import {mapState, mapGetters} from 'vuex'
 
 	export default {
 		name: 'LayerEditor',
@@ -64,13 +64,17 @@
 		computed: {
 			...mapState([
 				'currentLayerId'
+			]),
+			...mapGetters([
+				// 'getCurrentLayer',
+				'getLayer'
 			])
 		},
 
 		watch: {
 			currentLayerId: function(layerId) {
-//				console.log('LayerEditor watch', layerId);
-				let data = LayerTree.methods.getLayer(layerId);
+				let data = this.getLayer(layerId);
+				console.log(' * LayerEditor watch() '+layerId+' data : ', data);
 				eventBus.$emit('ace:content.set', data, layerId);
 				this.codeTitle = layerId || this.codeTitle;
 			}

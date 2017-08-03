@@ -41,17 +41,14 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import {cloneDeep, get, set, pick} from 'lodash'
-	import {buildTreeData, exportStyle, indexLayers, objectDiff} from './styleSync'
+	import {buildTreeData, exportStyle, indexLayers, objectDiff} from '../../util/styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
-	import {mapMutations, mapState} from 'vuex';
+	import {mapMutations, mapState, mapGetters} from 'vuex';
 
 
 	// drag-and-drop instance
 	let drake;
-
-	//  {object} GL Style
-//	let vStyle = null;
 
 	// {array} GL Style grouped Layers
 	// array of regular items {object} and/or groups {id:groupId, children: [{object}, ...]}
@@ -80,6 +77,10 @@
 			...mapState([
 				'currentLayerId',
 				'vStyle'
+			]),
+			...mapGetters([
+				// 'getCurrentLayer',
+				'getLayer'
 			])
 		},
 
@@ -90,7 +91,7 @@
 		},
 
 		created() {
-			this.set_vStyle(mbStyle);
+			this.setStyle(mbStyle);
 			this.set_gStyle(mbStyle);
 			this.$watch('listData', this.dataWatcher, {deep: true});
 
@@ -105,11 +106,12 @@
 		methods: {
 			...mapMutations({
 				toggleStyleModal: types.TOGGLE_MODAL,
-				setStyle: types.SET_STYLE
+				setStyle: types.SET_STYLE,
+				setLayer: types.SET_LAYER
 			}),
 
 			save() {
-				console.log('RESULT', JSON.stringify(this.get_vStyle()));
+				console.log('RESULT', JSON.stringify(this.vStyle));
 				
 			},
 			getEyeIcon() {
@@ -140,52 +142,25 @@
 				let updateObj = pick(layerNewStyle, 'layout');
 //					console.log('toggleVisibility', layerId, updateObj);
 				eventBus.$emit('map:layer.update', layerId, updateObj);
-				this.setLayer(layerId, layerNewStyle);
+				this.setLayer({layerId: layerId, value:layerNewStyle});
 				eventBus.$emit('ace:content.set', layerNewStyle, layerId);
 
 				this.setEyeIcon();
+
 			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
 				console.log('layer upd', layerId, layerNewStyle);
-
-				let newStyle = this.get_vStyle();
-				let index = vLayersIndex[layerId];
-				let layerStyle = newStyle.layers[index];
-
+				let layerStyle = this.getLayer(layerId);
 				// Avoid changing layerId by user
 				layerNewStyle = {...layerNewStyle, id: layerId};
 
 				let diffObj = objectDiff(layerNewStyle, layerStyle);
 				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
-
-				newStyle.layers[index] = layerNewStyle;
-				// whether this needed ?
-				this.set_vStyle(newStyle);
+				this.setLayer({layerId: layerId, value: layerNewStyle});
 			},
 
-			getLayer(layerId) {
-				let index = vLayersIndex[layerId];
-if (!this.vStyle) {
-	console.log('HAVE TO USE VUEX');
-
-}
-				return this.get_vStyle().layers[index];
-			},
-			setLayer(layerId, value) {
-				let index = vLayersIndex[layerId];
-				let newStyle = this.get_vStyle();
-				newStyle.layers[index] = value;
-			},
-
-			get_vStyle() {
-				return this.vStyle;
-
-			},
-			set_vStyle(newValue) {
-				this.setStyle(newValue)
-			},
 			get_gStyle() {
 				return gLayers;
 			},
@@ -194,12 +169,11 @@ if (!this.vStyle) {
 			},
 
 			dataWatcher() {
-				let vStyle = this.get_vStyle();
 				let gStyle = this.get_gStyle();
 
-				let newStyle = exportStyle(vStyle, gStyle);
+				let newStyle = exportStyle(this.vStyle, gStyle);
 				vLayersIndex = indexLayers(newStyle.layers);
-				this.set_vStyle(newStyle);
+				this.setStyle(newStyle);
 
 				eventBus.$emit('map:style.set', newStyle);
 			},
