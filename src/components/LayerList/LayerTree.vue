@@ -30,7 +30,7 @@
 					:class="{'dim noevents': !currentLayerId}"></button></span></div>
 		</div>
 
-		<LayerTreeItem :model="listData"></LayerTreeItem>
+		<LayerTreeItem :model="tree.listData"></LayerTreeItem>
 
 	</div>
 </template>
@@ -45,6 +45,7 @@
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
+	import storage from '../../util/storage'
 
 
 	// drag-and-drop instance
@@ -69,7 +70,9 @@
 					eye: 'noeye'
 				},
 				// grouped (tree structure)
-				listData: buildTreeData(cloneDeep(mbStyle))
+				tree: {
+					listData: buildTreeData(cloneDeep(mbStyle))
+				}
 			}
 		},
 
@@ -77,7 +80,8 @@
 			...mapState([
 				'projectId',
 				'currentLayerId',
-				'vStyle'
+				'vStyle',
+				'isLoading'
 			]),
 			...mapGetters([
 				// 'getCurrentLayer',
@@ -89,8 +93,36 @@
 			currentLayerId(layerId) {
 				this.setEyeIcon();
 			},
-			projectId(projectId) {
-				console.log(' * projectId : ', projectId);
+			projectId(projectId, prevId) {
+				console.log(' isLoading:', this.isLoading);
+				if (this.isLoading) { return; }
+
+				console.log(' * projectId : ', prevId +'-> ' + projectId);
+				const vm = this;
+				vm.setLoading(true);
+				
+				storage.getProject(projectId, (xhr) => {
+					console.log(' * getProject() xhr : ', xhr);
+
+					let srcStyle;
+					try {
+//						srcStyle = JSON.parse(xhr.responseText.replace(/[\t\r\n]|\s{2,}/g, ''));
+						srcStyle = JSON.parse(xhr.responseText);
+					} catch (e) {
+						console.warn(' (!) JSON crash', e);
+					}
+					vm.setLoading(false);
+
+
+					if (srcStyle) {
+						console.log(' * srcStyle : ', srcStyle);
+						vm.initStyle(srcStyle);
+					}
+
+					console.log('isLoading', vm.isLoading);
+
+				});
+
 
 			}
 		},
@@ -98,7 +130,7 @@
 		created() {
 			this.setStyle(mbStyle);
 			this.set_gStyle(mbStyle);
-			this.$watch('listData', this.dataWatcher, {deep: true});
+			this.$watch('tree.listData', this.dataWatcher, {deep: true});
 
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 		},
@@ -112,8 +144,17 @@
 			...mapMutations({
 				toggleStyleModal: types.TOGGLE_MODAL,
 				setStyle: types.SET_STYLE,
-				setLayer: types.SET_LAYER
+				setLayer: types.SET_LAYER,
+				setLoading: types.SET_LOADING,
+				setCurrentLayerId: types.SET_CURRENT_LAYER
 			}),
+
+			initStyle(srcStyle) {
+				this.setCurrentLayerId(null);
+				this.setListData(srcStyle)
+				this.setStyle(srcStyle);
+				this.set_gStyle(srcStyle);
+			},
 
 			save() {
 				console.log('RESULT', JSON.stringify(this.vStyle));
@@ -163,6 +204,10 @@
 				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
 				this.setLayer({layerId: layerId, value: layerNewStyle});
+			},
+
+			setListData(newValue) {
+				this.$set(this.tree, 'listData', buildTreeData(cloneDeep( newValue )))
 			},
 
 			get_gStyle() {
@@ -234,8 +279,8 @@
 
 				let mirrorSource = sourceGroupIndex === -1 ? gStyle : gStyle[sourceGroupIndex].children;
 				let mirrorTarget = targetGroupIndex === -1 ? gStyle : gStyle[targetGroupIndex].children;
-				let dataSource = sourceGroupIndex === -1 ? this.listData : this.listData[sourceGroupIndex].children;
-				let dataTarget = targetGroupIndex === -1 ? this.listData : this.listData[targetGroupIndex].children;
+				let dataSource = sourceGroupIndex === -1 ? this.tree.listData : this.tree.listData[sourceGroupIndex].children;
+				let dataTarget = targetGroupIndex === -1 ? this.tree.listData : this.tree.listData[targetGroupIndex].children;
 
 				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
 				targetIndex = targetIndex === -1

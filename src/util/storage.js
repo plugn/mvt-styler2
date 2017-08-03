@@ -35,6 +35,11 @@ let storage = {
 		xhr.get(`${API_HOST}/projects`, null, cb || defaultCallback)
 	},
 
+	// get project (style)
+	'getProject': function _getProject (projectId, cb) {
+		xhr.get(`${API_HOST}/projects/${projectId}/style.json`, null, cb || defaultCallback)
+	},
+
 	// create project in storage
 	'createProject': function _createProject (name, cb) {
 		xhr.post(`${API_HOST}/projects`,
@@ -52,21 +57,24 @@ let storage = {
 // let projectId = +req.params.projectId;
 // let style = req.body.style;
 
-	'updateStyle': function updateStyle(style, cb) {
+
+	'updateStyle': function updateStyle(projectId, style, cb) {
 		xhr.post(
-			baseProjectPath + '/style.json',
+			`${API_HOST}/projects/${projectId}/style.json`,
 			JSON.stringify({style: style}),
 			cb || defaultCallback
 		)
 	},
+			// baseProjectPath + '/style.json',
 
-	'loadStyle': function loadStyle(cb) {
+	'loadStyle': function loadStyle(projectId, cb) {
 		xhr.get(
-			baseProjectPath + '/style.json',
+			`${API_HOST}/projects/${projectId}/style.json`,
 			null,
 			cb || defaultCallback
 		)
 	},
+			// baseProjectPath + '/style.json',
 
 	// to storage
 	'save': function _store() {

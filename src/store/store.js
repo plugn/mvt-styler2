@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
 		vLayersIndex: {}, // layers index in sync with vStyle.layers
 		currentLayerId: null,
 
+		isLoading: false,
 		modalProjectsShow: false,
 		projectId: -1
 	},
@@ -40,6 +41,10 @@ export const store = new Vuex.Store({
 		},
 		[types.SET_PROJECT_ID](state, id) {
 			state.projectId = id;
-		}
+		},
+		[types.SET_LOADING](state, status) {
+			state.isLoading = status;
+		},
+
 	}
 });
