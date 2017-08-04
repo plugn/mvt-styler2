@@ -5,7 +5,7 @@
 
 		<div class="flex-row">
 			<div class="contain fill-dark2 dark"
-				 style="width:220px; min-width: 190px;"
+				 style="width:220px; min-width:220px;"
 				 v-resize="{height:false}" data-handle="tree-resizer">
 
 				<LayerTree />

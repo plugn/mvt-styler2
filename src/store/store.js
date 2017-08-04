@@ -2,6 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
 import {indexLayers} from '../util/styleSync'
+import {
+	isPlainObject,
+	has,
+	get
+} from 'lodash'
 
 Vue.use(Vuex)
 
@@ -14,6 +19,7 @@ export const store = new Vuex.Store({
 
 		isLoading: false,
 		modalProjectsShow: false,
+		projectName: '',
 		projectId: -1
 	},
 	getters: {
@@ -39,8 +45,9 @@ export const store = new Vuex.Store({
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, value);
 		},
-		[types.SET_PROJECT_ID](state, id) {
-			state.projectId = id;
+		[types.SET_PROJECT_DATA](state, payload) {
+			state.projectId = payload.id;
+			state.projectName =payload.name;
 		},
 		[types.SET_LOADING](state, status) {
 			state.isLoading = status;

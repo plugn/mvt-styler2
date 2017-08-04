@@ -1,10 +1,10 @@
 <template>
 	<div class="pin-left col12 fill-dark2 dark xpace-bottom3">
 		<div class="contain col12 clearfix pad0y fill-dark">
-			<div>
-				<div class="space-left1 strong small width10 space-right1 contain">
+			<div class="clearfix">
+				<div class="space-left1 strong small fl x-width10 space-right1 contain">
 					<div class="contain col12 pointer">
-						<div class="small pad0y truncate space-right2 strong"><span>{{vStyle.name || ''}} </span>
+						<div class="small pad0y truncate space-right2 strong"><span>{{projectName || vStyle.name || ''}}</span>
 							<button class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 						</div>
 					</div>
@@ -79,6 +79,7 @@
 		computed: {
 			...mapState([
 				'projectId',
+				'projectName',
 				'currentLayerId',
 				'vStyle',
 				'isLoading'

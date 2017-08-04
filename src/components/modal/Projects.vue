@@ -5,7 +5,7 @@
 				<div class="pad4x space-top2 space-bottom2 prose-big">Projects</div>
 				<div class="pad4x col12 clearfix space-bottom3 scroll-styled scroll-v" style="max-height: 360px;">
 					<div v-for="proj in projects" class="keyline-bottom">
-						<div @click="setProject(proj.id)" class="clearfix small pointer toggle-sibling">
+						<div @click="setProject({id:proj.id, name:proj.name})" class="clearfix small pointer toggle-sibling">
 							<div class="pad1y contain">
 								<a class="rcon pin-right pad1y dark-link caret-right"></a>
 								<span class="code strong strong truncate">{{proj.name}}</span>
@@ -74,7 +74,7 @@ export default {
 	methods: {
 		...mapMutations({
 			toggleShow: types.TOGGLE_MODAL,
-			setProject: types.SET_PROJECT_ID
+			setProject: types.SET_PROJECT_DATA
 		}),
 		getProjects() {
 			storage.getProjects(data => this.setProjects(data))
@@ -96,10 +96,7 @@ export default {
 				console.log('createProject', xhr, '/n this: ', this);
 				this.newProjectName = '';
 				this.getProjects();
-
 			})
-				
-			
 		},
 		escapeNewProject(e){
 			this.newProjectName='';
