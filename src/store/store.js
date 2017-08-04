@@ -2,11 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
 import {indexLayers} from '../util/styleSync'
-import {
-	isPlainObject,
-	has,
-	get
-} from 'lodash'
 
 Vue.use(Vuex)
 
