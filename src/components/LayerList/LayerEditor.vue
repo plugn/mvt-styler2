@@ -76,7 +76,7 @@
 				if (!layerId) { return; }
 
 				let data = this.getLayer(layerId);
-				console.log(' * LayerEditor watch() '+layerId+' data : ', data);
+//				console.log(' * LayerEditor watch() '+layerId+' data : ', data);
 				eventBus.$emit('ace:content.set', data, {layerId});
 				this.codeTitle = layerId || this.codeTitle;
 			}

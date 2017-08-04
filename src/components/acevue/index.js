@@ -48,7 +48,7 @@ module.exports = {
 		var editor = vm.editor = ace.edit(vm.$el);
 		aceStore.editor = editor;
 		editor.$blockScrolling = Infinity;
-		console.log(' * editor.getSession() : ', editor.getSession());
+		// console.log(' * editor.getSession() : ', editor.getSession());
 
 
 		editor.getSession(session).setMode('ace/mode/' + lang);

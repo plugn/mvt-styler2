@@ -109,7 +109,7 @@
 					vm.setLoading(false);
 
 					if (srcStyle) {
-						console.log(' * srcStyle : ', srcStyle);
+//						console.log(' * srcStyle : ', srcStyle);
 						vm.initStyle(srcStyle);
 					}
 				});
