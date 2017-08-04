@@ -150,6 +150,15 @@
 
 			save() {
 				console.log('RESULT', JSON.stringify(this.vStyle));
+				if (this.projectId < 1) {
+					console.log('you should have load project with `cloudy icon` dialog');
+					return;
+				}
+				storage.updateStyle(this.projectId, this.vStyle, function(xhrO){
+					console.log(' * updateStyle xhrO : ', xhrO);
+
+
+				})
 				
 			},
 			getEyeIcon() {
