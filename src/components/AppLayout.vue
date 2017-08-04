@@ -13,7 +13,7 @@
 			</div>
 			<div class="resizer" ref="tree-resizer"></div>
 
-			<LayerEditor v-show="currentLayerId" />
+			<LayerEditor v-show="editorPaneShow" />
 
 			<div class="stretch fill-canvas">
 				<MapGL></MapGL>
@@ -57,7 +57,8 @@
 		computed: {
 			...mapState([
 				'currentLayerId',
-				'modalProjectsShow'
+				'modalProjectsShow',
+				'editorPaneShow'
 			])
 		},
 

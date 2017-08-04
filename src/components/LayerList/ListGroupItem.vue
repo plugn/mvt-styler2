@@ -1,6 +1,6 @@
 
 <template>
-	<div @click="setCurrentLayer(model.id)" class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark"
+	<div @click="setCurrentLayerId(model.id)" class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark"
 		 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent}"
 		 style="padding-left: 20px;">
 		<div class="space-top0 space-bottom0 pin-left noevents"

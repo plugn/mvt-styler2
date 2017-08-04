@@ -4,8 +4,8 @@
 			<div class="clearfix">
 				<div class="space-left1 strong small fl x-width10 space-right1 contain">
 					<div class="contain col12 pointer">
-						<div class="small pad0y truncate space-right2 strong"><span>{{projectName || vStyle.name || ''}}</span>
-							<button class="a pin-right pad0y icon pencil show-in-hover animate"></button>
+						<div class="small pad0y truncate space-right2 strong"><span>{{ projectName || vStyle.name || '' }}</span>
+							<button @click="editFullStyle" class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 						</div>
 					</div>
 				</div>
@@ -55,9 +55,6 @@
 	// array of regular items {object} and/or groups {id:groupId, children: [{object}, ...]}
 	let gLayers = null;
 
-	// layerId : arrayIndex
- 	let vLayersIndex = {};
-
 	export default {
 		name: 'LayerTree',
 		components: {
@@ -85,7 +82,7 @@
 				'isLoading'
 			]),
 			...mapGetters([
-				// 'getCurrentLayer',
+				'getCurrentLayer',
 				'getLayer'
 			])
 		},
@@ -98,14 +95,12 @@
 				console.log(' isLoading:', this.isLoading);
 				if (this.isLoading) { return; }
 
-				console.log(' * projectId : ', prevId +'-> ' + projectId);
+				console.log(' * projectId : ', prevId +' -> ' + projectId);
 				const vm = this;
 				vm.setLoading(true);
 				
 				storage.getProject(projectId, (xhr) => {
-//					console.log(' * getProject() xhr : ', xhr);
 					let srcStyle;
-
 					try {
 						srcStyle = JSON.parse(xhr.responseText);
 					} catch (e) {
@@ -117,8 +112,6 @@
 						console.log(' * srcStyle : ', srcStyle);
 						vm.initStyle(srcStyle);
 					}
-
-//					console.log('isLoading', vm.isLoading);
 				});
 
 
@@ -143,7 +136,8 @@
 				setStyle: types.SET_STYLE,
 				setLayer: types.SET_LAYER,
 				setLoading: types.SET_LOADING,
-				setCurrentLayerId: types.SET_CURRENT_LAYER
+				setCurrentLayerId: types.SET_CURRENT_LAYER,
+				editorPaneShow: types.EDITOR_PANE_SHOW
 			}),
 
 			initStyle(srcStyle) {
@@ -151,6 +145,7 @@
 				this.setListData(srcStyle)
 				this.setStyle(srcStyle);
 				this.set_gStyle(srcStyle);
+				this.editorPaneShow(false);
 			},
 
 			save() {
@@ -186,9 +181,16 @@
 //					console.log('toggleVisibility', layerId, updateObj);
 				eventBus.$emit('map:layer.update', layerId, updateObj);
 				this.setLayer({layerId: layerId, value:layerNewStyle});
-				eventBus.$emit('ace:content.set', layerNewStyle, layerId);
+				eventBus.$emit('ace:content.set', layerNewStyle, {layerId});
 
 				this.setEyeIcon();
+			},
+
+			// layerId or current layer will be used
+			updateLayerCode(layerId) {
+				let layer = layerId && this.getLayer(layerId) || this.currentLayerId && this.getLayer(this.currentLayerId);
+				if (!layer) { return; }
+				eventBus.$emit('ace:content.set', layer, {layerId});
 			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
@@ -216,12 +218,16 @@
 
 			dataWatcher() {
 				let gStyle = this.get_gStyle();
-
 				let newStyle = exportStyle(this.vStyle, gStyle);
-				vLayersIndex = indexLayers(newStyle.layers);
 				this.setStyle(newStyle);
 
 				eventBus.$emit('map:style.set', newStyle);
+				this.updateLayerCode();
+			},
+
+			editFullStyle() {
+				console.log(' * editFullStyle : ');
+				eventBus.$emit('ace:content.set', this.vStyle, {projectId: this.projectId});
 			},
 
 

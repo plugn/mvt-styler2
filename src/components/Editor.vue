@@ -8,7 +8,9 @@
 	import 'brace/theme/idle_fingers'
 	import debounce from 'lodash/debounce'
 
-	import { eventBus } from '../main';
+	import { eventBus } from '../main'
+	import * as types from '../store/mutation-types'
+	import {mapState, mapMutations} from 'vuex'
 
 
 	export default{
@@ -45,9 +47,11 @@
 			editor
 		},
 		created() {
-			eventBus.$on('ace:content.set', (value, layerId) => {
+			eventBus.$on('ace:content.set', (value, {layerId, projectId}) => {
 				this.layerId = layerId;
+				this.projectId = projectId;
 				this.validContent = this.content = JSON.stringify(value, null, '\t');
+				this.editorPaneShow(true);
 			});
 		},
 
@@ -56,7 +60,13 @@
 			vm.$on('editor-update', debounce(vm.onUpdate, 2500, {trailing: true}));
 //			console.log('editor:', editor.methods.getEditor());
 			
+		},
+		methods: {
+			...mapMutations({
+				editorPaneShow: types.EDITOR_PANE_SHOW
+			})
 		}
+
 
 	}
 
