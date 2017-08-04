@@ -1,6 +1,6 @@
 <template>
 
-	<li class="col12 clearfix contain dark" @click="setCurrentLayer(model.id)">
+	<li class="col12 clearfix contain dark" @click="setCurrentLayerId(model.id)">
 		<ul>
 			<div class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark "
 				 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent}"
@@ -36,7 +36,7 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-				setCurrentLayer: types.SET_CURRENT_LAYER,
+				setCurrentLayerId: types.SET_CURRENT_LAYER,
 			}
 		)
 	}

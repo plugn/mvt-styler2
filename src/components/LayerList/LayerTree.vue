@@ -102,25 +102,22 @@
 				vm.setLoading(true);
 				
 				storage.getProject(projectId, (xhr) => {
-					console.log(' * getProject() xhr : ', xhr);
-
+//					console.log(' * getProject() xhr : ', xhr);
 					let srcStyle;
+
 					try {
-//						srcStyle = JSON.parse(xhr.responseText.replace(/[\t\r\n]|\s{2,}/g, ''));
 						srcStyle = JSON.parse(xhr.responseText);
 					} catch (e) {
-						console.warn(' (!) JSON crash', e);
+						console.warn(' (!) JSON crash', xhr.responseText);
 					}
 					vm.setLoading(false);
-
 
 					if (srcStyle) {
 						console.log(' * srcStyle : ', srcStyle);
 						vm.initStyle(srcStyle);
 					}
 
-					console.log('isLoading', vm.isLoading);
-
+//					console.log('isLoading', vm.isLoading);
 				});
 
 
@@ -130,14 +127,13 @@
 		created() {
 			this.setStyle(mbStyle);
 			this.set_gStyle(mbStyle);
-			this.$watch('tree.listData', this.dataWatcher, {deep: true});
 
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 		},
 
 		mounted() {
+			this.$watch('tree.listData', this.dataWatcher, {deep: true, immediate: true});
 			this.initDnD();
-			this.dataWatcher();
 		},
 
 		methods: {
