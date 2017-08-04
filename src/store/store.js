@@ -37,7 +37,6 @@ export const store = new Vuex.Store({
 		},
 		
 		[types.SET_LAYER](state, {layerId, value}) {
-			console.log('SET_LAYER');
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, value);
 		},

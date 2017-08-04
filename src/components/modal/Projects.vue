@@ -81,11 +81,8 @@ export default {
 		},
 		setProjects(data){
 			try {
-
 				let projects = JSON.parse(data.response);
-
 				this.projects = projects && _.filter(projects, project => /^vue/.test(project.name));
-				console.log(' * setProjects data() : ', this.projects);
 			} catch (e) {
 				console.warn(' (!) modal/projects ', e);
 			}
