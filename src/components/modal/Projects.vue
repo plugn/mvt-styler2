@@ -1,7 +1,8 @@
 <template>
 	<div data-type="modal" class="modal" v-if="show" style="z-index:200;">
 		<div @click.self="toggleShow" class="modal-underlay scroll-v" style="position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px;">
-			<div class="modal-entity publish-modal space-bottom4 width52 fill-white pin-top contain">
+			<div class="modal-entity publish-modal space-bottom4 width52 fill-white pin-top contain"
+				 :class="{'loading fill-lighten0': isLoading}">
 				<div class="pad4x space-top2 space-bottom2 prose-big">Projects</div>
 				<div class="pad4x col12 clearfix space-bottom3 scroll-styled scroll-v" style="max-height: 360px;">
 					<div v-for="proj in projects" class="keyline-bottom">
@@ -14,7 +15,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col12 clearfix space-top2 space-bottom2">
+				<div v-show="!isLoading" class="col12 clearfix space-top2 space-bottom2">
 
 					<div class="pad4x col12 clearfix fill">
 						<div class="strong small x-width10 contain">
@@ -28,7 +29,7 @@
 									   @keyup.enter="createProject"
 									   v-model="newProjectName"
 									   class="truncate x-clean small short col12 space-right2 round "
-									   style="padding-right: 20px;"
+									   style="padding-right: 20px; background-color: transparent;"
 								>
 							</div>
 						</div>
@@ -48,7 +49,7 @@
 <script>
 
 import * as types from '../../store/mutation-types'
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import storage from '../../util/storage'
 
 export default {
@@ -69,6 +70,12 @@ export default {
 
 	mounted() {	
 		this.getProjects();
+	},
+
+	computed: {
+		...mapState([
+			'isLoading'
+		])
 	},
 
 	methods: {
