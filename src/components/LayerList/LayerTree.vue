@@ -250,6 +250,7 @@
 
 				eventBus.$emit('map:style.set', newStyle);
 				this.updateLayerCode();
+				this.setFolderIcon();
 			},
 
 			editFullStyle() {
