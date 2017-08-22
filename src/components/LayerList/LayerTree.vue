@@ -21,8 +21,8 @@
 				class="icon plus"></span>New layer</a>
 			<div class="fr"><span class="space-right0"><button class="inline icon duplicate a pad0y align-top "
 					:class="{'dim noevents': !currentLayerId}"></button></span><span
-					class="space-right0"><button class="inline icon nofolder a pad0y align-top "
-					:class="{'dim noevents': !currentLayerId}"></button></span><span
+					class="space-right0"><button class="inline icon a pad0y align-top "
+					:class="[{'dim noevents': !currentLayerId}, icon.folder]"></button></span><span
 					class="space-right0"><button
 					@click="toggleVisibility" class="inline icon a pad0y align-top "
 					:class="[{'dim noevents': !currentLayerId}, icon.eye]"></button></span><span
@@ -64,7 +64,8 @@
 		data() {
 			return {
 				icon: {
-					eye: 'noeye'
+					eye: 'noeye',
+					folder: 'folder'
 				},
 				// grouped (tree structure)
 				tree: {
@@ -90,6 +91,7 @@
 		watch: {
 			currentLayerId(layerId) {
 				this.setEyeIcon();
+				this.setFolderIcon();
 			},
 			projectId(projectId, prevId) {
 				console.log(' isLoading:', this.isLoading);
@@ -161,13 +163,22 @@
 				})
 				
 			},
+
+			// TODO: refactor icon routine
 			getEyeIcon() {
 				let v8y = this.getCurrentLayerVisibility();
 				return ('visible' === v8y ? 'noeye' : 'eye');
 			},
+			getFolderIcon() {
+				let folder = this.getCurrentLayerFolder();
+				return (folder ? 'nofolder' : 'folder');
+			},
 
 			setEyeIcon() {
 				this.$set(this.icon, 'eye', this.getEyeIcon());
+			},
+			setFolderIcon() {
+				this.$set(this.icon, 'folder', this.getFolderIcon());
 			},
 
 			getCurrentLayerVisibility() {
@@ -175,6 +186,13 @@
 				let layerId = this.currentLayerId,
 					layerStyle = this.getLayer(layerId);
 				return get(layerStyle, 'layout.visibility', 'visible');
+			},
+
+			getCurrentLayerFolder() {
+				if (!this.currentLayerId) return;
+				let layerId = this.currentLayerId,
+					layerStyle = this.getLayer(layerId);
+				return get(layerStyle, ['metadata', 'mapbox:group']);
 			},
 
 			toggleVisibility() {

@@ -22,8 +22,8 @@ import {
 	value
 } from 'lodash'
 
-const groupsPath = ['metadata', 'mapbox:groups'];
-const groupPath = ['metadata', 'mapbox:group'];
+export const groupsPath = ['metadata', 'mapbox:groups'];
+export const groupPath = ['metadata', 'mapbox:group'];
 
 export function buildTreeData(mvtStyle) {
 	let currentGroup = null;
