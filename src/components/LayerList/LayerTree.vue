@@ -42,7 +42,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import {cloneDeep, get, set, pick} from 'lodash'
-	import {buildTreeData, exportStyle, updateLayers, indexLayers, objectDiff} from '../../util/styleSync'
+	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, objectDiff} from '../../util/styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
@@ -209,7 +209,7 @@
 
 				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
 //				console.log('vStyle', this.$store.state.vStyle.layers);
-//				console.log('gLayers', gLayers);
+				console.log('gLayers', gLayers);
 
 				if ('nofolder' === this.icon.folder) {
 					this.unfoldLayer(this.currentLayerId)
@@ -283,24 +283,12 @@
 
 
 			unfoldLayer(layerId) {
-				let layerIndex = this.getLayerIndex(layerId),
-					groupName = this.getLayerFolder(layerId),
-					walkIndex = layerIndex,
-					walkLayer,
-					walkGroup;
+				let treeIndexed = indexTree(this.get_gStyle());
+				console.log(' * treeIndexed : ', treeIndexed);
+				
+				return;
 
-				if (!groupName) { throw new Error('No groupName found for layerId #', layerId); }
-/*
-
-				do {
-					walkIndex--;
-					walkLayer = this.getLayerByIndex(walkIndex);
-					walkGroup = get(walkLayer, ['metadata', 'mapbox:group'])
-
-				} while (walkGroup === groupName);
-				console.log(' * walkLayer : ', walkLayer, ' * walkGroup : ', walkGroup, ' * walkIndex : ', layerIndex +' > '+ walkIndex);
-*/
-
+// TODO: use indexed tree for laf and group indexes instead, then refactor gStyle and listData mutations
 				let root = drake.containers[0],
 					rootList = utils.getList(drake.containers[0]);
 

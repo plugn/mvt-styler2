@@ -124,6 +124,28 @@ export function indexLayers(layers) {
 	}
 }
 
+/**
+ *
+ * @param layersTree
+ * @returns {*}
+ * layerId: {leafIndex: number, groupIndex?: number}
+ */
+export function indexTree(layersTree) {
+	return reduce(layersTree, reducer, {});
+
+	function reducer(acc, value, key) {
+		if (value.children) {
+			let children = map(value.children, child => set(child, 'groupIndex', key));
+			return reduce(children, reducer, acc);
+		}
+		else {
+			acc[value.id] = {...value, 'leafIndex': key};
+			return acc;
+		}
+	}
+
+}
+
 export function objectDiff(curr, last) {
 	let keysLast = keys(last),
 		keysCurr = keys(curr),
