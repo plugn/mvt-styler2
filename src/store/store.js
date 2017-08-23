@@ -20,7 +20,9 @@ export const store = new Vuex.Store({
 	},
 	getters: {
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
-		getLayer: state => layerId => state.vStyle.layers[state.vLayersIndex[layerId]]
+		getLayer: state => layerId => state.vStyle.layers[state.vLayersIndex[layerId]],
+		getLayerIndex: state => layerId => state.vLayersIndex[layerId],
+		getLayerByIndex: state => index => state.vStyle.layers[index]
  	},
 	mutations: {
 		[types.SET_CURRENT_LAYER](state, payload) {

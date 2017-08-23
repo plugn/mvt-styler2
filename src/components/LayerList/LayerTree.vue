@@ -21,7 +21,8 @@
 				class="icon plus"></span>New layer</a>
 			<div class="fr"><span class="space-right0"><button class="inline icon duplicate a pad0y align-top "
 					:class="{'dim noevents': !currentLayerId}"></button></span><span
-					class="space-right0"><button class="inline icon a pad0y align-top "
+					class="space-right0"><button
+					@click="toggleFolder" class="inline icon a pad0y align-top "
 					:class="[{'dim noevents': !currentLayerId}, icon.folder]"></button></span><span
 					class="space-right0"><button
 					@click="toggleVisibility" class="inline icon a pad0y align-top "
@@ -84,7 +85,9 @@
 			]),
 			...mapGetters([
 				'getCurrentLayer',
-				'getLayer'
+				'getLayer',
+				'getLayerIndex',
+				'getLayerByIndex'
 			])
 		},
 
@@ -190,11 +193,52 @@
 
 			getCurrentLayerFolder() {
 				if (!this.currentLayerId) return;
-				let layerId = this.currentLayerId,
-					layerStyle = this.getLayer(layerId);
+				return this.getLayerFolder(this.currentLayerId);
+			},
+
+			getLayerFolder(layerId) {
+				let layerStyle = this.getLayer(layerId);
 				return get(layerStyle, ['metadata', 'mapbox:group']);
 			},
 
+			toggleFolder() {
+				if (!this.currentLayerId) { return; }
+
+				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
+//				console.log('vStyle', this.$store.state.vStyle.layers);
+//				console.log('gLayers', gLayers);
+
+				if ('nofolder' === this.icon.folder) {
+					this.unfoldLayer(this.currentLayerId)
+				}
+
+
+			},
+
+			unfoldLayer(layerId) {
+				let layerIndex = this.getLayerIndex(layerId),
+					groupName = this.getLayerFolder(layerId),
+					walkIndex = layerIndex,
+					walkLayer,
+					walkGroup;
+
+				if (!groupName) { throw new Error('No groupName found for layerId #', layerId); }
+
+				console.log(' * groupName : ', groupName, 'layerIndex', layerIndex);
+
+				do {
+					walkIndex--;
+					walkLayer = this.getLayerByIndex(walkIndex);
+					walkGroup = get(walkLayer, ['metadata', 'mapbox:group'])
+
+				} while (walkGroup === groupName);
+				console.log(' * walkLayer : ', walkLayer, ' * walkGroup : ', walkGroup, ' * walkIndex : ', layerIndex +' > '+ walkIndex);
+
+
+				
+
+			},
+			
 			toggleVisibility() {
 				if (!this.currentLayerId) { return; }
 
