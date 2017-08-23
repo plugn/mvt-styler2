@@ -42,7 +42,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import {cloneDeep, get, set, pick} from 'lodash'
-	import {buildTreeData, exportStyle, indexLayers, objectDiff} from '../../util/styleSync'
+	import {buildTreeData, exportStyle, updateLayers, indexLayers, objectDiff} from '../../util/styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
@@ -115,6 +115,7 @@
 
 					if (srcStyle) {
 //						console.log(' * srcStyle : ', srcStyle);
+						vm.resetView();
 						vm.initStyle(srcStyle);
 					}
 				});
@@ -146,10 +147,12 @@
 			}),
 
 			initStyle(srcStyle) {
-				this.setCurrentLayerId(null);
 				this.setListData(srcStyle)
 				this.setStyle(srcStyle);
 				this.set_gStyle(srcStyle);
+			},
+			resetView() {
+				this.setCurrentLayerId(null);
 				this.editorPaneShow(false);
 			},
 
@@ -212,30 +215,6 @@
 					this.unfoldLayer(this.currentLayerId)
 				}
 
-
-			},
-
-			unfoldLayer(layerId) {
-				let layerIndex = this.getLayerIndex(layerId),
-					groupName = this.getLayerFolder(layerId),
-					walkIndex = layerIndex,
-					walkLayer,
-					walkGroup;
-
-				if (!groupName) { throw new Error('No groupName found for layerId #', layerId); }
-
-				console.log(' * groupName : ', groupName, 'layerIndex', layerIndex);
-
-				do {
-					walkIndex--;
-					walkLayer = this.getLayerByIndex(walkIndex);
-					walkGroup = get(walkLayer, ['metadata', 'mapbox:group'])
-
-				} while (walkGroup === groupName);
-				console.log(' * walkLayer : ', walkLayer, ' * walkGroup : ', walkGroup, ' * walkIndex : ', layerIndex +' > '+ walkIndex);
-
-
-				
 
 			},
 			
@@ -303,6 +282,63 @@
 			},
 
 
+			unfoldLayer(layerId) {
+				let layerIndex = this.getLayerIndex(layerId),
+					groupName = this.getLayerFolder(layerId),
+					walkIndex = layerIndex,
+					walkLayer,
+					walkGroup;
+
+				if (!groupName) { throw new Error('No groupName found for layerId #', layerId); }
+/*
+
+				do {
+					walkIndex--;
+					walkLayer = this.getLayerByIndex(walkIndex);
+					walkGroup = get(walkLayer, ['metadata', 'mapbox:group'])
+
+				} while (walkGroup === groupName);
+				console.log(' * walkLayer : ', walkLayer, ' * walkGroup : ', walkGroup, ' * walkIndex : ', layerIndex +' > '+ walkIndex);
+*/
+
+				let root = drake.containers[0],
+					rootList = utils.getList(drake.containers[0]);
+
+				let sourceList =  utils.getList(source),
+					sourceIndex = sourceList.indexOf(el),
+					sourceGroupIndex = -1;
+				if (root !== source && root.contains(source)) {
+					sourceGroupIndex = rootList.indexOf( source.closest('li') )
+				}
+
+//console.log('source', sourceIndex, '@', sourceGroupIndex);
+
+				let targetList = utils.getList(target),
+					targetIndex = targetList.indexOf(sibling);
+//console.log('target', targetIndex, '@', targetGroupIndex);
+
+				let gStyle = this.get_gStyle();
+
+				let mirrorSource = gStyle[sourceGroupIndex].children;
+				let mirrorTarget = gStyle;
+				let dataSource = this.tree.listData[sourceGroupIndex].children;
+				let dataTarget = this.tree.listData;
+
+				targetIndex = targetIndex === -1
+					? targetList.length
+					: targetIndex;
+
+				// data mutation
+				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
+				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+
+				let takeOut = dataSource.splice(sourceIndex, 1)[0];
+				dataTarget.splice(targetIndex, 0, takeOut);
+
+				// FF needs 300ms delay
+				setTimeout(this.refreshContainers.bind(this), 300);
+
+			},
 
 			initDnD() {
 				let options = {

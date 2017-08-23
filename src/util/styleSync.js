@@ -100,6 +100,13 @@ export function exportLayers(layersTree, vStyle, vIndex) {
 	}
 }
 
+export function updateLayers(vStyle, layers) {
+	let nextStyle = cloneDeep(pickBy(vStyle, (v, k) => k !== 'layers'));
+
+	nextStyle.layers = layers;
+	return nextStyle;
+}
+
 export function exportStyle(vStyle, layersTree) {
 	let vIndex = indexLayers(vStyle.layers),
 		nextStyle = cloneDeep(pickBy(vStyle, (v, k) => k !== 'layers'));
