@@ -139,7 +139,7 @@ export function indexTree(layersTree) {
 			return reduce(children, reducer, acc);
 		}
 		else {
-			acc[value.id] = {'groupIndex':value.groupIndex, 'leafIndex': key};
+			acc[value.id] = {'groupIndex': isFinite(value.groupIndex) ? value.groupIndex : -1, 'leafIndex': key};
 			return acc;
 		}
 	}

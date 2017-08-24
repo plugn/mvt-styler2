@@ -202,11 +202,20 @@
 				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
 
 				if ('nofolder' === this.icon.folder) {
-					this.unfoldLayer(this.currentLayerId)
+					this.ungroupLayer(this.currentLayerId);
+				}
+				else {
+					this.groupLayer(this.currentLayerId);
 				}
 			},
 
-			unfoldLayer(layerId) {
+			groupLayer(layerId) {
+				let	layerIndex = this.getTreeIndex(layerId);
+				console.log(' * groupLayer() layerIndex #'+layerId+' : ', layerIndex);
+
+			},
+
+			ungroupLayer(layerId) {
 				let	layerIndex = this.getTreeIndex(layerId);
 				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
 
