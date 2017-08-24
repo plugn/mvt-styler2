@@ -52,10 +52,6 @@
 	// drag-and-drop instance
 	let drake;
 
-	// {array} GL Style grouped Layers
-	// array of regular items {object} and/or groups {id:groupId, children: [{object}, ...]}
-	let gLayers = null;
-
 	export default {
 		name: 'LayerTree',
 		components: {
@@ -70,7 +66,7 @@
 				},
 				// grouped (tree structure)
 				tree: {
-					listData: buildTreeData(cloneDeep(mbStyle))
+					listData: buildTreeData(mbStyle)
 				}
 			}
 		},
@@ -81,13 +77,15 @@
 				'projectName',
 				'currentLayerId',
 				'vStyle',
+				'vTree',
 				'isLoading'
 			]),
 			...mapGetters([
 				'getCurrentLayer',
 				'getLayer',
 				'getLayerIndex',
-				'getLayerByIndex'
+				'getLayerByIndex',
+				'getTreeIndex'
 			])
 		},
 
@@ -97,7 +95,6 @@
 				this.setFolderIcon();
 			},
 			projectId(projectId, prevId) {
-				console.log(' isLoading:', this.isLoading);
 				if (this.isLoading) { return; }
 
 				console.log(' * projectId : ', prevId +' -> ' + projectId);
@@ -120,14 +117,11 @@
 					}
 				});
 
-
 			}
 		},
 
 		created() {
 			this.setStyle(mbStyle);
-			this.set_gStyle(mbStyle);
-
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 		},
 
@@ -149,7 +143,6 @@
 			initStyle(srcStyle) {
 				this.setListData(srcStyle)
 				this.setStyle(srcStyle);
-				this.set_gStyle(srcStyle);
 			},
 			resetView() {
 				this.setCurrentLayerId(null);
@@ -206,18 +199,39 @@
 
 			toggleFolder() {
 				if (!this.currentLayerId) { return; }
-
 				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
-//				console.log('vStyle', this.$store.state.vStyle.layers);
-				console.log('gLayers', gLayers);
 
 				if ('nofolder' === this.icon.folder) {
 					this.unfoldLayer(this.currentLayerId)
 				}
-
-
 			},
-			
+
+			unfoldLayer(layerId) {
+				let	layerIndex = this.getTreeIndex(layerId);
+				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
+
+				let sourceIndex = layerIndex.leafIndex;
+				let sourceGroupIndex = layerIndex.groupIndex;
+				let targetIndex = layerIndex.groupIndex;
+
+				let gStyle = this.vTree;
+
+				let mirrorSource = gStyle[sourceGroupIndex].children;
+				let mirrorTarget = gStyle;
+				let dataSource = this.tree.listData[sourceGroupIndex].children;
+				let dataTarget = this.tree.listData;
+
+				// data mutation
+				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
+				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+
+				let takeOut = dataSource.splice(sourceIndex, 1)[0];
+				dataTarget.splice(targetIndex, 0, takeOut);
+
+				// FF needs 300ms delay
+				setTimeout(this.refreshContainers.bind(this), 300);
+			},
+
 			toggleVisibility() {
 				if (!this.currentLayerId) { return; }
 
@@ -228,7 +242,6 @@
 					current = 'visible' === before ? 'none' : 'visible';
 				set(layerNewStyle, 'layout.visibility', current);
 				let updateObj = pick(layerNewStyle, 'layout');
-//					console.log('toggleVisibility', layerId, updateObj);
 				eventBus.$emit('map:layer.update', layerId, updateObj);
 				this.setLayer({layerId: layerId, value:layerNewStyle});
 				eventBus.$emit('ace:content.set', layerNewStyle, {layerId});
@@ -256,19 +269,11 @@
 			},
 
 			setListData(newValue) {
-				this.$set(this.tree, 'listData', buildTreeData(cloneDeep( newValue )))
-			},
-
-			get_gStyle() {
-				return gLayers;
-			},
-			set_gStyle(newValue) {
-				gLayers = buildTreeData(cloneDeep( newValue ));
+				this.$set(this.tree, 'listData', buildTreeData(newValue))
 			},
 
 			dataWatcher() {
-				let gStyle = this.get_gStyle();
-				let newStyle = exportStyle(this.vStyle, gStyle);
+				let newStyle = exportStyle(this.vStyle, this.vTree);
 				this.setStyle(newStyle);
 
 				eventBus.$emit('map:style.set', newStyle);
@@ -277,55 +282,8 @@
 			},
 
 			editFullStyle() {
-				console.log(' * editFullStyle : ');
+				// console.log(' * editFullStyle : ');
 				eventBus.$emit('ace:content.set', this.vStyle, {projectId: this.projectId});
-			},
-
-
-			unfoldLayer(layerId) {
-				let treeIndexed = indexTree(this.get_gStyle());
-				console.log(' * treeIndexed : ', treeIndexed);
-				
-				return;
-
-// TODO: use indexed tree for laf and group indexes instead, then refactor gStyle and listData mutations
-				let root = drake.containers[0],
-					rootList = utils.getList(drake.containers[0]);
-
-				let sourceList =  utils.getList(source),
-					sourceIndex = sourceList.indexOf(el),
-					sourceGroupIndex = -1;
-				if (root !== source && root.contains(source)) {
-					sourceGroupIndex = rootList.indexOf( source.closest('li') )
-				}
-
-//console.log('source', sourceIndex, '@', sourceGroupIndex);
-
-				let targetList = utils.getList(target),
-					targetIndex = targetList.indexOf(sibling);
-//console.log('target', targetIndex, '@', targetGroupIndex);
-
-				let gStyle = this.get_gStyle();
-
-				let mirrorSource = gStyle[sourceGroupIndex].children;
-				let mirrorTarget = gStyle;
-				let dataSource = this.tree.listData[sourceGroupIndex].children;
-				let dataTarget = this.tree.listData;
-
-				targetIndex = targetIndex === -1
-					? targetList.length
-					: targetIndex;
-
-				// data mutation
-				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
-				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
-
-				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-				dataTarget.splice(targetIndex, 0, takeOut);
-
-				// FF needs 300ms delay
-				setTimeout(this.refreshContainers.bind(this), 300);
-
 			},
 
 			initDnD() {
@@ -374,7 +332,7 @@
 				}
 //console.log('target', targetIndex, '@', targetGroupIndex);
 
-				let gStyle = this.get_gStyle();
+				let gStyle = this.vTree;
 
 				let mirrorSource = sourceGroupIndex === -1 ? gStyle : gStyle[sourceGroupIndex].children;
 				let mirrorTarget = targetGroupIndex === -1 ? gStyle : gStyle[targetGroupIndex].children;

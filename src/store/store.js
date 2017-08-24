@@ -1,17 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
-import {indexLayers} from '../util/styleSync'
+import {indexLayers, indexTree, buildTreeData} from '../util/styleSync'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
 		vStyle: {},  // virtual style
-
 		vLayersIndex: {}, // layers index in sync with vStyle.layers
-		currentLayerId: null,
 
+		// {array} GL Style grouped Layers (aka gLayers)
+		// array of regular items {object} and/or groups [ {id: 'layerId'}, {id:groupId, children: [{object}, ...]} ]
+		vTree: {},
+		vTreeIndex: {}, // tree indexes by layerId (see indexTree())
+
+		currentLayerId: null,
 		isLoading: false,
 		modalProjectsShow: false,
 		editorPaneShow: false,
@@ -22,7 +26,8 @@ export const store = new Vuex.Store({
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
 		getLayer: state => layerId => state.vStyle.layers[state.vLayersIndex[layerId]],
 		getLayerIndex: state => layerId => state.vLayersIndex[layerId],
-		getLayerByIndex: state => index => state.vStyle.layers[index]
+		getLayerByIndex: state => index => state.vStyle.layers[index],
+		getTreeIndex: state => layerId => state.vTreeIndex[layerId]
  	},
 	mutations: {
 		[types.SET_CURRENT_LAYER](state, payload) {
@@ -36,6 +41,8 @@ export const store = new Vuex.Store({
 		[types.SET_STYLE](state, payload) {
 			state.vLayersIndex = indexLayers(payload.layers);
 			state.vStyle = { ...payload };
+			state.vTree = buildTreeData(payload);
+			state.vTreeIndex = indexTree(state.vTree);
 		},
 		
 		[types.SET_LAYER](state, {layerId, value}) {

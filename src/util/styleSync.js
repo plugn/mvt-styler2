@@ -28,7 +28,7 @@ export const groupPath = ['metadata', 'mapbox:group'];
 export function buildTreeData(mvtStyle) {
 	let currentGroup = null;
 
-	return reduce(mvtStyle.layers, reducer, []);
+	return reduce(cloneDeep(mvtStyle.layers), reducer, []);
 
 	function reducer(result, value, key) {
 		let _value = {id: value.id};
@@ -139,7 +139,7 @@ export function indexTree(layersTree) {
 			return reduce(children, reducer, acc);
 		}
 		else {
-			acc[value.id] = {...value, 'leafIndex': key};
+			acc[value.id] = {'groupIndex':value.groupIndex, 'leafIndex': key};
 			return acc;
 		}
 	}
