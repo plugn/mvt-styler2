@@ -209,10 +209,33 @@
 				}
 			},
 
-			groupLayer(layerId) {
-				let	layerIndex = this.getTreeIndex(layerId);
-				console.log(' * groupLayer() layerIndex #'+layerId+' : ', layerIndex);
 
+			// TODO: add metadata group
+
+			groupLayer(layerId) {
+				let	{groupIndex, leafIndex} = this.getTreeIndex(layerId);
+				console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
+
+				if (groupIndex !== -1) {
+					throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
+				}
+
+
+				let mirrorTarget = this.vTree;
+				let dataTarget = this.tree.listData;
+
+				let payload = {
+					id: `Group: ${layerId}`,
+					children:[{
+						id: `${layerId}`
+					}]
+				};
+
+				mirrorTarget.splice(leafIndex, 1, payload);
+				dataTarget.splice(leafIndex, 1, payload);
+
+				// FF needs 300ms delay
+				setTimeout(this.refreshContainers.bind(this), 300);
 			},
 
 			ungroupLayer(layerId) {
