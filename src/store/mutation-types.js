@@ -1,6 +1,7 @@
 export const SET_CURRENT_LAYER = 'SET_CURRENT_LAYER'
 export const TOGGLE_MODAL = 'TOGGLE_MODAL'
 export const SET_STYLE = 'SET_STYLE'
+export const SET_VSTYLE = 'SET_VSTYLE'
 export const SET_LAYER = 'SET_LAYER'
 export const SET_PROJECT_DATA = 'SET_PROJECT_DATA'
 export const SET_LOADING = 'SET_LOADING'

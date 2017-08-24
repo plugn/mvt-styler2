@@ -38,6 +38,10 @@ export const store = new Vuex.Store({
 			state.modalProjectsShow = !state.modalProjectsShow;
 		},
 
+		[types.SET_VSTYLE](state, payload) {
+			state.vLayersIndex = indexLayers(payload.layers);
+			state.vStyle = {...payload};
+		},
 		[types.SET_STYLE](state, payload) {
 			state.vLayersIndex = indexLayers(payload.layers);
 			state.vStyle = { ...payload };

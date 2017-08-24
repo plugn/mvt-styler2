@@ -27,13 +27,13 @@ export const groupsPath = ['metadata', 'mapbox:groups'];
 export const groupPath = ['metadata', 'mapbox:group'];
 
 export function ensureStyleHasGroup(mvtStyle, groupData) {
-	let {name, id} = groupData;
+	let {groupName, groupId} = groupData;
 	let oGroups = get(mvtStyle, groupsPath);
-	if (has(oGroups, ''+id)) {
+	if (has(oGroups, ''+groupId)) {
 		return mvtStyle;
 	}
-
-	set(mvtStyle, concat(groupsPath, id), {name, collapsed: false})
+	let newStyle = cloneDeep(mvtStyle);
+	set(mvtStyle, concat(groupsPath, groupId), {groupName, collapsed: false})
 	return mvtStyle;
 }
 

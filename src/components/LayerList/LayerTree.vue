@@ -42,7 +42,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import {cloneDeep, get, set, pick} from 'lodash'
-	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, objectDiff} from '../../util/styleSync'
+	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, ensureStyleHasGroup, objectDiff} from '../../util/styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
@@ -134,6 +134,7 @@
 			...mapMutations({
 				toggleStyleModal: types.TOGGLE_MODAL,
 				setStyle: types.SET_STYLE,
+				setVStyle: types.SET_VSTYLE,
 				setLayer: types.SET_LAYER,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
@@ -220,12 +221,28 @@
 					throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
 				}
 
+				let layer = this.getLayer(layerId);
+
+				let groupId = '' + Date.now();
+				let groupName = `Group: ${layerId}`;
+
+				let setgr = set(layer, ['metadata', 'mapbox:group'], groupId);
+				console.log(' * setgr : ', setgr);
+
+				this.setLayer({layerId, layer});
+				let vStyle = ensureStyleHasGroup(this.vStyle, {groupName, groupId});
+				if (vStyle !== this.vStyle) {
+					this.setVStyle(vStyle);
+				}
+/*
+
+*/
 
 				let mirrorTarget = this.vTree;
 				let dataTarget = this.tree.listData;
 
 				let payload = {
-					id: `Group: ${layerId}`,
+					id: groupName,
 					children:[{
 						id: `${layerId}`
 					}]
@@ -305,11 +322,15 @@
 			},
 
 			dataWatcher() {
+debugger;
 				let newStyle = exportStyle(this.vStyle, this.vTree);
+debugger;
 				this.setStyle(newStyle);
-
+debugger;
 				eventBus.$emit('map:style.set', newStyle);
+debugger;
 				this.updateLayerCode();
+debugger;
 				this.setFolderIcon();
 			},
 
