@@ -5,6 +5,7 @@
 import {
 	cloneDeep,
 	chain,
+	concat,
 	difference,
 	forOwn,
 	get,
@@ -24,6 +25,17 @@ import {
 
 export const groupsPath = ['metadata', 'mapbox:groups'];
 export const groupPath = ['metadata', 'mapbox:group'];
+
+export function ensureStyleHasGroup(mvtStyle, groupData) {
+	let {name, id} = groupData;
+	let oGroups = get(mvtStyle, groupsPath);
+	if (has(oGroups, ''+id)) {
+		return mvtStyle;
+	}
+
+	set(mvtStyle, concat(groupsPath, id), {name, collapsed: false})
+	return mvtStyle;
+}
 
 export function buildTreeData(mvtStyle) {
 	let currentGroup = null;
