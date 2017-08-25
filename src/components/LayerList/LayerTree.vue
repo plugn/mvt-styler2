@@ -111,7 +111,6 @@
 					vm.setLoading(false);
 
 					if (srcStyle) {
-//						console.log(' * srcStyle : ', srcStyle);
 						vm.resetView();
 						vm.initStyle(srcStyle);
 					}
@@ -151,7 +150,7 @@
 			},
 
 			save() {
-				console.log('RESULT', JSON.stringify(this.vStyle));
+//				console.log('RESULT', JSON.stringify(this.vStyle));
 				if (this.projectId < 1) {
 					console.log('you should have load project with `cloudy icon` dialog');
 					return;
@@ -210,12 +209,9 @@
 				}
 			},
 
-
-			// TODO: add metadata group
-
 			groupLayer(layerId) {
 				let	{groupIndex, leafIndex} = this.getTreeIndex(layerId);
-				console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
+//				console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
 
 				if (groupIndex !== -1) {
 					throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
@@ -254,7 +250,7 @@
 
 			ungroupLayer(layerId) {
 				let	layerIndex = this.getTreeIndex(layerId);
-				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
+//				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
 
 				let sourceIndex = layerIndex.leafIndex;
 				let sourceGroupIndex = layerIndex.groupIndex;
@@ -303,7 +299,7 @@
 			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
-				console.log('layer upd', layerId, layerNewStyle);
+//				console.log('layer upd', layerId, layerNewStyle);
 				let layerStyle = this.getLayer(layerId);
 				// Avoid changing layerId by user
 				layerNewStyle = {...layerNewStyle, id: layerId};
