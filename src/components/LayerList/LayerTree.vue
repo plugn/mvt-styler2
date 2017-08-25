@@ -264,11 +264,13 @@
 				let dataTarget = this.tree.listData;
 
 				// data mutation
+				let dropCount = (mirrorSource.length - 1) < 1 ? 1 : 0;
+
 				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
-				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+				mirrorTarget.splice(targetIndex, dropCount, mirrorTakeOut);
 
 				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-				dataTarget.splice(targetIndex, 0, takeOut);
+				dataTarget.splice(targetIndex, dropCount, takeOut);
 
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
