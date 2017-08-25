@@ -226,17 +226,14 @@
 				let groupId = '' + Date.now();
 				let groupName = `Group: ${layerId}`;
 
-				let setgr = set(layer, ['metadata', 'mapbox:group'], groupId);
-				console.log(' * setgr : ', setgr);
+				set(layer, ['metadata', 'mapbox:group'], groupId);
 
-				this.setLayer({layerId, layer});
+				this.setLayer({layerId, value:layer});
+
 				let vStyle = ensureStyleHasGroup(this.vStyle, {groupName, groupId});
 				if (vStyle !== this.vStyle) {
 					this.setVStyle(vStyle);
 				}
-/*
-
-*/
 
 				let mirrorTarget = this.vTree;
 				let dataTarget = this.tree.listData;
@@ -322,15 +319,10 @@
 			},
 
 			dataWatcher() {
-debugger;
 				let newStyle = exportStyle(this.vStyle, this.vTree);
-debugger;
 				this.setStyle(newStyle);
-debugger;
 				eventBus.$emit('map:style.set', newStyle);
-debugger;
 				this.updateLayerCode();
-debugger;
 				this.setFolderIcon();
 			},
 

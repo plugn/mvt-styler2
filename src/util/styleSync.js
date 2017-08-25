@@ -32,9 +32,8 @@ export function ensureStyleHasGroup(mvtStyle, groupData) {
 	if (has(oGroups, ''+groupId)) {
 		return mvtStyle;
 	}
-	let newStyle = cloneDeep(mvtStyle);
-	set(mvtStyle, concat(groupsPath, groupId), {groupName, collapsed: false})
-	return mvtStyle;
+
+	return set(cloneDeep(mvtStyle), concat(groupsPath, groupId), {name:groupName, collapsed: false})
 }
 
 export function buildTreeData(mvtStyle) {
