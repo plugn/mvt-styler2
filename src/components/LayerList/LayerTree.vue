@@ -27,7 +27,8 @@
 					class="space-right0"><button
 					@click="toggleVisibility" class="inline icon a pad0y align-top "
 					:class="[{'dim noevents': !currentLayerId}, icon.eye]"></button></span><span
-					class="space-right0"><button class="inline icon trash a pad0y align-top "
+					class="space-right0"><button
+					@click="removeCurrentLayer" class="inline icon trash a pad0y align-top "
 					:class="{'dim noevents': !currentLayerId}"></button></span></div>
 		</div>
 
@@ -199,7 +200,7 @@
 
 			toggleFolder() {
 				if (!this.currentLayerId) { return; }
-				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
+//				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
 
 				if ('nofolder' === this.icon.folder) {
 					this.ungroupLayer(this.currentLayerId);
@@ -207,6 +208,31 @@
 				else {
 					this.groupLayer(this.currentLayerId);
 				}
+			},
+
+			removeCurrentLayer() {
+				if (!this.currentLayerId) { return; }
+				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
+
+
+				let mirrorSource = groupIndex === -1 ? this.vTree : this.vTree[groupIndex].children;
+				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
+				let mirrorTarget = this.vTree;
+				let dataTarget = this.tree.listData;
+
+				let dropCount = groupIndex === -1 ?  0 : ((mirrorSource.length - 1) < 1 ? 1 : 0);
+
+				mirrorSource.splice(leafIndex, 1);
+				mirrorTarget.splice(groupIndex, dropCount);
+
+				dataSource.splice(leafIndex, 1);
+				dataTarget.splice(groupIndex, dropCount);
+
+				// TODO: set current layerId by prev index
+				this.setCurrentLayerId(null);
+
+				// FF needs 300ms delay
+				setTimeout(this.refreshContainers.bind(this), 300);
 			},
 
 			groupLayer(layerId) {
