@@ -210,10 +210,27 @@
 				}
 			},
 
+			getSiblingLayerId(currentlayerId, shift) {
+				let nextLayerId = null;
+				let currentIndex = this.getLayerIndex(currentlayerId);
+				let nextIndex = currentIndex + shift;
+
+				if (nextIndex < 0) {
+					console.warn(`(!) getSiblingLayer( ${shift}, ${currentlayerId} ) : nextIndex is ${nextIndex}`);
+				}
+				else {
+					let nextLayer = this.getLayerByIndex(nextIndex);
+					if (nextLayer && nextLayer.id) {
+						nextLayerId = nextLayer.id;
+					}
+				}
+
+				return nextLayerId;
+			},
+
 			removeCurrentLayer() {
 				if (!this.currentLayerId) { return; }
 				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
-
 
 				let mirrorSource = groupIndex === -1 ? this.vTree : this.vTree[groupIndex].children;
 				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
@@ -228,8 +245,10 @@
 				dataSource.splice(leafIndex, 1);
 				dataTarget.splice(groupIndex, dropCount);
 
-				// TODO: set current layerId by prev index
-				this.setCurrentLayerId(null);
+				let nextLayerId = this.getSiblingLayerId(this.currentLayerId, -1);
+//				console.log(' * nextLayerId : ', nextLayerId);
+
+				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
 
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
