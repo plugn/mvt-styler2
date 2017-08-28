@@ -19,7 +19,8 @@
 		<div class="micro clearfix col12 fill-dark"><a class="inline micro pad0 strong "
 													   href="#"><span
 				class="icon plus"></span>New layer</a>
-			<div class="fr"><span class="space-right0"><button class="inline icon duplicate a pad0y align-top "
+			<div class="fr"><span class="space-right0"><button
+					@click="duplicateLayer" class="inline icon duplicate a pad0y align-top "
 					:class="{'dim noevents': !currentLayerId}"></button></span><span
 					class="space-right0"><button
 					@click="toggleFolder" class="inline icon a pad0y align-top "
@@ -136,6 +137,8 @@
 				setStyle: types.SET_STYLE,
 				setVStyle: types.SET_VSTYLE,
 				setLayer: types.SET_LAYER,
+				addLayerAfter: types.ADD_LAYER_AFTER,
+				addLayerBefore: types.ADD_LAYER_BEFORE,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
 				editorPaneShow: types.EDITOR_PANE_SHOW
@@ -200,7 +203,6 @@
 
 			toggleFolder() {
 				if (!this.currentLayerId) { return; }
-//				console.log('toggleFolder #'+this.currentLayerId, ' icon.folder', this.icon.folder);
 
 				if ('nofolder' === this.icon.folder) {
 					this.ungroupLayer(this.currentLayerId);
@@ -208,6 +210,44 @@
 				else {
 					this.groupLayer(this.currentLayerId);
 				}
+			},
+
+			duplicateLayer() {
+				if (!this.currentLayerId) { return; }
+				console.log('duplicateLayer #'+this.currentLayerId);
+
+				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
+
+
+				let mirrorSource = groupIndex === -1 ? this.vTree : this.vTree[groupIndex].children;
+				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
+
+				let makeNewId = s => s.replace(/([^\d]*)(\d+)$/, function(m,p1,p2){
+					return p1 + (+p2 + 1);
+				})
+
+				let nextLayerId;
+				let parts = ('' + this.currentLayerId).match(/([^\d]*)(\d+)?$/);
+				let assumed = this.currentLayerId + (parts[2] ? '' : '_copy_0');
+
+				let iterIndex, prevIndex;
+				do {
+					nextLayerId = makeNewId(assumed);
+					assumed = nextLayerId;
+					prevIndex = iterIndex;
+					iterIndex = this.getLayerIndex(assumed);
+				} while ('undefined' !== typeof iterIndex);
+
+				let layer = {...this.getLayer(this.currentLayerId), id: nextLayerId };
+
+				this.addLayerBefore({refLayerId: this.currentLayerId, value:layer});
+				mirrorSource.splice(leafIndex, 0, {id: nextLayerId});
+				dataSource.splice(leafIndex, 0, {id: nextLayerId});
+
+
+				// FF needs 300ms delay
+				setTimeout(this.refreshContainers.bind(this), 300);
+
 			},
 
 			getSiblingLayerId(currentlayerId, shift) {

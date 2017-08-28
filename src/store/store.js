@@ -52,7 +52,19 @@ export const store = new Vuex.Store({
 		[types.SET_LAYER](state, {layerId, value}) {
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, value);
+			// in case of rename we must re-index with indexLayers()
 		},
+		[types.ADD_LAYER_AFTER](state, {refLayerId, value}) {
+			let index = state.vLayersIndex[refLayerId];
+			state.vStyle.layers.splice(index+1, 0, value);
+			state.vLayersIndex = indexLayers(state.vStyle.layers);
+		},
+		[types.ADD_LAYER_BEFORE](state, {refLayerId, value}) {
+			let index = state.vLayersIndex[refLayerId];
+			state.vStyle.layers.splice(index, 0, value);
+			state.vLayersIndex = indexLayers(state.vStyle.layers);
+		},
+
 		[types.SET_PROJECT_DATA](state, payload) {
 			state.projectId = payload.id;
 			state.projectName =payload.name;
