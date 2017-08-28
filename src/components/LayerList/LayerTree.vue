@@ -232,6 +232,10 @@
 				if (!this.currentLayerId) { return; }
 				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
 
+				// clean way is to compute it if before data mutations
+				let nextLayerId = this.getSiblingLayerId(this.currentLayerId, -1);
+//				console.log(' * nextLayerId : ', nextLayerId);
+
 				let mirrorSource = groupIndex === -1 ? this.vTree : this.vTree[groupIndex].children;
 				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
 				let mirrorTarget = this.vTree;
@@ -245,8 +249,6 @@
 				dataSource.splice(leafIndex, 1);
 				dataTarget.splice(groupIndex, dropCount);
 
-				let nextLayerId = this.getSiblingLayerId(this.currentLayerId, -1);
-//				console.log(' * nextLayerId : ', nextLayerId);
 
 				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
 
