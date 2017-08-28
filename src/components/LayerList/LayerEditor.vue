@@ -73,7 +73,7 @@
 
 		watch: {
 			currentLayerId: function(layerId) {
-				if (!layerId) { return; }
+				if (!layerId && layerId !== 0) { return; }
 
 				let data = this.getLayer(layerId);
 //				console.log(' * LayerEditor watch() '+layerId+' data : ', data);
