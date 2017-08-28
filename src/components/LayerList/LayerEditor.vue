@@ -10,9 +10,22 @@
 							 style="width: 2px; background: rgba(255, 204, 68, 0.75);"></div>
 						<div class="strong small pin-topleft pad0 icon line"></div>
 						<div class="strong space-left3">
-							<div class="contain col12 pointer">
-								<div class="small pad0y truncate space-right2 strong"><span data-test="layer-name-text" >{{codeTitle}}</span>
+							<div v-if="editMode" class="contain col12">
+								<form v-on:submit.prevent="">
+									<button data-test="confirm-rename-layer"
+											class="a pad0y pin-right icon check space-right0"></button>
+									<input type="text" :value="codeTitle"
+										   @keyup.27="editMode=false"
+										   @keyup.enter="saveId($event.target.value)"
+										   class="truncate clean small short col12 space-right2 round "
+										   style="padding-right: 20px;"
+									>
+								</form>
+							</div>
+							<div v-else="" class="contain col12 pointer">
+								<div class="small pad0y truncate space-right2 strong"><span data-test="layer-name-text">{{codeTitle}}</span>
 									<button data-test="trigger-layer-rename"
+											@click="editMode=true"
 											class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 								</div>
 							</div>
@@ -27,7 +40,8 @@
 						style="padding-bottom: 4px;">Code
 				</button>
 				<span class="space-left0">
-					<button data-test="data-tab-button" class="a icon paint inline animate pad0 keyline-bottom keyline-transparent"
+					<button data-test="data-tab-button"
+							class="a icon paint inline animate pad0 keyline-bottom keyline-transparent"
 							style="padding-bottom: 4px;">Style</button>
 				</span></div>
 			<div class="scroll-styled pin-left col12 space-top7">
@@ -58,7 +72,8 @@
 		},
 		data() {
 			return {
-				codeTitle: '?'
+				codeTitle: '?',
+				editMode: false
 			}
 		},
 		computed: {
@@ -72,8 +87,10 @@
 		},
 
 		watch: {
-			currentLayerId: function(layerId) {
-				if (!layerId && layerId !== 0) { return; }
+			currentLayerId: function (layerId) {
+				if (!layerId && layerId !== 0) {
+					return;
+				}
 
 				let data = this.getLayer(layerId);
 //				console.log(' * LayerEditor watch() '+layerId+' data : ', data);
@@ -83,8 +100,14 @@
 		},
 
 		methods: {
-			onAfterResize: function() {
+			onAfterResize: function () {
 				eventBus.$emit('map:resize');
+			},
+			saveId(value) {
+//				console.log('saveId', this.codeTitle, '->', value);
+				this.editMode = false;
+				this.codeTitle = value;
+				
 			}
 		}
 	}
