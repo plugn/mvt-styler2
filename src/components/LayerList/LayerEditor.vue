@@ -59,7 +59,8 @@
 	import LayerTree from '../LayerList/LayerTree.vue'
 	import Editor from '../Editor.vue'
 	import resize from '../../directives/resize/resize'
-	import {mapState, mapGetters} from 'vuex'
+	import * as types from '../../store/mutation-types'
+	import {mapMutations, mapState, mapGetters} from 'vuex';
 
 	export default {
 		name: 'LayerEditor',
@@ -100,6 +101,10 @@
 		},
 
 		methods: {
+			...mapMutations({
+				renameLayer: types.RENAME_LAYER
+			}),
+
 			onAfterResize: function () {
 				eventBus.$emit('map:resize');
 			},
@@ -107,7 +112,7 @@
 //				console.log('saveId', this.codeTitle, '->', value);
 				this.editMode = false;
 				this.codeTitle = value;
-				
+				this.renameLayer({oldLayerId: this.currentLayerId, newLayerId: value});
 			}
 		}
 	}
