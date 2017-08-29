@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
-import {indexLayers, indexTree, buildTreeData, exportStyle} from '../util/styleSync'
+import {cloneDeep, get, set, pick} from 'lodash'
+import {indexLayers, indexTree, buildTreeData, exportStyle, ensureStyleHasGroup} from '../util/styleSync'
 
 Vue.use(Vuex)
 
@@ -139,16 +140,64 @@ export const store = new Vuex.Store({
 			mirrorTarget.splice(targetIndex, dropCount, mirrorTakeOut);
 
 			// vTree index
-			let echoIndex = indexTree(state.vTree);
-
 			state.vTreeIndex = indexTree(state.vTree);
-			console.log(' * echo vTreeIndex : ', echoIndex);
+
+			// vStyle and Index
+			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
+
+			state.vLayersIndex = indexLayers(nextStyle.layers);
+			state.vStyle = {...nextStyle};
+		},
+
+		[types.GROUP_LAYER](state, layerId) {
+			let	{groupIndex, leafIndex} = state.vTreeIndex[layerId];
+// console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
+
+			if (groupIndex !== -1) {
+				throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
+			}
+
+			let layer = state.vStyle.layers[state.vLayersIndex[layerId]];
+
+			let groupId = '' + Date.now();
+			let groupName = `Group: ${layerId}`;
+
+			set(layer, ['metadata', 'mapbox:group'], groupId);
+
+			// this.setLayer({layerId, value:layer});
+			let index = state.vLayersIndex[layerId];
+			state.vStyle.layers.splice(index, 1, layer);
+
+
+			let vStyle = ensureStyleHasGroup(state.vStyle, {groupName, groupId});
+			if (vStyle !== state.vStyle) {
+				// this.setVStyle(vStyle);
+				state.vLayersIndex = indexLayers(vStyle.layers);
+				state.vStyle = {...vStyle};
+			}
+
+			let mirrorTarget = state.vTree;
+			let payload = {
+				id: groupName,
+				children:[{
+					id: `${layerId}`
+				}]
+			};
+
+			mirrorTarget.splice(leafIndex, 1, payload);
+
+			// vTree index
+			// let echoIndex = indexTree(state.vTree);
+			state.vTreeIndex = indexTree(state.vTree);
+			// console.log(' * echo vTreeIndex : ', echoIndex);
+
 			// vStyle and Index
 			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
 
 
 			state.vLayersIndex = indexLayers(nextStyle.layers);
 			state.vStyle = {...nextStyle};
+
 		},
 
 		[types.SET_PROJECT_DATA](state, payload) {

@@ -147,6 +147,7 @@
 				addLayerBefore: types.ADD_LAYER_BEFORE,
 				dragDropLayer: types.DRAGDROP_LAYER,
 				removeLayer: types.REMOVE_LAYER,
+				groupLayer: types.GROUP_LAYER,
 				ungroupLayer: types.UNGROUP_LAYER,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
@@ -163,23 +164,19 @@
 			},
 
 			setListData(vTreeValue) {
-console.log(' * setListData() vTreeValue : ', vTreeValue);
+				// console.log(' * setListData() vTreeValue : ', vTreeValue);
 				this.$set(this.tree, 'listData', [...vTreeValue]);
 
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
+
+				eventBus.$emit('map:style.set', this.vStyle);
+				this.updateLayerCode();
+				this.setFolderIcon();
 			},
 
 			setListDataFromStyle(newStyle) {
 				this.$set(this.tree, 'listData', buildTreeData(newStyle))
-			},
-
-			dataWatcher() {
-				let newStyle = exportStyle(this.vStyle, this.vTree);
-				this.setVStyle(newStyle);
-				eventBus.$emit('map:style.set', newStyle);
-				this.updateLayerCode();
-				this.setFolderIcon();
 			},
 
 			save() {
@@ -293,7 +290,7 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 				this.removeLayer(this.currentLayerId);
 				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
 			},
-
+/*
 			groupLayer(layerId) {
 				let	{groupIndex, leafIndex} = this.getTreeIndex(layerId);
 //				console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
@@ -328,34 +325,6 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 
 				mirrorTarget.splice(leafIndex, 1, payload);
 				dataTarget.splice(leafIndex, 1, payload);
-
-				// FF needs 300ms delay
-				setTimeout(this.refreshContainers.bind(this), 300);
-			},
-/*
-			ungroupLayer(layerId) {
-				let	layerIndex = this.getTreeIndex(layerId);
-//				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
-
-				let sourceIndex = layerIndex.leafIndex;
-				let sourceGroupIndex = layerIndex.groupIndex;
-				let targetIndex = layerIndex.groupIndex;
-
-				let gStyle = this.vTree;
-
-				let mirrorSource = gStyle[sourceGroupIndex].children;
-				let mirrorTarget = gStyle;
-				let dataSource = this.tree.listData[sourceGroupIndex].children;
-				let dataTarget = this.tree.listData;
-
-				// data mutation
-				let dropCount = (mirrorSource.length - 1) < 1 ? 1 : 0;
-
-				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
-				mirrorTarget.splice(targetIndex, dropCount, mirrorTakeOut);
-
-				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-				dataTarget.splice(targetIndex, dropCount, takeOut);
 
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
