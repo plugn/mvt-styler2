@@ -143,6 +143,7 @@
 				setLayer: types.SET_LAYER,
 				addLayerAfter: types.ADD_LAYER_AFTER,
 				addLayerBefore: types.ADD_LAYER_BEFORE,
+				dragDropLayer: types.DRAGDROP_LAYER,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
 				editorPaneShow: types.EDITOR_PANE_SHOW
@@ -479,12 +480,14 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 				}
 //console.log('target', targetIndex, '@', targetGroupIndex);
 
+
+				this.dragDropLayer({sourceIndex, sourceGroupIndex, targetIndex, targetGroupIndex});
+
+/*
 				let gStyle = this.vTree;
 
 				let mirrorSource = sourceGroupIndex === -1 ? gStyle : gStyle[sourceGroupIndex].children;
 				let mirrorTarget = targetGroupIndex === -1 ? gStyle : gStyle[targetGroupIndex].children;
-				let dataSource = sourceGroupIndex === -1 ? this.tree.listData : this.tree.listData[sourceGroupIndex].children;
-				let dataTarget = targetGroupIndex === -1 ? this.tree.listData : this.tree.listData[targetGroupIndex].children;
 
 				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
 				targetIndex = targetIndex === -1
@@ -494,6 +497,7 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 				// data mutation
 				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+*/
 
 				// TODO: re-calc vTreeIndex
 				// TODO: move to store mutations

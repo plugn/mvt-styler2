@@ -75,6 +75,21 @@ export const store = new Vuex.Store({
 			state.vStyle.layers.splice(index, 0, value);
 			state.vLayersIndex = indexLayers(state.vStyle.layers);
 		},
+		[types.DRAGDROP_LAYER](state, {sourceIndex, sourceGroupIndex, targetIndex, targetGroupIndex}){
+			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
+			let mirrorTarget = targetGroupIndex === -1 ? state.vTree : state.vTree[targetGroupIndex].children;
+
+			let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
+			targetIndex = targetIndex === -1
+				? mirrorTarget.length
+				: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
+
+			// data mutation
+			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
+			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+
+			state.vTreeIndex = indexTree(state.vTree);
+		},
 
 		[types.SET_PROJECT_DATA](state, payload) {
 			state.projectId = payload.id;
