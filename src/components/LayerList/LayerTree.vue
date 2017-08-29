@@ -124,6 +124,7 @@
 		created() {
 			this.setStyle(mbStyle);
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
+			eventBus.$on('tree:listdata.set', this.setListData);
 		},
 
 		mounted() {
@@ -145,12 +146,30 @@
 			}),
 
 			initStyle(srcStyle) {
-				this.setListData(srcStyle)
+				this.setListDataFromStyle(srcStyle)
 				this.setStyle(srcStyle);
 			},
 			resetView() {
 				this.setCurrentLayerId(null);
 				this.editorPaneShow(false);
+			},
+
+			setListData(vTreeValue) {
+				console.log(' * vTreeValue : ', vTreeValue);
+				
+				this.$set(this.tree, 'listData', [...vTreeValue]);
+			},
+
+			setListDataFromStyle(newStyle) {
+				this.$set(this.tree, 'listData', buildTreeData(newStyle))
+			},
+
+			dataWatcher() {
+				let newStyle = exportStyle(this.vStyle, this.vTree);
+				this.setStyle(newStyle);
+				eventBus.$emit('map:style.set', newStyle);
+				this.updateLayerCode();
+				this.setFolderIcon();
 			},
 
 			save() {
@@ -397,18 +416,6 @@
 				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 
 				this.setLayer({layerId: layerId, value: layerNewStyle});
-			},
-
-			setListData(newValue) {
-				this.$set(this.tree, 'listData', buildTreeData(newValue))
-			},
-
-			dataWatcher() {
-				let newStyle = exportStyle(this.vStyle, this.vTree);
-				this.setStyle(newStyle);
-				eventBus.$emit('map:style.set', newStyle);
-				this.updateLayerCode();
-				this.setFolderIcon();
 			},
 
 			editFullStyle() {
