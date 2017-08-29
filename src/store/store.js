@@ -67,18 +67,18 @@ export const store = new Vuex.Store({
 		},
 
 		[types.ADD_LAYER_BEFORE](state, {refLayerId, layer}) {
-			// layers
-			let index = state.vLayersIndex[refLayerId];
-			state.vStyle.layers.splice(index, 0, layer);
-			state.vLayersIndex = indexLayers(state.vStyle.layers);
-
 			// vTree
 			let	{groupIndex, leafIndex} = state.vTreeIndex[refLayerId];
 			let mirrorSource = groupIndex === -1 ? state.vTree : state.vTree[groupIndex].children;
 			mirrorSource.splice(leafIndex, 0, {id: layer.id});
 
-			// MUST INDEX
+			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
+
+			// vStyle and Index
+			let index = state.vLayersIndex[refLayerId];
+			state.vStyle.layers.splice(index, 0, layer);
+			state.vLayersIndex = indexLayers(state.vStyle.layers);
 		},
 
 		[types.REMOVE_LAYER](state, layerId){
@@ -92,8 +92,6 @@ export const store = new Vuex.Store({
 
 			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
-
-// TODO: sync mutation with vStyle where it required
 
 			// vStyle and Index
 			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
@@ -116,6 +114,7 @@ export const store = new Vuex.Store({
 
 			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
+
 			// vStyle and Index
 			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
 			state.vLayersIndex = indexLayers(nextStyle.layers);
@@ -124,7 +123,6 @@ export const store = new Vuex.Store({
 
 		[types.UNGROUP_LAYER](state, layerId) {
 			let	layerIndex = state.vTreeIndex[layerId];
-//				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
 
 			let sourceIndex = layerIndex.leafIndex;
 			let sourceGroupIndex = layerIndex.groupIndex;
@@ -151,7 +149,6 @@ export const store = new Vuex.Store({
 
 		[types.GROUP_LAYER](state, layerId) {
 			let	{groupIndex, leafIndex} = state.vTreeIndex[layerId];
-// console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
 
 			if (groupIndex !== -1) {
 				throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
@@ -164,14 +161,12 @@ export const store = new Vuex.Store({
 
 			set(layer, ['metadata', 'mapbox:group'], groupId);
 
-			// this.setLayer({layerId, value:layer});
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, layer);
 
 
 			let vStyle = ensureStyleHasGroup(state.vStyle, {groupName, groupId});
 			if (vStyle !== state.vStyle) {
-				// this.setVStyle(vStyle);
 				state.vLayersIndex = indexLayers(vStyle.layers);
 				state.vStyle = {...vStyle};
 			}
@@ -187,17 +182,13 @@ export const store = new Vuex.Store({
 			mirrorTarget.splice(leafIndex, 1, payload);
 
 			// vTree index
-			// let echoIndex = indexTree(state.vTree);
 			state.vTreeIndex = indexTree(state.vTree);
-			// console.log(' * echo vTreeIndex : ', echoIndex);
 
 			// vStyle and Index
 			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
 
-
 			state.vLayersIndex = indexLayers(nextStyle.layers);
 			state.vStyle = {...nextStyle};
-
 		},
 
 		[types.SET_PROJECT_DATA](state, payload) {

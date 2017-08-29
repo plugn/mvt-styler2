@@ -125,13 +125,11 @@
 		},
 
 		created() {
-			//this.setStyle(mbStyle);
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 			eventBus.$on('tree:listdata.set', this.setListData);
 		},
 
 		mounted() {
-//			// this.$watch('tree.listData', this.dataWatcher, {deep: true, immediate: true});
 			this.setStyle(mbStyle);
 			eventBus.$emit('map:style.set', mbStyle);
 
@@ -240,7 +238,6 @@
 
 			duplicateLayer() {
 				if (!this.currentLayerId) { return; }
-//				console.log('duplicateLayer #'+this.currentLayerId);
 
 				let makeNewId = s => s.replace(/([^\d]*)(\d+)$/, function(m,p1,p2){
 					return p1 + (+p2 + 1);
@@ -285,50 +282,9 @@
 				if (!this.currentLayerId) { return; }
 
 				let nextLayerId = this.getSiblingLayerId(this.currentLayerId, -1);
-//				console.log(' * nextLayerId : ', nextLayerId);
-
 				this.removeLayer(this.currentLayerId);
 				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
 			},
-/*
-			groupLayer(layerId) {
-				let	{groupIndex, leafIndex} = this.getTreeIndex(layerId);
-//				console.log(' * groupLayer() layerIndex #'+layerId+' groupIndex: ', groupIndex, 'leafIndex:', leafIndex);
-
-				if (groupIndex !== -1) {
-					throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
-				}
-
-				let layer = this.getLayer(layerId);
-
-				let groupId = '' + Date.now();
-				let groupName = `Group: ${layerId}`;
-
-				set(layer, ['metadata', 'mapbox:group'], groupId);
-
-				this.setLayer({layerId, value:layer});
-
-				let vStyle = ensureStyleHasGroup(this.vStyle, {groupName, groupId});
-				if (vStyle !== this.vStyle) {
-					this.setVStyle(vStyle);
-				}
-
-				let mirrorTarget = this.vTree;
-				let dataTarget = this.tree.listData;
-
-				let payload = {
-					id: groupName,
-					children:[{
-						id: `${layerId}`
-					}]
-				};
-
-				mirrorTarget.splice(leafIndex, 1, payload);
-				dataTarget.splice(leafIndex, 1, payload);
-
-				// FF needs 300ms delay
-				setTimeout(this.refreshContainers.bind(this), 300);
-			},*/
 
 			toggleVisibility() {
 				if (!this.currentLayerId) { return; }
