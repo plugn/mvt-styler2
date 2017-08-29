@@ -92,6 +92,8 @@ export const store = new Vuex.Store({
 			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
 
+// TODO: sync mutation with vStyle where it required
+
 			// vStyle and Index
 			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
 			state.vLayersIndex = indexLayers(nextStyle.layers);
@@ -107,11 +109,46 @@ export const store = new Vuex.Store({
 				? mirrorTarget.length
 				: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
 
-			// data mutation
+			// vTree
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
 
+			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
+			// vStyle and Index
+			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
+			state.vLayersIndex = indexLayers(nextStyle.layers);
+			state.vStyle = {...nextStyle};
+		},
+
+		[types.UNGROUP_LAYER](state, layerId) {
+			let	layerIndex = state.vTreeIndex[layerId];
+//				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
+
+			let sourceIndex = layerIndex.leafIndex;
+			let sourceGroupIndex = layerIndex.groupIndex;
+			let targetIndex = layerIndex.groupIndex;
+
+			let mirrorSource = state.vTree[sourceGroupIndex].children;
+			let mirrorTarget = state.vTree;
+
+			// data mutation
+			let dropCount = (mirrorSource.length - 1) < 1 ? 1 : 0;
+
+			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
+			mirrorTarget.splice(targetIndex, dropCount, mirrorTakeOut);
+
+			// vTree index
+			let echoIndex = indexTree(state.vTree);
+
+			state.vTreeIndex = indexTree(state.vTree);
+			console.log(' * echo vTreeIndex : ', echoIndex);
+			// vStyle and Index
+			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
+
+
+			state.vLayersIndex = indexLayers(nextStyle.layers);
+			state.vStyle = {...nextStyle};
 		},
 
 		[types.SET_PROJECT_DATA](state, payload) {

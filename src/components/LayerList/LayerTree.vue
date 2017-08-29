@@ -147,6 +147,7 @@
 				addLayerBefore: types.ADD_LAYER_BEFORE,
 				dragDropLayer: types.DRAGDROP_LAYER,
 				removeLayer: types.REMOVE_LAYER,
+				ungroupLayer: types.UNGROUP_LAYER,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
 				editorPaneShow: types.EDITOR_PANE_SHOW
@@ -331,7 +332,7 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
 			},
-
+/*
 			ungroupLayer(layerId) {
 				let	layerIndex = this.getTreeIndex(layerId);
 //				console.log(' * layerIndex #'+layerId+' : ', layerIndex);
@@ -358,7 +359,7 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
-			},
+			},*/
 
 			toggleVisibility() {
 				if (!this.currentLayerId) { return; }
