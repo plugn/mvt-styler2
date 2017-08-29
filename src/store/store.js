@@ -75,6 +75,21 @@ export const store = new Vuex.Store({
 			let	{groupIndex, leafIndex} = state.vTreeIndex[refLayerId];
 			let mirrorSource = groupIndex === -1 ? state.vTree : state.vTree[groupIndex].children;
 			mirrorSource.splice(leafIndex, 0, {id: layer.id});
+
+			// MUST INDEX
+			state.vTreeIndex = indexTree(state.vTree);
+		},
+
+		[types.REMOVE_LAYER](state, layerId){
+			let	{groupIndex, leafIndex} = state.vTreeIndex[layerId];
+			let mirrorSource = groupIndex === -1 ? state.vTree : state.vTree[groupIndex].children;
+			let mirrorTarget = state.vTree;
+			let dropCount = groupIndex === -1 ?  0 : ((mirrorSource.length - 1) < 1 ? 1 : 0);
+
+			mirrorSource.splice(leafIndex, 1);
+			mirrorTarget.splice(groupIndex, dropCount);
+
+			// MUST INDEX
 			state.vTreeIndex = indexTree(state.vTree);
 		},
 

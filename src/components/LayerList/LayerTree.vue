@@ -144,9 +144,9 @@
 				setStyle: types.SET_STYLE,
 				setVStyle: types.SET_VSTYLE,
 				setLayer: types.SET_LAYER,
-				addLayerAfter: types.ADD_LAYER_AFTER,
 				addLayerBefore: types.ADD_LAYER_BEFORE,
 				dragDropLayer: types.DRAGDROP_LAYER,
+				removeLayer: types.REMOVE_LAYER,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
 				editorPaneShow: types.EDITOR_PANE_SHOW
@@ -285,30 +285,35 @@
 
 			removeCurrentLayer() {
 				if (!this.currentLayerId) { return; }
-				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
 
 				// clean way is to compute it if before data mutations
 				let nextLayerId = this.getSiblingLayerId(this.currentLayerId, -1);
 //				console.log(' * nextLayerId : ', nextLayerId);
 
+				this.removeLayer(this.currentLayerId);
+/*
+
+
+				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
 				let mirrorSource = groupIndex === -1 ? this.vTree : this.vTree[groupIndex].children;
-				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
+//				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
 				let mirrorTarget = this.vTree;
-				let dataTarget = this.tree.listData;
+//				let dataTarget = this.tree.listData;
 
 				let dropCount = groupIndex === -1 ?  0 : ((mirrorSource.length - 1) < 1 ? 1 : 0);
 
 				mirrorSource.splice(leafIndex, 1);
 				mirrorTarget.splice(groupIndex, dropCount);
 
-				dataSource.splice(leafIndex, 1);
-				dataTarget.splice(groupIndex, dropCount);
+//				dataSource.splice(leafIndex, 1);
+//				dataTarget.splice(groupIndex, dropCount);
+*/
 
 
 				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
 
 				// FF needs 300ms delay
-				setTimeout(this.refreshContainers.bind(this), 300);
+//				setTimeout(this.refreshContainers.bind(this), 300);
 			},
 
 			groupLayer(layerId) {
