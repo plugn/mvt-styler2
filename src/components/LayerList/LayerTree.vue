@@ -125,13 +125,16 @@
 		},
 
 		created() {
-			this.setStyle(mbStyle);
+			//this.setStyle(mbStyle);
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
 			eventBus.$on('tree:listdata.set', this.setListData);
 		},
 
 		mounted() {
-			this.$watch('tree.listData', this.dataWatcher, {deep: true, immediate: true});
+//			// this.$watch('tree.listData', this.dataWatcher, {deep: true, immediate: true});
+			this.setStyle(mbStyle);
+			eventBus.$emit('map:style.set', mbStyle);
+
 			this.initDnD();
 		},
 
@@ -159,16 +162,11 @@
 			},
 
 			setListData(vTreeValue) {
-console.log(' * setListData() vTreeValue : ', vTreeValue);
-
+//console.log(' * setListData() vTreeValue : ', vTreeValue);
 				this.$set(this.tree, 'listData', [...vTreeValue]);
 
-//				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-//				dataTarget.splice(targetIndex, 0, takeOut);
-//
-//				// FF needs 300ms delay
+				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
-
 			},
 
 			setListDataFromStyle(newStyle) {
@@ -469,7 +467,6 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 				if (root !== source && root.contains(source)) {
 					sourceGroupIndex = rootList.indexOf( source.closest('li') )
 				}
-
 //console.log('source', sourceIndex, '@', sourceGroupIndex);
 
 				let targetList = utils.getList(target),
@@ -479,35 +476,7 @@ console.log(' * setListData() vTreeValue : ', vTreeValue);
 					targetGroupIndex = rootList.indexOf( target.closest('li') )
 				}
 //console.log('target', targetIndex, '@', targetGroupIndex);
-
-
 				this.dragDropLayer({sourceIndex, sourceGroupIndex, targetIndex, targetGroupIndex});
-
-/*
-				let gStyle = this.vTree;
-
-				let mirrorSource = sourceGroupIndex === -1 ? gStyle : gStyle[sourceGroupIndex].children;
-				let mirrorTarget = targetGroupIndex === -1 ? gStyle : gStyle[targetGroupIndex].children;
-
-				let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
-				targetIndex = targetIndex === -1
-					? targetList.length
-					: (isMoveLocalFwd ? targetIndex-1 : targetIndex);
-
-				// data mutation
-				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
-				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
-*/
-
-				// TODO: re-calc vTreeIndex
-				// TODO: move to store mutations
-				// TODO: repeat for all mutations in LayerTree
-
-//				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-//				dataTarget.splice(targetIndex, 0, takeOut);
-//
-//				// FF needs 300ms delay
-//				setTimeout(this.refreshContainers.bind(this), 300);
 
 			},
 
