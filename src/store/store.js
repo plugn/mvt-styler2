@@ -65,16 +65,18 @@ export const store = new Vuex.Store({
 			state.vTreeIndex = indexTree(state.vTree);
 		},
 
-		[types.ADD_LAYER_AFTER](state, {refLayerId, value}) {
+		[types.ADD_LAYER_BEFORE](state, {refLayerId, layer}) {
 			let index = state.vLayersIndex[refLayerId];
-			state.vStyle.layers.splice(index+1, 0, value);
+			state.vStyle.layers.splice(index, 0, layer);
 			state.vLayersIndex = indexLayers(state.vStyle.layers);
+
+			// let	{groupIndex, leafIndex} = state.getTreeIndex(refLayerId);
+			let	{groupIndex, leafIndex} = state.vTreeIndex[refLayerId];
+			let mirrorSource = groupIndex === -1 ? state.vTree : state.vTree[groupIndex].children;
+			mirrorSource.splice(leafIndex, 0, {id: layer.id});
+			state.vTreeIndex = indexTree(state.vTree);
 		},
-		[types.ADD_LAYER_BEFORE](state, {refLayerId, value}) {
-			let index = state.vLayersIndex[refLayerId];
-			state.vStyle.layers.splice(index, 0, value);
-			state.vLayersIndex = indexLayers(state.vStyle.layers);
-		},
+
 		[types.DRAGDROP_LAYER](state, {sourceIndex, sourceGroupIndex, targetIndex, targetGroupIndex}){
 			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
 			let mirrorTarget = targetGroupIndex === -1 ? state.vTree : state.vTree[targetGroupIndex].children;

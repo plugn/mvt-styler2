@@ -244,11 +244,13 @@
 				if (!this.currentLayerId) { return; }
 				console.log('duplicateLayer #'+this.currentLayerId);
 
+/*
 				let	{groupIndex, leafIndex} = this.getTreeIndex(this.currentLayerId);
 
 
 				let mirrorSource = groupIndex === -1 ? this.vTree : this.vTree[groupIndex].children;
 				let dataSource = groupIndex === -1 ? this.tree.listData : this.tree.listData[groupIndex].children;
+*/
 
 				let makeNewId = s => s.replace(/([^\d]*)(\d+)$/, function(m,p1,p2){
 					return p1 + (+p2 + 1);
@@ -268,13 +270,15 @@
 
 				let layer = {...this.getLayer(this.currentLayerId), id: nextLayerId };
 
-				this.addLayerBefore({refLayerId: this.currentLayerId, value:layer});
+				this.addLayerBefore({refLayerId: this.currentLayerId, layer});
+/*
 				mirrorSource.splice(leafIndex, 0, {id: nextLayerId});
 				dataSource.splice(leafIndex, 0, {id: nextLayerId});
 
 
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
+*/
 
 			},
 
