@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
-import {indexLayers, indexTree, buildTreeData} from '../util/styleSync'
+import {indexLayers, indexTree, buildTreeData, exportStyle} from '../util/styleSync'
 
 Vue.use(Vuex)
 
@@ -89,8 +89,13 @@ export const store = new Vuex.Store({
 			mirrorSource.splice(leafIndex, 1);
 			mirrorTarget.splice(groupIndex, dropCount);
 
-			// MUST INDEX
+			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
+
+			// vStyle and Index
+			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
+			state.vLayersIndex = indexLayers(nextStyle.layers);
+			state.vStyle = {...nextStyle};
 		},
 
 		[types.DRAGDROP_LAYER](state, {sourceIndex, sourceGroupIndex, targetIndex, targetGroupIndex}){
