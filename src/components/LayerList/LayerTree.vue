@@ -92,6 +92,9 @@
 		},
 
 		watch: {
+			vTree(newVTree) {
+				this.setListData(newVTree);
+			},
 			currentLayerId(layerId) {
 				this.setEyeIcon();
 				this.setFolderIcon();
@@ -155,9 +158,16 @@
 			},
 
 			setListData(vTreeValue) {
-				console.log(' * vTreeValue : ', vTreeValue);
-				
+console.log(' * setListData() vTreeValue : ', vTreeValue);
+
 				this.$set(this.tree, 'listData', [...vTreeValue]);
+
+//				let takeOut = dataSource.splice(sourceIndex, 1)[0];
+//				dataTarget.splice(targetIndex, 0, takeOut);
+//
+//				// FF needs 300ms delay
+				setTimeout(this.refreshContainers.bind(this), 300);
+
 			},
 
 			setListDataFromStyle(newStyle) {
@@ -166,7 +176,7 @@
 
 			dataWatcher() {
 				let newStyle = exportStyle(this.vStyle, this.vTree);
-				this.setStyle(newStyle);
+				this.setVStyle(newStyle);
 				eventBus.$emit('map:style.set', newStyle);
 				this.updateLayerCode();
 				this.setFolderIcon();
@@ -485,11 +495,15 @@
 				let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 				mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
 
-				let takeOut = dataSource.splice(sourceIndex, 1)[0];
-				dataTarget.splice(targetIndex, 0, takeOut);
+				// TODO: re-calc vTreeIndex
+				// TODO: move to store mutations
+				// TODO: repeat for all mutations in LayerTree
 
-				// FF needs 300ms delay
-				setTimeout(this.refreshContainers.bind(this), 300);
+//				let takeOut = dataSource.splice(sourceIndex, 1)[0];
+//				dataTarget.splice(targetIndex, 0, takeOut);
+//
+//				// FF needs 300ms delay
+//				setTimeout(this.refreshContainers.bind(this), 300);
 
 			},
 
