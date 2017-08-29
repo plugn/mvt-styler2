@@ -79,7 +79,7 @@ export function getGroupIdByName(vStyle) {
 	}, {});
 }
 
-export function exportLayers(layersTree, vStyle, vIndex) {
+export function exportLayers(vStyle, layersTree, vIndex) {
 	let groupMapIdByName = getGroupIdByName(vStyle);
 	let vLayers = vStyle.layers;
 
@@ -118,11 +118,11 @@ export function updateLayers(vStyle, layers) {
 	return nextStyle;
 }
 
-export function exportStyle(vStyle, layersTree) {
-	let vIndex = indexLayers(vStyle.layers),
-		nextStyle = cloneDeep(pickBy(vStyle, (v, k) => k !== 'layers'));
+export function exportStyle(vStyle, layersTree, vIndex) {
+	vIndex = vIndex || indexLayers(vStyle.layers);
+	let nextStyle = cloneDeep(pickBy(vStyle, (v, k) => k !== 'layers'));
 
-	nextStyle.layers = exportLayers(layersTree, vStyle, vIndex);
+	nextStyle.layers = exportLayers(vStyle, layersTree, vIndex);
 	return nextStyle;
 }
 
