@@ -166,6 +166,8 @@ export const store = new Vuex.Store({
 
 
 			let vStyle = ensureStyleHasGroup(state.vStyle, {groupName, groupId});
+			// console.log(' * ensurehasGroup vStyle : ', vStyle);
+
 			if (vStyle !== state.vStyle) {
 				state.vLayersIndex = indexLayers(vStyle.layers);
 				state.vStyle = {...vStyle};
@@ -184,11 +186,7 @@ export const store = new Vuex.Store({
 			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
 
-			// vStyle and Index
-			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
-
-			state.vLayersIndex = indexLayers(nextStyle.layers);
-			state.vStyle = {...nextStyle};
+			// vStyle and Index : already set
 		},
 
 		[types.SET_PROJECT_DATA](state, payload) {
