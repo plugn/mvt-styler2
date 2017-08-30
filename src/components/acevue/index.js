@@ -1,4 +1,6 @@
 const ace = require('brace');
+require('brace/ext/searchbox');
+
 let aceStore = {};
 module.exports = {
 	template: '<div :style="{height: height, width: width}"></div>',
