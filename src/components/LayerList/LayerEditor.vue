@@ -41,9 +41,10 @@
 				</button>
 				<span class="space-left0">
 					<button data-test="data-tab-button"
-							class="a icon paint inline animate pad0 keyline-bottom keyline-transparent"
+							class="dim noevents a icon paint inline animate pad0 keyline-bottom keyline-transparent"
 							style="padding-bottom: 4px;">Style</button>
-				</span></div>
+				</span>
+			</div>
 			<div class="scroll-styled pin-left col12 space-top7">
 				<Editor class="body"></Editor>
 			</div>
