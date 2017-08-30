@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
 
 		currentLayerId: null,
 		isLoading: false,
+		isSaving: false,
 		modalProjectsShow: false,
 		editorPaneShow: false,
 		projectName: '',
@@ -207,6 +208,9 @@ export const store = new Vuex.Store({
 		},
 		[types.SET_LOADING](state, status) {
 			state.isLoading = status;
+		},
+		[types.SET_SAVING](state, status) {
+			state.isSaving = status;
 		},
 		[types.EDITOR_PANE_SHOW](state, payload) {
 			state.editorPaneShow = payload;

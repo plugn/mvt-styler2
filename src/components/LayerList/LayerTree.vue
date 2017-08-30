@@ -10,7 +10,10 @@
 					</div>
 				</div>
 				<div id="card-publish-style" class="pad00y pad1x fr">
-					<button @click="save" class="round width5 pad0x pad00y micro button fill-denim">Save</button>
+					<button @click="save"
+							class="mvt-save round width5 pad0x pad00y micro button fill-denim"
+							:class="{'loading fill-lighten0': isSaving}"
+					>Save</button>
 					<button title="Manage Projects" @click="toggleStyleModal" class="a inline space-left0 icon cloud pad00y align-top"></button>
 				</div>
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
@@ -80,7 +83,8 @@
 				'currentLayerId',
 				'vStyle',
 				'vTree',
-				'isLoading'
+				'isLoading',
+				'isSaving'
 			]),
 			...mapGetters([
 				'getCurrentLayer',
@@ -148,6 +152,8 @@
 				groupLayer: types.GROUP_LAYER,
 				ungroupLayer: types.UNGROUP_LAYER,
 				setLoading: types.SET_LOADING,
+				setSaving: types.SET_SAVING,
+
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
 				editorPaneShow: types.EDITOR_PANE_SHOW,
 				setEditorMode: types.SET_EDITOR_MODE
@@ -179,16 +185,17 @@
 			},
 
 			save() {
+				const vm = this;
 //				console.log('RESULT', JSON.stringify(this.vStyle));
 				if (this.projectId < 1) {
 					console.log('you should have load project with `cloudy icon` dialog');
 					return;
 				}
+				vm.setSaving(true);
 				storage.updateStyle(this.projectId, this.vStyle, function(xhrO){
 					console.log(' * updateStyle xhrO : ', xhrO);
-
-
-				})
+					vm.setSaving(false);
+				});
 				
 			},
 
