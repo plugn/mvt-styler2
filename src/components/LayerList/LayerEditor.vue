@@ -137,8 +137,6 @@
 				this.editMode = false;
 				this.codeTitle = value;
 				this.renameLayer({oldLayerId: this.currentLayerId, newLayerId: value});
-
-				eventBus.$emit('tree:listdata.set', this.vTree);
 			}
 		}
 	}

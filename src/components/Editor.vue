@@ -16,7 +16,6 @@
 	export default{
 		data() {
 			return {
-//				layerId: '',
 				validContent:'',
 				content:'',
 				lang:	'json',
@@ -25,7 +24,6 @@
 				onUpdate: function(value) {
 					// new session case
 					if (value === this.validContent) {
-//						console.log('just new session');
 						return;
 					}
 
@@ -40,8 +38,8 @@
 						if (this.editorMode === 'layer' && this.currentLayerId) {
 							eventBus.$emit('ace:layer.updated', this.currentLayerId, code);
 						}
-						else if (this.editorMode === 'style' && this.projectId) {
-							eventBus.$emit('ace:project.updated', this.projectId, code);
+						else if (this.editorMode === 'style') {
+							this.setStyle(code);
 						}
 					}
 				}
@@ -66,7 +64,6 @@
 		computed: {
 			...mapState([
 				'currentLayerId',
-				'projectId',
 				'editorMode',
 				'getInitEditorCode'
 			])
@@ -75,6 +72,7 @@
 
 		methods: {
 			...mapMutations({
+				setStyle: types.SET_STYLE,
 				editorPaneShow: types.EDITOR_PANE_SHOW
 			})
 		}
