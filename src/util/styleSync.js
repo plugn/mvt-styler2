@@ -33,7 +33,11 @@ export function ensureStyleHasGroup(mvtStyle, groupData) {
 		return mvtStyle;
 	}
 
-	return set(cloneDeep(mvtStyle), concat(groupsPath, groupId), {name:groupName, collapsed: false})
+	// workaround because of _.set() produces an Array if last path-key numeric-like
+	if (! has(mvtStyle, groupsPath)) {
+		set(mvtStyle, groupsPath, {});
+	}
+	return set(mvtStyle, concat(groupsPath, groupId), {name:groupName, collapsed: false})
 }
 
 export function buildTreeData(mvtStyle) {
