@@ -36,12 +36,16 @@
 			</div>
 			<div class="fill-lighten0 pad1x col12 micro strong">
 				<button data-test="style-tab-button"
-						class="a icon brackets inline animate pad0 keyline-bottom  active keyline-white"
-						style="padding-bottom: 4px;">Code
+						class="a icon brackets inline animate pad0 keyline-bottom keyline-transparent"
+						:class="{'active keyline-white': (editorMode === 'layer'), 'dim noevents': !currentLayerId}"
+						@click="setEditorValue('layer')"
+						style="padding-bottom: 4px;">Layer
 				</button>
 				<span class="space-left0">
 					<button data-test="data-tab-button"
-							class="dim noevents a icon paint inline animate pad0 keyline-bottom keyline-transparent"
+							class="a icon paint inline animate pad0 keyline-bottom keyline-transparent"
+							:class="{'active keyline-white': (editorMode === 'style')}"
+							@click="setEditorValue('style')"
 							style="padding-bottom: 4px;">Style</button>
 				</span>
 			</div>
@@ -81,32 +85,50 @@
 		computed: {
 			...mapState([
 				'currentLayerId',
-				'vTree'
+				'vTree',
+				'editorMode'
 			]),
 			...mapGetters([
-				// 'getCurrentLayer',
+				'getInitEditorCode',
 				'getLayer'
 			])
 		},
 
 		watch: {
 			currentLayerId: function (layerId) {
-				if (!layerId && layerId !== 0) {
+				if (!layerId) {
+					if (this.editorMode==='layer') {
+						this.editorPaneShow(false);
+					}
 					return;
 				}
 
+				this.setEditorMode('layer');
 				let data = this.getLayer(layerId);
-//				console.log(' * LayerEditor watch() '+layerId+' data : ', data);
-				eventBus.$emit('ace:content.set', data, {layerId});
+//				console.log(' * LayerEditor watch() '+layerId+' data : ', data, ' editorMode', this.editorMode);
+				eventBus.$emit('ace:content.set', data);
 				this.codeTitle = layerId || this.codeTitle;
 			}
 		},
 
 		methods: {
 			...mapMutations({
-				renameLayer: types.RENAME_LAYER
+				setEditorMode: types.SET_EDITOR_MODE,
+				renameLayer: types.RENAME_LAYER,
+				editorPaneShow: types.EDITOR_PANE_SHOW
 			}),
 
+			setEditorValue(mode) {
+				let code = this.getInitEditorCode(mode);
+				if (!code) {
+					console.warn('setEditorValue() code \n', code);
+					return;
+				}
+
+				eventBus.$emit('ace:content.set', code);
+				this.setEditorMode(mode);
+
+			},
 			onAfterResize: function () {
 				eventBus.$emit('map:resize');
 			},

@@ -149,7 +149,8 @@
 				ungroupLayer: types.UNGROUP_LAYER,
 				setLoading: types.SET_LOADING,
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
-				editorPaneShow: types.EDITOR_PANE_SHOW
+				editorPaneShow: types.EDITOR_PANE_SHOW,
+				setEditorMode: types.SET_EDITOR_MODE
 			}),
 
 			initStyle(srcStyle) {
@@ -283,7 +284,8 @@
 
 				let nextLayerId = this.getSiblingLayerId(this.currentLayerId, -1);
 				this.removeLayer(this.currentLayerId);
-				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
+				this.setCurrentLayerId(nextLayerId);
+//				if (nextLayerId) this.setCurrentLayerId(nextLayerId);
 			},
 
 			toggleVisibility() {
@@ -298,7 +300,7 @@
 				let updateObj = pick(layerNewStyle, 'layout');
 				eventBus.$emit('map:layer.update', layerId, updateObj);
 				this.setLayer({layerId: layerId, value:layerNewStyle});
-				eventBus.$emit('ace:content.set', layerNewStyle, {layerId});
+				eventBus.$emit('ace:content.set', layerNewStyle);
 
 				this.setEyeIcon();
 			},
@@ -307,7 +309,7 @@
 			updateLayerCode(layerId) {
 				let layer = layerId && this.getLayer(layerId) || this.currentLayerId && this.getLayer(this.currentLayerId);
 				if (!layer) { return; }
-				eventBus.$emit('ace:content.set', layer, {layerId});
+				eventBus.$emit('ace:content.set', layer);
 			},
 
 			onLayerUpdated(layerId, layerNewStyle) {
@@ -323,8 +325,8 @@
 			},
 
 			editFullStyle() {
-				// console.log(' * editFullStyle : ');
-				eventBus.$emit('ace:content.set', this.vStyle, {projectId: this.projectId});
+				this.setEditorMode('style');
+				eventBus.$emit('ace:content.set', this.vStyle);
 			},
 
 			initDnD() {

@@ -21,20 +21,32 @@ export const store = new Vuex.Store({
 		modalProjectsShow: false,
 		editorPaneShow: false,
 		projectName: '',
-		projectId: -1
+		projectId: -1,
+		editorMode: 'layer' // layer|style
 	},
 	getters: {
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
 		getLayer: state => layerId => state.vStyle.layers[state.vLayersIndex[layerId]],
 		getLayerIndex: state => layerId => state.vLayersIndex[layerId],
 		getLayerByIndex: state => index => state.vStyle.layers[index],
-		getTreeIndex: state => layerId => state.vTreeIndex[layerId]
+		getTreeIndex: state => layerId => state.vTreeIndex[layerId],
+		getInitEditorCode: state => (mode = state.editorMode) => (
+			mode === 'style'
+				? state.vStyle
+				: (
+					(mode === 'layer' && state.currentLayerId)
+					? state.vStyle.layers[state.vLayersIndex[state.currentLayerId]]
+					: {id:'none'} // {id: ('new_' + Date.now())}
+				)
+		)
  	},
 	mutations: {
 		[types.SET_CURRENT_LAYER](state, payload) {
 			state.currentLayerId = payload;
 		},
-
+		[types.SET_EDITOR_MODE](state, payload) {
+			state.editorMode = payload;
+		},
 		[types.TOGGLE_MODAL](state) {
 			state.modalProjectsShow = !state.modalProjectsShow;
 		},
