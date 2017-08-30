@@ -68,7 +68,7 @@ export default {
 		}
 	},
 
-	mounted() {	
+	mounted() {
 		this.getProjects();
 	},
 
@@ -77,7 +77,14 @@ export default {
 			'isLoading'
 		])
 	},
-
+	watch: {
+		isLoading(value, oldValue) {
+			console.log(' * watch isLoading : ', oldValue,'->', value);
+			if (value === false && oldValue === true) {
+				this.toggleShow();
+			}
+		}
+	},
 	methods: {
 		...mapMutations({
 			toggleShow: types.TOGGLE_MODAL,
@@ -98,7 +105,7 @@ export default {
 			console.log('createProject()');
 			let name = this.newProjectName;
 			if (!name) { return; }
-			
+
 			storage.createProject(name, (xhr) => {
 				console.log('createProject', xhr, '/n this: ', this);
 				this.newProjectName = '';
@@ -108,7 +115,7 @@ export default {
 		escapeNewProject(e){
 			this.newProjectName='';
 			console.log('escaped', this.newProjectName);
-			
+
 		},
 	}
 }
