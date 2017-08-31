@@ -75,6 +75,8 @@ export const store = new Vuex.Store({
 			state.vStyle.layers.splice(index, 1, newLayer);
 			state.vLayersIndex = indexLayers(state.vStyle.layers);
 
+			state.currentLayerId = newLayerId;
+
 			state.vTree = buildTreeData(state.vStyle);
 			state.vTreeIndex = indexTree(state.vTree);
 		},
