@@ -65,13 +65,26 @@ console.log('not applied with update:', unhandledParams);
 					hash: true // display current zoom and coordinates as a part of URL
 				});
 
-				let nav = new mapboxgl.NavigationControl();
-				map.addControl(nav, 'top-left');
-
 				if (_initialStyle) {
 				    map.setStyle(_initialStyle);
 				    _initialStyle = undefined;
 				}
+
+				let nav = new mapboxgl.NavigationControl();
+				map.addControl(nav, 'top-left');
+
+				map.on('click', function (e) {
+/*
+					if (layersAtPointPopup && layersAtPointPopup.isOpen()) {
+						layersAtPointPopup.remove();
+						return;
+					}
+*/
+
+					let features = map.queryRenderedFeatures(e.point, {});
+
+					console.log('map click features', features);
+				});
 
 			}
 		}

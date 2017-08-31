@@ -37,3 +37,10 @@ header.tc-navbar {
 	width: 20px;
 	height: 20px;
 }
+
+.pad2r {
+	padding-right: 20px
+}
+.pad2l {
+	padding-left: 20px;
+}

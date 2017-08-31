@@ -4,17 +4,25 @@
 	</ul>
 
 	<li v-else-if="isFolder" class="tile__folder col12 clearfix contain dark">
-		<div class="animate draggable layer-group"><a @click="toggle"
+		<div class="animate draggable layer-group"
+			@mouseenter="hoverFolder=true"
+			@mouseleave="hoverFolder=false"
+		><a @click="toggle"
 				:class="{'caret-right': !open, 'caret-down': open}"
 				class="pin-topleft z1 icon pad00y"></a>
 			<div title="Group"
 				 class="keyline-bottom keyline-dark2 layer-folder block pad0x pad00y pointer micro"><span
 					class="pin-topleft z1 icon inline folder" style="left: 12px; top: 2px;"></span>
-				<div @click="toggle" class="pad0x micro" style="padding-left: 27px;">
+				<div @click="toggle"
+					 :class="{'pad2r': hoverFolder}"
+					 class="pad0x micro" style="padding-left: 27px;">
 					<div class="contain col12 ">
-						<div class="truncate layer-folder-title"><span data-test="">{{ model.id }}</span><span
+						<div class="truncate layer-folder-title"
+							:class="{'space-right2': hoverFolder}"><span data-test="">{{ model.id }}</span><span
 								class="quiet space-left0">{{model.children.length}} layers</span>
-							<button class="pin-topright animate icon"></button>
+							<button
+							class="pin-topright animate icon pointer"
+							:class="{'pencil': hoverFolder}"></button>
 						</div>
 					</div>
 				</div>
@@ -54,7 +62,8 @@
 
 		data() {
 			return {
-				open: false
+				open: false,
+				hoverFolder: false
 			}
 		},
 
@@ -82,4 +91,5 @@
 	.tile__root {
 		padding-left: .5rem;
 	}
+
 </style>
