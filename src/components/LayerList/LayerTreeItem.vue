@@ -5,6 +5,7 @@
 
 	<li v-else-if="isFolder" class="tile__folder col12 clearfix contain dark">
 		<div class="animate draggable layer-group"
+			:class="{'fill-dark': editMode}"
 			@mouseenter="hoverFolder=true"
 			@mouseleave="hoverFolder=false"
 		><a @click="toggle"
@@ -16,15 +17,30 @@
 				<div @click="toggle"
 					 :class="{'pad2r': hoverFolder}"
 					 class="pad0x micro" style="padding-left: 27px;">
-					<div class="contain col12 ">
+
+					<div v-if="editMode" class="contain col12">
+						<form v-on:submit.prevent="">
+							<button class="pin-right icon check space-right0"
+								@click="saveGroup"></button>
+							<input type="text"
+								   ref="inputGroupId"
+								   v-model="modelGroupId"
+								   @keyup.27="editMode=false"
+								   @keyup.enter="saveGroup"
+								   class="truncate space-right1 micro col12 round shortest clean pad2r ">
+						</form>
+					</div>
+					<div v-else="" class="contain col12 ">
 						<div class="truncate layer-folder-title"
 							:class="{'space-right2': hoverFolder}"><span data-test="">{{ model.id }}</span><span
 								class="quiet space-left0">{{model.children.length}} layers</span>
 							<button
-							class="pin-topright animate icon pointer"
-							:class="{'pencil': hoverFolder}"></button>
+								@click="editGroup(model.id)"
+								class="pin-topright animate icon pointer"
+								:class="{'pencil': hoverFolder}"></button>
 						</div>
 					</div>
+
 				</div>
 				<span class="pin-topright z1 drag-handle animate"></span>
 			</div>
@@ -48,6 +64,7 @@
 	import {eventBus} from '../../main'
 	import ListItem from  './ListItem.vue'
 	import ListGroupItem from './ListGroupItem.vue'
+	import {get} from 'lodash'
 
 	export default {
 		name: 'LayerTreeItem',
@@ -63,7 +80,10 @@
 		data() {
 			return {
 				open: false,
-				hoverFolder: false
+				hoverFolder: false,
+				editMode: false,
+				prevGroupId: '',
+				modelGroupId: ''
 			}
 		},
 
@@ -81,6 +101,18 @@
 				if (this.isFolder) {
 					this.open = !this.open;
 				}
+			},
+			editGroup(id) {
+				this.editMode = true;
+				this.prevGroupId = id;
+				this.modelGroupId = id;
+				console.log('editGroup', id);
+
+			},
+			saveGroup() {
+				this.editMode = false;
+				console.log('saveGroup', this.prevGroupId, '->', this.modelGroupId);
+
 			}
 		}
 	}

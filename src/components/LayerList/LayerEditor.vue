@@ -13,19 +13,24 @@
 							<div v-if="editMode" class="contain col12">
 								<form v-on:submit.prevent="">
 									<button data-test="confirm-rename-layer"
+											@click="saveId"
 											class="a pad0y pin-right icon check space-right0"></button>
-									<input type="text" :value="codeTitle"
+									<input type="text"
+										   ref="inputCodeTitle"
+										   :value="codeTitle"
+										   @keyup.enter="saveId"
 										   @keyup.27="editMode=false"
-										   @keyup.enter="saveId($event.target.value)"
+										   @blur="onEditBlur"
 										   class="truncate clean small short col12 space-right2 round "
 										   style="padding-right: 20px;"
 									>
 								</form>
 							</div>
+
 							<div v-else="" class="contain col12 pointer">
 								<div class="small pad0y truncate space-right2 strong"><span data-test="layer-name-text">{{codeTitle}}</span>
 									<button data-test="trigger-layer-rename"
-											@click="editMode=true"
+											@click="editId"
 											class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 								</div>
 							</div>
@@ -132,11 +137,21 @@
 			onAfterResize: function () {
 				eventBus.$emit('map:resize');
 			},
-			saveId(value) {
-//				console.log('saveId', this.codeTitle, '->', value);
+			saveId() {
+				console.log('saveId', this.codeTitle, '->', this.$refs.inputCodeTitle.value);
+				let value = this.$refs.inputCodeTitle.value;
 				this.editMode = false;
 				this.codeTitle = value;
 				this.renameLayer({oldLayerId: this.currentLayerId, newLayerId: value});
+			},
+			editId() {
+				this.editMode = true;
+			},
+			onEditBlur() {
+				const vm = this;
+				setTimeout(function() {
+					vm.editMode = false;
+				}, 300);
 			}
 		}
 	}
