@@ -40,6 +40,19 @@ export function ensureStyleHasGroup(mvtStyle, groupData) {
 	return set(mvtStyle, concat(groupsPath, groupId), {name:groupName, collapsed: false})
 }
 
+export function renameStyleGroup(mvtStyle, prevName, nextName) {
+	let oGroups = get(mvtStyle, groupsPath);
+
+	function reducer(acc, {name}, id) {
+		acc[name] = id;
+		return acc;
+	}
+	let groupsByName = reduce(oGroups, reducer, {});
+	let groupId = groupsByName[prevName];
+
+	return set(mvtStyle, concat(groupsPath, groupId, 'name'), nextName);
+}
+
 export function buildTreeData(mvtStyle) {
 	let currentGroup = null;
 
@@ -146,16 +159,18 @@ export function indexLayers(layers) {
  * layerId: {leafIndex: number, groupIndex?: number}
  */
 export function indexTree(layersTree) {
-	return reduce(layersTree, reducer, {});
+	return reduce(layersTree, reducer, {'__groups':{}});
 
 	function reducer(acc, value, key) {
 		if (value.children) {
+			// acc[value.id] = {leafIndex: key, isGroup: true};
+			acc.__groups[value.id] = key;
 			let children = map(value.children, child => set(child, 'groupIndex', key));
 			return reduce(children, reducer, acc);
 		}
 		else {
 			let groupIndex = isFinite(value.groupIndex) ? value.groupIndex : -1;
-			acc[value.id] = {groupIndex, 'leafIndex': key};
+			acc[value.id] = {groupIndex, leafIndex: key};
 			unset(value, 'groupIndex');
 			return acc;
 		}

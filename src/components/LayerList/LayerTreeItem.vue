@@ -65,6 +65,8 @@
 	import ListItem from  './ListItem.vue'
 	import ListGroupItem from './ListGroupItem.vue'
 	import {get} from 'lodash'
+	import * as types from '../../store/mutation-types'
+	import {mapMutations} from 'vuex'
 
 	export default {
 		name: 'LayerTreeItem',
@@ -97,6 +99,9 @@
 			}
 		},
 		methods: {
+			...mapMutations({
+				renameGroup: types.RENAME_GROUP
+			}),
 			toggle() {
 				if (this.isFolder) {
 					this.open = !this.open;
@@ -112,6 +117,7 @@
 			saveGroup() {
 				this.editMode = false;
 				console.log('saveGroup', this.prevGroupId, '->', this.modelGroupId);
+				this.renameGroup({prevName: this.prevGroupId, nextName: this.modelGroupId});
 
 			}
 		}

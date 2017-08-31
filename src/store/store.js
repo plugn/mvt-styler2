@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
 import {cloneDeep, get, set, pick} from 'lodash'
-import {indexLayers, indexTree, buildTreeData, exportStyle, ensureStyleHasGroup} from '../util/styleSync'
+import {indexLayers, indexTree, buildTreeData, exportStyle, ensureStyleHasGroup, renameStyleGroup} from '../util/styleSync'
 
 Vue.use(Vuex)
 
@@ -202,6 +202,16 @@ export const store = new Vuex.Store({
 			state.vTreeIndex = indexTree(state.vTree);
 
 			// vStyle and Index : already set
+		},
+		[types.RENAME_GROUP](state, payload) {
+			let vStyle = renameStyleGroup(state.vStyle, payload.prevName, payload.nextName);
+			if (!vStyle) return;
+
+			//state.vLayersIndex = indexLayers(payload.layers);
+			state.vStyle = { ...vStyle };
+			state.vTree = buildTreeData(state.vStyle);
+			state.vTreeIndex = indexTree(state.vTree);
+
 		},
 
 		[types.SET_PROJECT_DATA](state, payload) {
