@@ -23,7 +23,13 @@ export const store = new Vuex.Store({
 		editorPaneShow: false,
 		projectName: '',
 		projectId: -1,
-		editorMode: 'layer' // layer|style
+		editorMode: 'layer', // layer|style
+
+		mapPopup: {
+			features:[],
+			point: null,
+			show: false
+		}
 	},
 	getters: {
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
@@ -42,6 +48,9 @@ export const store = new Vuex.Store({
 		)
  	},
 	mutations: {
+		[types.SET_MAP_POPUP](state, payload){
+			state.mapPopup = {...payload};
+		},
 		[types.SET_CURRENT_LAYER](state, payload) {
 			state.currentLayerId = payload;
 		},

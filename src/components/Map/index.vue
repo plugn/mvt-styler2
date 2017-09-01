@@ -4,10 +4,15 @@
 
 <script>
 
-	import {eventBus} from '../../main';
+	import {eventBus} from '../../main'
+	import icons from '../../util/icons.json'
+//	import toColor from '@mapbox/to-color'
 	import {updateMapLayer, prettifyMapLayer} from '../../util/styleSync'
 
-	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
+	import * as types from '../../store/mutation-types'
+	import {mapMutations} from 'vuex'
+
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
 
 	let map,
@@ -57,7 +62,11 @@ console.log('not applied with update:', unhandledParams);
 		},
 
 		methods: {
+			...mapMutations({
+				setMapPopup: types.SET_MAP_POPUP
+			}),
 			initMap() {
+				const vm = this;
 				map = new mapboxgl.Map({
 					container: this.$el,
 					center: [37, 55],
@@ -74,16 +83,43 @@ console.log('not applied with update:', unhandledParams);
 				map.addControl(nav, 'top-left');
 
 				map.on('click', function (e) {
-/*
-					if (layersAtPointPopup && layersAtPointPopup.isOpen()) {
-						layersAtPointPopup.remove();
-						return;
-					}
-*/
+
 
 					let features = map.queryRenderedFeatures(e.point, {});
 
-					console.log('map click features', features);
+
+
+					let featList = features.map((feature) => `
+<a  class="pad0x pad00y contain micro block truncate quiet" href="/edit/">
+				<span class="space-left0 inline icon ${icons[feature.layer.type] || ''}"></span>
+				${feature.layer.id}
+			</a>
+`).join();
+
+
+					console.log('map click features', features, ' -> ', featList, 'point', e.point);
+
+					vm.setMapPopup({features, point: e.point});
+
+
+
+/*
+
+					let html = `<div><div class="width16 map-popup pin-topleft" style="position: fixed; top: ${e.point.y}px; left:${e.point.x}px;">
+<div class="round shadow scroll-styled dark fill-dark2" style="max-height: 180px;">
+	<a class="pad0x pad00y contain micro block truncate quiet" href="/studio/styles/plugn/cj5cmjiv709622rmpaq1rpspe/edit/">
+		<span class="space-left0 inline icon fill"></span>water_pattern</a>
+	<a class="pad0x pad00y contain micro block truncate quiet" href="/studio/styles/plugn/cj5cmjiv709622rmpaq1rpspe/edit/">
+		<span class="space-left0 inline icon fill"></span>water_offset</a>
+	<a class="pad0x pad00y contain micro block truncate quiet" href="/studio/styles/plugn/cj5cmjiv709622rmpaq1rpspe/edit/">
+		<span class="space-left0 inline icon globe"></span>background</a>
+</div><div class="map-popup-nub"></div></div></div>`;
+*/
+//					new mapboxgl.Popup({closeOnClick: true})
+//						.setLngLat(e.lngLat)
+//						.setText('featList'+featList)
+//						.addTo(map);
+
 				});
 
 			}
@@ -97,5 +133,6 @@ console.log('not applied with update:', unhandledParams);
 	.map {
 		height: 100%;
 		background-color: ghostwhite;
+		cursor: pointer;
 	}
 </style>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mapbox/mapbox-gl-style-spec": "^9.0.0",
+    "@mapbox/to-color": "^1.1.0",
     "brace": "^0.8.0",
     "dat-gui-light-theme": "git+https://git@github.com/plugn/dat-gui-light-theme.git",
     "dat.gui": "^0.6.1",
@@ -21,7 +22,6 @@
     "vue-loader": "^10.3.0",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.4.1",
-    "vue2-ace": "^1.0.4",
     "vuex": "^2.3.1"
   },
   "devDependencies": {

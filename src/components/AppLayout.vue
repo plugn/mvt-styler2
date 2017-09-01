@@ -17,6 +17,7 @@
 
 			<div class="stretch fill-canvas">
 				<MapGL></MapGL>
+				<MapPopup></MapPopup>
 			</div>
 
 			<!--<Dashboard />-->
@@ -34,6 +35,7 @@
 	import LayerTree from './LayerList/LayerTree.vue'
 	import Editor from './Editor'
 	import MapGL from './Map/index.vue'
+	import MapPopup from './Map/Popup.vue'
 	import {eventBus} from '../main';
 	import Dashboard from './mbst/index.vue';
 	import LayerEditor from './LayerEditor.vue'
@@ -48,7 +50,8 @@
 			LayerEditor,
 			MapGL,
 			Editor,
-			ModalProjects
+			ModalProjects,
+			MapPopup
 		},
 		directives: {
 			resize
