@@ -15,12 +15,10 @@
 
 			<LayerEditor v-show="editorPaneShow" />
 
-			<div class="stretch fill-canvas">
+			<div class="stretch fill-canvas" style="position: relative;">
 				<MapGL></MapGL>
 				<MapPopup></MapPopup>
 			</div>
-
-			<!--<Dashboard />-->
 
 		</div>
 	</div>
