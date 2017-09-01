@@ -36,7 +36,7 @@
 	import MapGL from './Map/index.vue'
 	import {eventBus} from '../main';
 	import Dashboard from './mbst/index.vue';
-	import LayerEditor from './LayerList/LayerEditor.vue'
+	import LayerEditor from './LayerEditor.vue'
 	import ModalProjects from '../components/modal/Projects.vue'
 	import {mapState} from 'vuex'
 

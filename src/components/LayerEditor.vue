@@ -64,12 +64,12 @@
 </template>
 
 <script>
-	import {eventBus} from '../../main'
-	import * as utils from '../../utils'
-	import LayerTree from '../LayerList/LayerTree.vue'
-	import Editor from '../Editor.vue'
-	import resize from '../../directives/resize/resize'
-	import * as types from '../../store/mutation-types'
+	import {eventBus} from '../main'
+	import * as utils from '../utils'
+	import LayerTree from './LayerList/LayerTree.vue'
+	import Editor from './Editor.vue'
+	import resize from '../directives/resize/resize'
+	import * as types from '../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
 
 	export default {
