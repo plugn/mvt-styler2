@@ -25,6 +25,7 @@
 							<input type="text"
 								   ref="inputGroupId"
 								   v-model="modelGroupId"
+								   @click.stop=""
 								   @keyup.27="editMode=false"
 								   @keyup.enter="saveGroup"
 								   class="truncate space-right1 micro col12 round shortest clean pad2r ">
