@@ -21,7 +21,7 @@
 					<div v-if="editMode" class="contain col12">
 						<form v-on:submit.prevent="">
 							<button class="pin-right icon check space-right0"
-								@click="saveGroup"></button>
+								@click.stop="saveGroup"></button>
 							<input type="text"
 								   ref="inputGroupId"
 								   v-model="modelGroupId"
@@ -36,7 +36,7 @@
 							:class="{'space-right2': hoverFolder}"><span data-test="">{{ model.id }}</span><span
 								class="quiet space-left0">{{model.children.length}} layers</span>
 							<button
-								@click="editGroup(model.id)"
+								@click.stop="editGroup(model.id)"
 								class="pin-topright animate icon pointer"
 								:class="{'pencil': hoverFolder}"></button>
 						</div>
