@@ -24,6 +24,7 @@
 	import * as types from '../../store/mutation-types'
 	import {mapState, mapMutations} from 'vuex'
 	import {get} from 'lodash'
+	import {icon, bgColor} from '../../utils'
 
 	export default {
 		computed:{
@@ -33,18 +34,11 @@
 			})
 		},
 		methods:{
+			icon,
+			bgColor,
 			...mapMutations({
 				setCurrentLayerId: types.SET_CURRENT_LAYER
-			}),
-			icon(type) {
-				return icons[type];
-			},
-			bgColor(feature) {
-				let srcLayer = get(feature, 'source-layer')
-				let color = toColor(srcLayer);
-				return color ? {'backgroundColor': color} : null;
-			}
-
+			})
 		}
 	}
 </script>

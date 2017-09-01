@@ -22,6 +22,7 @@ import {
 	unset,
 	value
 } from 'lodash'
+import {icon, getColor} from '../utils'
 
 export const groupsPath = ['metadata', 'mapbox:groups'];
 export const groupPath = ['metadata', 'mapbox:group'];
@@ -59,7 +60,7 @@ export function buildTreeData(mvtStyle) {
 	return reduce(cloneDeep(mvtStyle.layers), reducer, []);
 
 	function reducer(result, value, key) {
-		let _value = {id: value.id};
+		let _value = {id: value.id, icon: icon(value.type || 'fill'), color: getColor(value)};
 		let thisGroup = get(value, groupPath, null);
 		if (!thisGroup) {
 			result.push(_value);

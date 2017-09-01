@@ -7,8 +7,9 @@
 				<div class="pad1x pad0y">
 					<div class="col12 contain" data-test="layer-name">
 						<div class="space-top0 space-bottom0 pin-left noevents"
-							 style="width: 2px; background: rgba(255, 204, 68, 0.75);"></div>
-						<div class="strong small pin-topleft pad0 icon line"></div>
+							 :style="[{width:'2px'}, bgColor(layer)]"></div>
+						<div class="strong small pin-topleft pad0 icon "
+							 :class="layer && icon(layer.type || 'fill')"></div>
 						<div class="strong space-left3">
 							<div v-if="editMode" class="contain col12">
 								<form v-on:submit.prevent="">
@@ -65,12 +66,12 @@
 
 <script>
 	import {eventBus} from '../main'
-	import * as utils from '../utils'
 	import LayerTree from './LayerList/LayerTree.vue'
 	import Editor from './Editor.vue'
 	import resize from '../directives/resize/resize'
 	import * as types from '../store/mutation-types'
-	import {mapMutations, mapState, mapGetters} from 'vuex';
+	import {mapMutations, mapState, mapGetters} from 'vuex'
+	import {icon, bgColor} from '../utils'
 
 	export default {
 		name: 'LayerEditor',
@@ -84,6 +85,7 @@
 		data() {
 			return {
 				codeTitle: '?',
+				layer: null,
 				editMode: false
 			}
 		},
@@ -109,14 +111,19 @@
 				}
 
 				this.setEditorMode('layer');
-				let data = this.getLayer(layerId);
-//				console.log(' * LayerEditor watch() '+layerId+' data : ', data, ' editorMode', this.editorMode);
-				eventBus.$emit('ace:content.set', data);
+
+				this.layer = this.getLayer(layerId);
+//				console.log(' * LayerEditor watch() '+layerId+' layer : ', this.layer, ' editorMode', this.editorMode);
+				eventBus.$emit('ace:content.set', this.getLayer(layerId));
 				this.codeTitle = layerId || this.codeTitle;
+
 			}
 		},
 
 		methods: {
+			icon,
+			bgColor,
+
 			...mapMutations({
 				setEditorMode: types.SET_EDITOR_MODE,
 				renameLayer: types.RENAME_LAYER,

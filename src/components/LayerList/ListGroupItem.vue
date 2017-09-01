@@ -4,10 +4,12 @@
 		 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent}"
 		 style="padding-left: 20px;">
 		<div class="space-top0 space-bottom0 pin-left noevents"
-			 style="margin-left: 20px; width: 2px; background: rgba(255, 153, 119, 0.75);"></div>
+			 style="margin-left: 20px;"
+			 :style="{width:'2px', backgroundColor:model.color}"></div>
 		<button title="admin_country" data-test="layer_item-admin_country"
 				class="a col12 layer-title animate pad00y pad00x block quiet truncate micro"><span
-				class="line icon inline" ></span>{{ model.id }} </button>
+				class="icon"
+				:class="model.icon"></span>{{ model.id }} </button>
 		<div class="pin-right drag-handle animate"></div>
 	</div>
 

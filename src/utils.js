@@ -1,3 +1,6 @@
+import icons from './util/icons.json'
+import toColor from '@mapbox/to-color'
+import {get} from 'lodash'
 /**
  * moves element from fromIndex and place it at toIndex in given list
  * @param list {Array}
@@ -17,4 +20,17 @@ export function getList(listEl) {
 	return Array.from(listEl.childNodes).filter(function(node) {
 		return node.tagName && !node.hidden;
 	});
+}
+
+export function icon(type) {
+	return icons[type];
+}
+
+export function getColor(feature) {
+	return toColor(get(feature, 'source-layer'));
+}
+export function bgColor(feature) {
+	let srcLayer = get(feature, 'source-layer')
+	let color = toColor(srcLayer);
+	return color ? {'backgroundColor': color} : null;
 }
