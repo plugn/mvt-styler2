@@ -1,3 +1,10 @@
+/**
+ * @title acevue Brace (AceJS+ES6) binding for VueJS
+ *
+ * @descriptiom "forked" from npm package "vue2-ace@1.0.4"
+ */
+
+
 const ace = require('brace');
 require('brace/ext/searchbox');
 
