@@ -265,17 +265,11 @@
 				return nextLayerId;
 			},
 
-
-
-
 			addNewLayer() {
-//				if (!get(this.vStyle,'layers.length')) {}
-
 				let refLayerId = this.currentLayerId || this.getLayerByIndex(0);
-
 				let nextLayerId = this.makeUniqueLayerId('new_layer', '_0');
 				let layer = {...newLayerTemplate,id: nextLayerId};
-				console.log('refLayerId',refLayerId, 'layer',layer);
+//				console.log('refLayerId',refLayerId, 'layer',layer);
 
 				this.addLayer({refLayerId, layer});
 				this.setCurrentLayerId(nextLayerId);
