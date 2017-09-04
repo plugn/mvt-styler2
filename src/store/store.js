@@ -94,7 +94,10 @@ export const store = new Vuex.Store({
 			// vTree
 			let	{groupIndex, leafIndex} = state.vTreeIndex[refLayerId];
 			let mirrorSource = groupIndex === -1 ? state.vTree : state.vTree[groupIndex].children;
-			mirrorSource.splice(leafIndex, 0, {id: layer.id});
+			let refTreeItem = mirrorSource[leafIndex];
+			let newTreeItem = {id: layer.id, icon: refTreeItem.icon, color: refTreeItem.color}
+
+			mirrorSource.splice(leafIndex, 0, newTreeItem);
 
 			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
