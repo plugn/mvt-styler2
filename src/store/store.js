@@ -108,6 +108,24 @@ export const store = new Vuex.Store({
 			state.vLayersIndex = indexLayers(state.vStyle.layers);
 		},
 
+		[types.ADD_LAYER](state, {refLayerId, refLayerIndex = 0, layer}) {
+			// vStyle and Index
+			let index = (refLayerId && state.vLayersIndex[refLayerId]) || refLayerIndex;
+			let refLayer = refLayerId && state.vStyle.layers[state.vLayersIndex[refLayerId]];
+			let metadata = refLayer && pick(refLayer,'metadata') || {};
+
+			if (!Array.isArray(state.vStyle.layers)) {
+				state.vStyle.layers = [];
+			}
+			state.vStyle.layers.splice(index, 0, {...layer, ...metadata});
+
+			state.vLayersIndex = indexLayers(state.vStyle.layers);
+
+			// vTree
+			state.vTree = buildTreeData(state.vStyle);
+			state.vTreeIndex = indexTree(state.vTree);
+		},
+
 		[types.REMOVE_LAYER](state, layerId){
 			let	{groupIndex, leafIndex} = state.vTreeIndex[layerId];
 			let mirrorSource = groupIndex === -1 ? state.vTree : state.vTree[groupIndex].children;

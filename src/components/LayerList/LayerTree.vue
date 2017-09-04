@@ -19,8 +19,9 @@
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
 			</div>
 		</div>
-		<div class="micro clearfix col12 fill-dark"><a class="inline micro pad0 strong "
-													   href="#"><span
+		<div class="micro clearfix col12 fill-dark"><a
+				@click.prevent="addNewLayer"
+				class="inline micro pad0 strong " href="#"><span
 				class="icon plus"></span>New layer</a>
 			<div class="fr"><span class="space-right0"><button
 					@click="duplicateLayer" class="inline icon duplicate a pad0y align-top "
@@ -47,7 +48,7 @@
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
 	import {cloneDeep, get, set, pick} from 'lodash'
-	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, ensureStyleHasGroup, objectDiff} from '../../util/styleSync'
+	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, ensureStyleHasGroup, objectDiff, newLayerTemplate} from '../../util/styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
@@ -147,6 +148,7 @@
 				setVStyle: types.SET_VSTYLE,
 				setLayer: types.SET_LAYER,
 				addLayerBefore: types.ADD_LAYER_BEFORE,
+				addLayer: types.ADD_LAYER,
 				dragDropLayer: types.DRAGDROP_LAYER,
 				removeLayer: types.REMOVE_LAYER,
 				groupLayer: types.GROUP_LAYER,
@@ -244,16 +246,14 @@
 				}
 			},
 
-			duplicateLayer() {
-				if (!this.currentLayerId) { return; }
-
+			makeUniqueLayerId(sourceString, postfix = '_copy_0') {
 				let makeNewId = s => s.replace(/([^\d]*)(\d+)$/, function(m,p1,p2){
 					return p1 + (+p2 + 1);
-				})
+				});
 
 				let nextLayerId;
-				let parts = ('' + this.currentLayerId).match(/([^\d]*)(\d+)?$/);
-				let assumed = this.currentLayerId + (parts[2] ? '' : '_copy_0');
+				let parts = ('' + sourceString).match(/([^\d]*)(\d+)?$/);
+				let assumed = sourceString + (parts[2] ? '' : postfix);
 
 				let iterIndex, prevIndex;
 				do {
@@ -262,7 +262,29 @@
 					prevIndex = iterIndex;
 					iterIndex = this.getLayerIndex(assumed);
 				} while ('undefined' !== typeof iterIndex);
+				return nextLayerId;
+			},
 
+
+
+
+			addNewLayer() {
+//				if (!get(this.vStyle,'layers.length')) {}
+
+				let refLayerId = this.currentLayerId || this.getLayerByIndex(0);
+
+				let nextLayerId = this.makeUniqueLayerId('new_layer', '_0');
+				let layer = {...newLayerTemplate,id: nextLayerId};
+				console.log('refLayerId',refLayerId, 'layer',layer);
+
+				this.addLayer({refLayerId, layer});
+				this.setCurrentLayerId(nextLayerId);
+			},
+
+			duplicateLayer() {
+				if (!this.currentLayerId) { return; }
+
+				let nextLayerId = this.makeUniqueLayerId(this.currentLayerId);
 				let layer = {...this.getLayer(this.currentLayerId), id: nextLayerId };
 
 				this.addLayerBefore({refLayerId: this.currentLayerId, layer});

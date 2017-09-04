@@ -82,7 +82,6 @@
 
 				function onInteraction(e) {
 					if (vm.popupFeatures && vm.popupFeatures.length) {
-//						console.log(' * cleanup on e : ', e.type);
 						vm.setMapPopup({features:[]});
 					}
 				}
@@ -92,17 +91,12 @@
 				})
 
 				map.on('click', function (e) {
-//					console.log(' * this.popupFeatures : ', vm.popupFeatures);
-					
 					if (vm.popupFeatures && vm.popupFeatures.length) {
 						return onInteraction(e);
 					}
 					let features = map.queryRenderedFeatures(e.point, {});
-					console.log('map click features', features.length);
-
 					vm.setMapPopup({features, point: e.point});
 				});
-
 			}
 		}
 	}

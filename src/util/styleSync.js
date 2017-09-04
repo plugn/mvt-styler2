@@ -30,15 +30,15 @@ export const groupPath = ['metadata', 'mapbox:group'];
 export function ensureStyleHasGroup(mvtStyle, groupData) {
 	let {groupName, groupId} = groupData;
 	let oGroups = get(mvtStyle, groupsPath);
-	if (has(oGroups, ''+groupId)) {
+	if (has(oGroups, '' + groupId)) {
 		return mvtStyle;
 	}
 
 	// workaround because of _.set() produces an Array if last path-key numeric-like
-	if (! has(mvtStyle, groupsPath)) {
+	if (!has(mvtStyle, groupsPath)) {
 		set(mvtStyle, groupsPath, {});
 	}
-	return set(mvtStyle, concat(groupsPath, groupId), {name:groupName, collapsed: false})
+	return set(mvtStyle, concat(groupsPath, groupId), {name: groupName, collapsed: false})
 }
 
 export function renameStyleGroup(mvtStyle, prevName, nextName) {
@@ -48,6 +48,7 @@ export function renameStyleGroup(mvtStyle, prevName, nextName) {
 		acc[name] = id;
 		return acc;
 	}
+
 	let groupsByName = reduce(oGroups, reducer, {});
 	let groupId = groupsByName[prevName];
 
@@ -160,7 +161,7 @@ export function indexLayers(layers) {
  * layerId: {leafIndex: number, groupIndex?: number}
  */
 export function indexTree(layersTree) {
-	return reduce(layersTree, reducer, {'__groups':{}});
+	return reduce(layersTree, reducer, {'__groups': {}});
 
 	function reducer(acc, value, key) {
 		if (value.children) {
@@ -239,3 +240,11 @@ export function prettifyMapLayer(obj) {
 		}, {})
 		.value();
 }
+
+export const newLayerTemplate = {
+	"type": "background",
+	"paint": {
+		"background-color": "#f8f4f0"
+	},
+	"interactive": true
+};
