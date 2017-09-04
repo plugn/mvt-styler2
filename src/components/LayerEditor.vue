@@ -9,7 +9,7 @@
 						<div class="space-top0 space-bottom0 pin-left noevents"
 							 :style="[{width:'2px'}, bgColor(layer)]"></div>
 						<div class="strong small pin-topleft pad0 icon "
-							 :class="layer && icon(layer.type || 'fill')"></div>
+							 :class="layer && (icon(layer.type) || 'return')"></div>
 						<div class="strong space-left3">
 							<div v-if="editMode" class="contain col12">
 								<form v-on:submit.prevent="">
