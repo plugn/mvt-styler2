@@ -196,7 +196,7 @@ export function objectDiff(curr, last) {
 	};
 }
 
-
+// TODO: RE-THINK SMART UPDATE for cases 'source' and 'source-layer'
 export function updateMapLayer(layerId, params, map) {
 
 	if (has(params, 'minzoom') && has(params, 'maxzoom')) {
