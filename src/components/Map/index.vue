@@ -10,6 +10,7 @@
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 	import * as types from '../../store/mutation-types'
 	import {mapState, mapMutations} from 'vuex'
+	import {forOwn} from 'lodash'
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
 
@@ -29,11 +30,20 @@
 
 		created() {
 			// TODO: refactor to utility function
-			eventBus.$on('map:layer.update', function(layerId, values) {
+			eventBus.$on('map:layer.update', function(layerId, values, newStyle) {
 //				console.log('map:layer.update', layerId, values);
 
-				let unhandledParams = updateMapLayer(layerId, values, map);
-				console.log('not applied with update:', unhandledParams);
+				let {cmd, unhandledParams} = updateMapLayer(layerId, values, map);
+				console.log('not applied with update:', JSON.stringify(unhandledParams));
+				if (Object.keys(unhandledParams).length) {
+					map.setStyle(newStyle);
+				}
+				else {
+					forOwn(cmd, function (fn) {
+						console.log(' * fn : ', fn.toString());
+						fn.call();
+					});
+				}
 			});
 
 			eventBus.$on('map:resize', function () {

@@ -342,9 +342,9 @@
 				layerNewStyle = {...layerNewStyle, id: layerId};
 
 				let diffObj = objectDiff(layerNewStyle, layerStyle);
-				eventBus.$emit('map:layer.update', layerId, diffObj.update);
-
 				this.setLayer({layerId: layerId, value: layerNewStyle});
+
+				eventBus.$emit('map:layer.update', layerId, diffObj.update);
 			},
 
 			editFullStyle() {

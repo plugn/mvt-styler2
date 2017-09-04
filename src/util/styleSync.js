@@ -199,25 +199,36 @@ export function objectDiff(curr, last) {
 // TODO: RE-THINK SMART UPDATE for cases 'source' and 'source-layer'
 export function updateMapLayer(layerId, params, map) {
 
+	let unhandledParams = {};
+	let cmd = [];
+
 	if (has(params, 'minzoom') && has(params, 'maxzoom')) {
-		map.setLayerZoomRange(layerId, params.minzoom, params.maxzoom);
+		cmd.push(function () {
+			map.setLayerZoomRange(layerId, params.minzoom, params.maxzoom);
+		})
 	}
 	let procParams = omit(params, ['minzoom', 'maxzoom', 'id', 'metadata']);
 
-	let unhandledParams = {};
 
 	forOwn(procParams, function (value, name) {
 
 //console.log('forOwn', name, '=>', value);
 		if ('filter' === name) {
-			map.setFilter(layerId, value);
+			cmd.push(function () {
+				map.setFilter(layerId, value);
+			})
 		} else if ('layout' === name) {
 			forOwn(value, function (v, k) {
-				map.setLayoutProperty(layerId, k, v);
+				cmd.push(function(){
+					map.setLayoutProperty(layerId, k, v);
+				})
 			});
 		} else if ('paint' === name) {
 			forOwn(value, function (v, k) {
-				map.setPaintProperty(layerId, k, v);
+				cmd.push(function(){
+
+					map.setPaintProperty(layerId, k, v);
+				})
 			});
 		} else {
 			unhandledParams[name] = value;
@@ -226,7 +237,7 @@ export function updateMapLayer(layerId, params, map) {
 
 	});
 
-	return unhandledParams;
+	return {cmd,unhandledParams};
 }
 
 export function prettifyMapLayer(obj) {
