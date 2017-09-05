@@ -8,6 +8,9 @@
 	import {updateMapLayer, prettifyMapLayer} from '../../util/styleSync'
 
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
+	import GlSpec from '@mapbox/mapbox-gl-style-spec/reference/latest'
+	import validateStyleMin from '@mapbox/mapbox-gl-style-spec/validate_style.min'
+
 	import * as types from '../../store/mutation-types'
 	import {mapState, mapMutations, mapGetters} from 'vuex'
 	import {forOwn, isEqual, isEqualWith, difference} from 'lodash'
@@ -62,9 +65,16 @@
 				}
 
 				let mHash = map.isStyleLoaded() ? JSON.stringify(map.getStyle(), null, '') : '';
+
 				let vHash = JSON.stringify(vStyle, null, '');
 
-// console.log(' * style diff : ', (mHash !== vHash));
+				if (mHash && vHash && mHash !== vHash) {
+					console.log('mHash slice', JSON.stringify(map.getStyle().layers.slice(0, 12),null,''));
+
+
+					console.log('vHash slice', JSON.stringify(vStyle.layers.slice(0, 12),null,''));
+				}
+				console.log(' * style diff : ', (mHash !== vHash));
 
 				if (mHash !== vHash) {
 					this.applyStyle(vStyle);
@@ -74,18 +84,24 @@
 			onLayerUpdate(layerId, values, layerNewStyle) {
 				console.log('map:layer.update', layerId, values, layerNewStyle);
 
-				let {cmd, unhandledParams} = updateMapLayer(layerId, values, map);
+				let options = {value: layerNewStyle, key: '', style: this.vStyle, styleSpec: GlSpec }  ;
+				let errors = validateStyleMin.layer(options);
+				console.warn(' * onLayerUpdate() errors : ', _.map(errors, 'message'));
+				if (errors.length) {return;}
+
+				let {scm, cmd, unhandledParams} = updateMapLayer(layerId, values, map);
 
 				if (!Object.keys(unhandledParams).length) {
-					forOwn(cmd, function (fn) {
+					forOwn(cmd, function (fn, k) {
+						console.log('scm ', scm[k]);
 						fn.call();
 					});
 				}
-
+// TODO: repair smart update
 				this.setLayer({layerId: layerId, value: layerNewStyle});
 			},
 
-			applyStyle (value) {
+			applyStyle(value) {
 				map.setStyle(value);
 			},
 
