@@ -9,8 +9,8 @@
 
 	import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 	import * as types from '../../store/mutation-types'
-	import {mapState, mapMutations} from 'vuex'
-	import {forOwn} from 'lodash'
+	import {mapState, mapMutations, mapGetters} from 'vuex'
+	import {forOwn, isEqual, isEqualWith, difference} from 'lodash'
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
 
@@ -18,37 +18,20 @@
 		_initialStyle;
 
 	export default {
-		computed:{
-			...mapState({
-				popupFeatures: state => state.mapPopup.features,
-			})
-		},
-
 		data() {
-			return {
-				style: null
-			}
+			return {map:map};
+		},
+		computed:{
+			...mapState([
+				'vStyle'
+			]),
+
+			...mapGetters([
+				'getPopupFeatures'
+			])
 		},
 
 		created() {
-			// TODO: refactor to utility function
-			eventBus.$on('map:layer.update', function(layerId, values, newStyle) {
-//				console.log('map:layer.update', layerId, values);
-
-				let {cmd, unhandledParams} = updateMapLayer(layerId, values, map);
-				console.log('not applied with update:', JSON.stringify(unhandledParams));
-				if (Object.keys(unhandledParams).length) {
-					this.applyStyle(newStyle);
-//					map.setStyle(newStyle);
-				}
-				else {
-					forOwn(cmd, function (fn) {
-						console.log(' * fn : ', fn.toString());
-						fn.call();
-					});
-				}
-			});
-
 			eventBus.$on('map:resize', function () {
 				console.log('@map:resize');
 				if (map) {
@@ -56,33 +39,56 @@
 				}
 			});
 
-			eventBus.$on('map:style.set', this.applyStyle);
-
+			this.$watch('vStyle', this.track_vStyle, {deep: true});
 		},
 
 		mounted() {
 			this.initMap();
+			eventBus.$on('map:layer.update', this.onLayerUpdate);
 		},
 
 		methods: {
 			...mapMutations({
-				setMapPopup: types.SET_MAP_POPUP
+				setMapPopup: types.SET_MAP_POPUP,
+				setLayer: types.SET_LAYER,
 			}),
 
-			applyStyle (value) {
-//				console.log('$on map:style.set');
+			track_vStyle(vStyle) {
+				if (!vStyle) { return; }
+
 				if (!map) {
-					_initialStyle = value;
+					_initialStyle = vStyle;
 					return;
 				}
-// TODO : smart setting style with map hot update in mind
-				if (value !== this.style) {
-					map.setStyle(value);
-					this.style = value;
-				} else {
-					console.log('map:style.set ignored because of identical');
+
+				let mHash = map.isStyleLoaded() ? JSON.stringify(map.getStyle(), null, '') : '';
+				let vHash = JSON.stringify(vStyle, null, '');
+
+// console.log(' * style diff : ', (mHash !== vHash));
+
+				if (mHash !== vHash) {
+					this.applyStyle(vStyle);
 				}
 			},
+
+			onLayerUpdate(layerId, values, layerNewStyle) {
+				console.log('map:layer.update', layerId, values, layerNewStyle);
+
+				let {cmd, unhandledParams} = updateMapLayer(layerId, values, map);
+
+				if (!Object.keys(unhandledParams).length) {
+					forOwn(cmd, function (fn) {
+						fn.call();
+					});
+				}
+
+				this.setLayer({layerId: layerId, value: layerNewStyle});
+			},
+
+			applyStyle (value) {
+				map.setStyle(value);
+			},
+
 			initMap() {
 				const vm = this;
 				map = new mapboxgl.Map({
@@ -93,7 +99,7 @@
 				});
 
 				if (_initialStyle) {
-				    map.setStyle(_initialStyle);
+				    this.applyStyle(_initialStyle);
 				    _initialStyle = undefined;
 				}
 
@@ -101,7 +107,7 @@
 				map.addControl(nav, 'top-left');
 
 				function onInteraction(e) {
-					if (vm.popupFeatures && vm.popupFeatures.length) {
+					if (vm.getPopupFeatures && vm.getPopupFeatures.length) {
 						vm.setMapPopup({features:[]});
 					}
 				}
@@ -111,7 +117,7 @@
 				})
 
 				map.on('click', function (e) {
-					if (vm.popupFeatures && vm.popupFeatures.length) {
+					if (vm.getPopupFeatures && vm.getPopupFeatures.length) {
 						return onInteraction(e);
 					}
 					let features = map.queryRenderedFeatures(e.point, {});

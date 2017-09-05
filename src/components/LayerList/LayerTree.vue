@@ -135,8 +135,6 @@
 
 		mounted() {
 			this.setStyle(mbStyle);
-			eventBus.$emit('map:style.set', mbStyle);
-
 			this.initDnD();
 		},
 
@@ -176,7 +174,6 @@
 				// FF needs 300ms delay
 				setTimeout(this.refreshContainers.bind(this), 300);
 
-				eventBus.$emit('map:style.set', this.vStyle);
 				this.updateLayerCode();
 				this.setFolderIcon();
 			},
@@ -320,8 +317,7 @@
 					current = 'visible' === before ? 'none' : 'visible';
 				set(layerNewStyle, 'layout.visibility', current);
 				let updateObj = pick(layerNewStyle, 'layout');
-				eventBus.$emit('map:layer.update', layerId, updateObj);
-				this.setLayer({layerId: layerId, value:layerNewStyle});
+				eventBus.$emit('map:layer.update', layerId, updateObj, layerNewStyle);
 				eventBus.$emit('ace:content.set', layerNewStyle);
 
 				this.setEyeIcon();
@@ -341,9 +337,7 @@
 				layerNewStyle = {...layerNewStyle, id: layerId};
 
 				let diffObj = objectDiff(layerNewStyle, layerStyle);
-				this.setLayer({layerId: layerId, value: layerNewStyle});
-
-				eventBus.$emit('map:layer.update', layerId, diffObj.update);
+				eventBus.$emit('map:layer.update', layerId, diffObj.update, layerNewStyle);
 			},
 
 			editFullStyle() {

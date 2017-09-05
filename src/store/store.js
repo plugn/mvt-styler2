@@ -32,6 +32,7 @@ export const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		getPopupFeatures: state => state.mapPopup.features,
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
 		getLayer: state => layerId => state.vStyle.layers[state.vLayersIndex[layerId]],
 		getLayerIndex: state => layerId => state.vLayersIndex[layerId],
