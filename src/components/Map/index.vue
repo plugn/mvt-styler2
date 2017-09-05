@@ -25,7 +25,9 @@
 		},
 
 		data() {
-			return {}
+			return {
+				style: null
+			}
 		},
 
 		created() {
@@ -36,7 +38,8 @@
 				let {cmd, unhandledParams} = updateMapLayer(layerId, values, map);
 				console.log('not applied with update:', JSON.stringify(unhandledParams));
 				if (Object.keys(unhandledParams).length) {
-					map.setStyle(newStyle);
+					this.applyStyle(newStyle);
+//					map.setStyle(newStyle);
 				}
 				else {
 					forOwn(cmd, function (fn) {
@@ -53,15 +56,7 @@
 				}
 			});
 
-			eventBus.$on('map:style.set', function (value) {
-//				console.log('$on map:style.set');
-				if (map) {
-					map.setStyle(value);
-				}
-				else {
-					_initialStyle = value;
-				}
-			});
+			eventBus.$on('map:style.set', this.applyStyle);
 
 		},
 
@@ -73,6 +68,21 @@
 			...mapMutations({
 				setMapPopup: types.SET_MAP_POPUP
 			}),
+
+			applyStyle (value) {
+//				console.log('$on map:style.set');
+				if (!map) {
+					_initialStyle = value;
+					return;
+				}
+// TODO : smart setting style with map hot update in mind
+				if (value !== this.style) {
+					map.setStyle(value);
+					this.style = value;
+				} else {
+					console.log('map:style.set ignored because of identical');
+				}
+			},
 			initMap() {
 				const vm = this;
 				map = new mapboxgl.Map({

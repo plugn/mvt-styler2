@@ -76,8 +76,8 @@ export const store = new Vuex.Store({
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, value);
 
-			// state.vTree = buildTreeData(state.vStyle);
-			// state.vTreeIndex = indexTree(state.vTree);
+			state.vTree = buildTreeData(state.vStyle);
+			state.vTreeIndex = indexTree(state.vTree);
 		},
 		// in case of rename we must re-index with indexLayers()
 		[types.RENAME_LAYER](state, {oldLayerId, newLayerId}) {

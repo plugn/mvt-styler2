@@ -131,7 +131,6 @@
 
 		created() {
 			eventBus.$on('ace:layer.updated', this.onLayerUpdated);
-			eventBus.$on('tree:listdata.set', this.setListData);
 		},
 
 		mounted() {
