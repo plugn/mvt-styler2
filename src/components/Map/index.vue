@@ -135,7 +135,7 @@
 						return onInteraction(e);
 					}
 					let mapFeatures = map.queryRenderedFeatures(e.point, {});
-					let oFeatures = keyBy(mapFeatures, 'id');
+					let oFeatures = keyBy(mapFeatures, 'layer.id');
 					let features = reduce(oFeatures, (acc,v) => acc.concat(v), []);
 					vm.setMapPopup({features, point: e.point});
 				});
