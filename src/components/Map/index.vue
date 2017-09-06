@@ -13,7 +13,7 @@
 
 	import * as types from '../../store/mutation-types'
 	import {mapState, mapMutations, mapGetters} from 'vuex'
-	import {forOwn, isEqual, isEqualWith, difference, get} from 'lodash'
+	import {forOwn, get, keyBy, reduce} from 'lodash'
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
 
@@ -134,7 +134,9 @@
 					if (vm.getPopupFeatures && vm.getPopupFeatures.length) {
 						return onInteraction(e);
 					}
-					let features = map.queryRenderedFeatures(e.point, {});
+					let mapFeatures = map.queryRenderedFeatures(e.point, {});
+					let oFeatures = keyBy(mapFeatures, 'id');
+					let features = reduce(oFeatures, (acc,v) => acc.concat(v), []);
 					vm.setMapPopup({features, point: e.point});
 				});
 			}
