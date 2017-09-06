@@ -26,11 +26,13 @@
 		},
 		computed:{
 			...mapState([
-				'vStyle'
+				'vStyle',
+				'smartUpdate'
 			]),
 
 			...mapGetters([
-				'getPopupFeatures'
+				'getPopupFeatures',
+				'getLayerIndex'
 			])
 		},
 
@@ -54,6 +56,7 @@
 			...mapMutations({
 				setMapPopup: types.SET_MAP_POPUP,
 				setLayer: types.SET_LAYER,
+				setSmartUpdate: types.SET_SMART_UPDATE
 			}),
 
 			track_vStyle(vStyle) {
@@ -64,22 +67,19 @@
 					return;
 				}
 
-				let isLoaded = get(map, 'style.stylesheet.layers');
-				let mapStyle = isLoaded && map.getStyle();
-
-				let mHash = isLoaded ? JSON.stringify(mapStyle, null, '') : '';
-
-				let vHash = JSON.stringify(vStyle, null, '');
-
-
-				console.log(' * style diff : ', (mHash !== vHash));
-
-				if (mHash !== vHash) {
-					console.log('mHash slice', mHash && JSON.stringify(mapStyle.layers.slice(0, 12),null,'') || '');
-					console.log('vHash slice', vHash && JSON.stringify(vStyle.layers.slice(0, 12),null,'') || '');
-//debugger;
+				if (!this.smartUpdate.length) {
 					this.applyStyle(vStyle);
+					return;
 				}
+
+				forOwn(this.smartUpdate, function (cmdItem) {
+					let [mapMethod, params] = cmdItem;
+					map[mapMethod].apply(map, params);
+					console.log(' # smartUpdate : ', mapMethod+'( ' + params.join(', ') + ' )');
+				});
+				this.setSmartUpdate([]);
+
+
 			},
 
 			onLayerUpdate(layerId, values, layerNewStyle) {
@@ -90,16 +90,12 @@
 				console.warn(' * onLayerUpdate() errors : ', _.map(errors, 'message'));
 				if (errors.length) {return;}
 
-				let {scm, cmd, unhandledParams} = updateMapLayer(layerId, values, map);
+				let {cmd, unhandledParams} = updateMapLayer(layerId, values, map);
 
 				if (!Object.keys(unhandledParams).length) {
-					forOwn(cmd, function (fn, k) {
-						let [mapMethod, params] = scm[k]
-						console.log('scm ', mapMethod+'( ' + params.join(', ') + ' )');
-						fn.call(map);
-					});
+					this.setSmartUpdate(cmd);
 				}
-// TODO: repair smart update
+
 				this.setLayer({layerId: layerId, value: layerNewStyle});
 			},
 

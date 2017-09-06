@@ -29,7 +29,8 @@ export const store = new Vuex.Store({
 			features:[],
 			point: null,
 			show: false
-		}
+		},
+		smartUpdate: []
 	},
 	getters: {
 		getPopupFeatures: state => state.mapPopup.features,
@@ -49,6 +50,10 @@ export const store = new Vuex.Store({
 		)
  	},
 	mutations: {
+		[types.SET_SMART_UPDATE](state, payload=[]){
+			state.smartUpdate = payload;
+		},
+
 		[types.SET_MAP_POPUP](state, payload){
 			state.mapPopup = {...payload};
 		},
