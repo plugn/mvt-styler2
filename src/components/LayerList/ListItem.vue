@@ -7,7 +7,7 @@
 				 style="padding-left: 10px;">
 				<div class="space-top0 space-bottom0 pin-left noevents space-left1"
 					 :style="{width:'2px', backgroundColor:model.color}"></div>
-				<button title="country_label" data-test="layer_item-country_label" class="a col12 layer-title animate pad00y pad00x block quiet truncate micro"><span
+				<button  :title="model.id" :data-test="model.id" class="a col12 layer-title animate pad00y pad00x block quiet truncate micro"><span
 						class="icon" :class="model.icon"></span>
 					{{ model.id }}
 				</button>

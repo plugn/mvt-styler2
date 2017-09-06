@@ -46,7 +46,7 @@
 				<span class="pin-topright z1 drag-handle animate"></span>
 			</div>
 		</div>
-		<ul v-show="open" class="draghost ">
+		<ul v-show="allGroupsOpen || open" class="draghost ">
 			<ListGroupItem
 					v-for="(listItem, listKey) in model.children"
 					:key="listItem.id"
@@ -67,7 +67,7 @@
 	import ListGroupItem from './ListGroupItem.vue'
 	import {get} from 'lodash'
 	import * as types from '../../store/mutation-types'
-	import {mapMutations} from 'vuex'
+	import {mapMutations, mapState} from 'vuex'
 
 	export default {
 		name: 'LayerTreeItem',
@@ -91,21 +91,32 @@
 		},
 
 		computed: {
-			isFolder: function() {
+			...mapState([
+				'allGroupsOpen'
+			]),
+
+			isFolder() {
 				return this.model.children &&
 					this.model.children.length
 			},
-			isRoot: function() {
+			isRoot() {
 				return Array.isArray(this.model);
 			}
 		},
 		methods: {
 			...mapMutations({
+				setAllGroupsOpen: types.SET_ALL_GROUPS_OPEN,
 				renameGroup: types.RENAME_GROUP
 			}),
 			toggle() {
 				if (this.isFolder) {
-					this.open = !this.open;
+					if (this.allGroupsOpen) {
+						this.setAllGroupsOpen(false);
+						this.open = false;
+					}
+					else {
+						this.open = !this.open;
+					}
 				}
 			},
 			editGroup(id) {

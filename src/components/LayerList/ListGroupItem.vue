@@ -6,7 +6,7 @@
 		<div class="space-top0 space-bottom0 pin-left noevents"
 			 style="margin-left: 20px;"
 			 :style="{width:'2px', backgroundColor:model.color}"></div>
-		<button title="admin_country" data-test="layer_item-admin_country"
+		<button :title="model.id" :data-test="model.id"
 				class="a col12 layer-title animate pad00y pad00x block quiet truncate micro"><span
 				class="icon"
 				:class="model.icon"></span>{{ model.id }} </button>

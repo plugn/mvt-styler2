@@ -30,7 +30,8 @@ export const store = new Vuex.Store({
 			point: null,
 			show: false
 		},
-		smartUpdate: []
+		smartUpdate: [],
+		allGroupsOpen: false
 	},
 	getters: {
 		getPopupFeatures: state => state.mapPopup.features,
@@ -55,6 +56,10 @@ export const store = new Vuex.Store({
 		)
  	},
 	mutations: {
+		[types.SET_ALL_GROUPS_OPEN](state, payload){
+			state.allGroupsOpen = payload;
+		},
+
 		[types.SET_SMART_UPDATE](state, payload=[]){
 			state.smartUpdate = payload;
 		},
