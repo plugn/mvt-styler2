@@ -204,6 +204,7 @@ export function updateMapLayer(layerId, params, map) {
 	let scm = [];
 
 	if (has(params, 'minzoom') && has(params, 'maxzoom')) {
+		scm.push(['setLayerZoomRange',[layerId, params.minzoom, params.maxzoom]]);
 		cmd.push(function () {
 			map.setLayerZoomRange(layerId, params.minzoom, params.maxzoom);
 		})
@@ -215,20 +216,20 @@ export function updateMapLayer(layerId, params, map) {
 
 //console.log('forOwn', name, '=>', value);
 		if ('filter' === name) {
-			scm.push('setFilter',[layerId, value]);
+			scm.push(['setFilter',[layerId, value]]);
 			cmd.push(function () {
 				map.setFilter(layerId, value);
 			})
 		} else if ('layout' === name) {
 			forOwn(value, function (v, k) {
-				scm.push('setLayoutProperty',[layerId, k, v]);
+				scm.push(['setLayoutProperty',[layerId, k, v]]);
 				cmd.push(function(){
 					map.setLayoutProperty(layerId, k, v);
 				})
 			});
 		} else if ('paint' === name) {
 			forOwn(value, function (v, k) {
-				scm.push('setPaintProperty', [layerId, k, v]);
+				scm.push(['setPaintProperty', [layerId, k, v]]);
 				cmd.push(function(){
 					map.setPaintProperty(layerId, k, v);
 				})

@@ -13,7 +13,7 @@
 
 	import * as types from '../../store/mutation-types'
 	import {mapState, mapMutations, mapGetters} from 'vuex'
-	import {forOwn, isEqual, isEqualWith, difference} from 'lodash'
+	import {forOwn, isEqual, isEqualWith, difference, get} from 'lodash'
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoicGx1Z24iLCJhIjoiY2l6cHIyejhzMDAyODJxdXEzaHM2cmVrZiJ9.qLg-Ki18d0JQnAMfzg7nCA';
 
@@ -64,19 +64,20 @@
 					return;
 				}
 
-				let mHash = map.isStyleLoaded() ? JSON.stringify(map.getStyle(), null, '') : '';
+				let isLoaded = get(map, 'style.stylesheet.layers');
+				let mapStyle = isLoaded && map.getStyle();
+
+				let mHash = isLoaded ? JSON.stringify(mapStyle, null, '') : '';
 
 				let vHash = JSON.stringify(vStyle, null, '');
 
-				if (mHash && vHash && mHash !== vHash) {
-					console.log('mHash slice', JSON.stringify(map.getStyle().layers.slice(0, 12),null,''));
 
-
-					console.log('vHash slice', JSON.stringify(vStyle.layers.slice(0, 12),null,''));
-				}
 				console.log(' * style diff : ', (mHash !== vHash));
 
 				if (mHash !== vHash) {
+					console.log('mHash slice', mHash && JSON.stringify(mapStyle.layers.slice(0, 12),null,'') || '');
+					console.log('vHash slice', vHash && JSON.stringify(vStyle.layers.slice(0, 12),null,'') || '');
+//debugger;
 					this.applyStyle(vStyle);
 				}
 			},
@@ -93,8 +94,9 @@
 
 				if (!Object.keys(unhandledParams).length) {
 					forOwn(cmd, function (fn, k) {
-						console.log('scm ', scm[k]);
-						fn.call();
+						let [mapMethod, params] = scm[k]
+						console.log('scm ', mapMethod+'( ' + params.join(', ') + ' )');
+						fn.call(map);
 					});
 				}
 // TODO: repair smart update
