@@ -39,6 +39,11 @@ export const store = new Vuex.Store({
 		getLayerIndex: state => layerId => state.vLayersIndex[layerId],
 		getLayerByIndex: state => index => state.vStyle.layers[index],
 		getTreeIndex: state => layerId => state.vTreeIndex[layerId],
+		getTreeItem: state => layerId => {
+			let {groupIndex, leafIndex} = state.vTreeIndex[layerId],
+				branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex];
+			return branch[leafIndex];
+		},
 		getInitEditorCode: state => (mode = state.editorMode) => (
 			mode === 'style'
 				? state.vStyle
@@ -203,6 +208,8 @@ export const store = new Vuex.Store({
 
 		[types.GROUP_LAYER](state, layerId) {
 			let	{groupIndex, leafIndex} = state.vTreeIndex[layerId];
+			let	branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex];
+			let treeItem = branch[leafIndex];
 
 			if (groupIndex !== -1) {
 				throw new Error(` (!) descendant ${layerId} of  ${groupIndex} cannot be grouped `);
@@ -218,7 +225,6 @@ export const store = new Vuex.Store({
 			let index = state.vLayersIndex[layerId];
 			state.vStyle.layers.splice(index, 1, layer);
 
-
 			let vStyle = ensureStyleHasGroup(state.vStyle, {groupName, groupId});
 			// console.log(' * ensurehasGroup vStyle : ', vStyle);
 
@@ -230,9 +236,7 @@ export const store = new Vuex.Store({
 			let mirrorTarget = state.vTree;
 			let payload = {
 				id: groupName,
-				children:[{
-					id: `${layerId}`
-				}]
+				children:[treeItem]
 			};
 
 			mirrorTarget.splice(leafIndex, 1, payload);
