@@ -152,8 +152,10 @@
 		background-color: ghostwhite;
 	}
 	/*
+
 	#map-container canvas {
 		cursor: auto;
 	}
+
 	*/
 </style>
