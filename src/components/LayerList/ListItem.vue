@@ -3,7 +3,7 @@
 	<li class="col12 clearfix contain dark" @click="setCurrentLayerId(model.id)">
 		<ul>
 			<div class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark "
-				 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent}"
+				 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
 				 style="padding-left: 10px;">
 				<div class="space-top0 space-bottom0 pin-left noevents space-left1"
 					 :style="{width:'2px', backgroundColor:model.color}"></div>
@@ -34,6 +34,9 @@ export default {
 		]),
 		isCurrent() {
 			return this.model.id === this.currentLayerId
+		},
+		isSelected() {
+			return false;
 		}
 	},
 	methods: {
