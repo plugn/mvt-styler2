@@ -1,8 +1,11 @@
 
 <template>
-	<div @click="setCurrentLayerId(model.id)" class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark"
-		 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
-		 style="padding-left: 20px;">
+	<div
+		@click.shift="toggleSelected()"
+		@click="setCurrentLayerId(model.id)"
+		class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark"
+		:class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
+		style="padding-left: 20px;">
 		<div class="space-top0 space-bottom0 pin-left noevents"
 			 style="margin-left: 20px;"
 			 :style="{width:'2px', backgroundColor:model.color}"></div>
@@ -18,7 +21,6 @@
 <script>
 import {eventBus} from '../../main'
 import * as types from '../../store/mutation-types'
-import {mapState, mapMutations} from 'vuex'
 import ListItem from './ListItem.vue'
 
 export default {

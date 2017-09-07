@@ -275,6 +275,31 @@ export const store = new Vuex.Store({
 
 			// vStyle and Index : already set
 		},
+
+		[types.MOVE_LAYER_INTO_GROUP](state, {layerId, targetGroup}) {
+			let	{groupIndex: sourceGroupIndex, leafIndex:sourceIndex} = state.vTreeIndex[layerId];
+			let targetGroupIndex = state.vTreeIndex.__groups[targetGroup.name];
+// console.log(' *** sgI, sI, tgI', {sourceGroupIndex, sourceIndex, targetGroupIndex});
+
+			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
+			let mirrorTarget = targetGroupIndex === -1 ? state.vTree : state.vTree[targetGroupIndex].children;
+			let targetIndex = mirrorTarget.length;
+// console.log(' ### mS, mT, tI', {mirrorSource, mirrorTarget, targetIndex});
+
+			// vTree
+			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
+			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+
+			// vTree index
+			state.vTreeIndex = indexTree(state.vTree);
+
+			// vStyle and Index
+			let nextStyle = exportStyle(state.vStyle, state.vTree, state.vLayersIndex)
+			state.vLayersIndex = indexLayers(nextStyle.layers);
+			state.vStyle = {...nextStyle};
+
+		},
+
 		[types.RENAME_GROUP](state, payload) {
 			let vStyle = renameStyleGroup(state.vStyle, payload.prevName, payload.nextName);
 			if (!vStyle) return;

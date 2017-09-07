@@ -4,7 +4,7 @@
 		@click="setCurrentLayerId(model.id)">
 		<ul>
 			<div class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark "
-				 @click.shift="toggleMeta()"
+				 @click.shift="toggleSelected()"
 				 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
 				 style="padding-left: 10px;">
 				<div class="space-top0 space-bottom0 pin-left noevents space-left1"
@@ -49,7 +49,7 @@ export default {
 			setCurrentLayerId:		types.SET_CURRENT_LAYER,
 			toggleTreeItemSelected:	types.TOGGLE_TREE_ITEM_SELECTED,
 		}),
-		toggleMeta() {
+		toggleSelected() {
 			this.toggleTreeItemSelected(this.model.id)
 		}
 	}

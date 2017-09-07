@@ -67,7 +67,7 @@
 	import {eventBus} from '../../main'
 	import dragula from 'dragula'
 	import * as utils from '../../utils'
-	import {cloneDeep, get, set, pick} from 'lodash'
+	import {cloneDeep, get, set, pick, forOwn} from 'lodash'
 	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, ensureStyleHasGroup, objectDiff, newLayerTemplate} from '../../util/styleSync'
 	import mbStyle from '../../style.conf'
 	import * as types from '../../store/mutation-types'
@@ -173,8 +173,10 @@
 				removeLayer: types.REMOVE_LAYER,
 				groupLayer: types.GROUP_LAYER,
 				ungroupLayer: types.UNGROUP_LAYER,
+				moveLayerIntoGroup: types.MOVE_LAYER_INTO_GROUP,
 				setLoading: types.SET_LOADING,
 				setSaving: types.SET_SAVING,
+				toggleTreeItemSelected:	types.TOGGLE_TREE_ITEM_SELECTED,
 
 				setCurrentLayerId: types.SET_CURRENT_LAYER,
 				editorPaneShow: types.EDITOR_PANE_SHOW,
@@ -207,7 +209,6 @@
 
 			save() {
 				const vm = this;
-//				console.log('RESULT', JSON.stringify(this.vStyle));
 				if (this.projectId < 1) {
 					console.log('you should have load project with `cloudy icon` dialog');
 					return;
@@ -221,12 +222,13 @@
 			},
 
 			applyGroup() {
+				let targetGroup = this.getGroupsInfo[this.targetGroupIndex];
+//				console.log(`applyGroup() ${this.treeSelected.toString()} into `, targetGroup);
 
-				let groupInfo = this.getGroupsInfo[this.targetGroupIndex];
-
-				console.log(
-					`applyGroup() ${this.treeSelected.toString()} into `, groupInfo
-				);
+				forOwn(this.treeSelected.concat(), layerId => {
+					this.toggleTreeItemSelected(layerId);
+					this.moveLayerIntoGroup({layerId, targetGroup})
+				})
 			},
 
 			// TODO: refactor icon routine
