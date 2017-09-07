@@ -1,5 +1,5 @@
 <template>
-	<div v-show="model && model.length" class="width24 map-popup pin-topleft" style="position: absolute;"
+	<div v-show="model && model.length" class="width24 map-popup pin-topleft z10" style="position: absolute;"
 		:style="{top: point && point.y+'px' || '0', left: point && point.x+'px' || '0'}">
 
 		<div class="round shadow scroll-styled dark fill-dark2" style="max-height: 180px;">
