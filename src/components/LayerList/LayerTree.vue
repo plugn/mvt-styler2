@@ -33,7 +33,9 @@
 					<div class="pin-top icon caret-down center-y"></div>
 				</div>
 			</div>
-			<button class="fill-slategrey fr width7 micro button round"
+			<button
+				@click="applyGroup"
+				class="fill-slategrey fr width7 micro button round"
 				:class="{'disabled noevents':targetGroupIndex==-1}">Apply</button>
 		</div>
 
@@ -216,6 +218,15 @@
 					vm.setSaving(false);
 				});
 				
+			},
+
+			applyGroup() {
+
+				let groupInfo = this.getGroupsInfo[this.targetGroupIndex];
+
+				console.log(
+					`applyGroup() ${this.treeSelected.toString()} into `, groupInfo
+				);
 			},
 
 			// TODO: refactor icon routine
