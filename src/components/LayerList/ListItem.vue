@@ -1,8 +1,10 @@
 <template>
 
-	<li class="col12 clearfix contain dark" @click="setCurrentLayerId(model.id)">
+	<li class="col12 clearfix contain dark"
+		@click="setCurrentLayerId(model.id)">
 		<ul>
 			<div class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark "
+				 @click.shift.stop="toggleMeta()"
 				 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
 				 style="padding-left: 10px;">
 				<div class="space-top0 space-bottom0 pin-left noevents space-left1"
@@ -21,7 +23,7 @@
 <script>
 import {eventBus} from '../../main'
 import * as types from '../../store/mutation-types'
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapGetters, mapMutations} from 'vuex'
 
 export default {
 	name: 'ListItem',
@@ -29,6 +31,9 @@ export default {
 		model: [Object]
 	},
 	computed: {
+		...mapGetters([
+			'getTreeSelected'
+		]),
 		...mapState([
 			'currentLayerId'
 		]),
@@ -36,14 +41,17 @@ export default {
 			return this.model.id === this.currentLayerId
 		},
 		isSelected() {
-			return false;
+			return this.getTreeSelected(this.model.id)
 		}
 	},
 	methods: {
 		...mapMutations({
-				setCurrentLayerId: types.SET_CURRENT_LAYER,
-			}
-		)
+			setCurrentLayerId:		types.SET_CURRENT_LAYER,
+			toggleTreeItemSelected:	types.TOGGLE_TREE_ITEM_SELECTED,
+		}),
+		toggleMeta() {
+			this.toggleTreeItemSelected(this.model.id)
+		}
 	}
 }
 </script>

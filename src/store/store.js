@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
-import {cloneDeep, get, set, pick} from 'lodash'
+import {cloneDeep, get, set, pick, pull} from 'lodash'
 import {indexLayers, indexTree, buildTreeData, exportStyle, ensureStyleHasGroup, renameStyleGroup} from '../util/styleSync'
 
 Vue.use(Vuex)
@@ -31,7 +31,8 @@ export const store = new Vuex.Store({
 			show: false
 		},
 		smartUpdate: [],
-		allGroupsOpen: false
+		allGroupsOpen: false,
+		treeSelected:[]
 	},
 	getters: {
 		getPopupFeatures: state => state.mapPopup.features,
@@ -45,6 +46,7 @@ export const store = new Vuex.Store({
 				branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex];
 			return branch[leafIndex];
 		},
+		getTreeSelected: state => layerId => !(state.treeSelected.indexOf(layerId) === -1),
 		getInitEditorCode: state => (mode = state.editorMode) => (
 			mode === 'style'
 				? state.vStyle
@@ -56,6 +58,15 @@ export const store = new Vuex.Store({
 		)
  	},
 	mutations: {
+		[types.TOGGLE_TREE_ITEM_SELECTED](state, layerId){
+			let index = state.treeSelected.indexOf(layerId);
+			if (index === -1) {
+				state.treeSelected.push(layerId);
+			}
+			else {
+				pull(state.treeSelected, layerId);
+			}
+		},
 		[types.SET_ALL_GROUPS_OPEN](state, payload){
 			state.allGroupsOpen = payload;
 		},

@@ -61,7 +61,12 @@ export function buildTreeData(mvtStyle) {
 	return reduce(cloneDeep(mvtStyle.layers), reducer, []);
 
 	function reducer(result, value, key) {
-		let _value = {id: value.id, icon: icon(value.type) || 'return', color: getColor(value)};
+		let _value = {
+			id: value.id,
+			icon: icon(value.type) || 'return',
+			color: getColor(value)
+		};
+
 		let thisGroup = get(value, groupPath, null);
 		if (!thisGroup) {
 			result.push(_value);
