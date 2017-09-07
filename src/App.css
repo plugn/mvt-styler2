@@ -49,3 +49,7 @@ header.tc-navbar {
 .ace-idle-fingers .ace_marker-layer .ace_bracket {
 	border: 1px solid #888 !important;
 }
+
+.fill-slategrey {
+	background-color: #708090;
+}

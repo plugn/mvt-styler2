@@ -1,8 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutation-types'
-import {cloneDeep, get, set, pick, pull} from 'lodash'
-import {indexLayers, indexTree, buildTreeData, exportStyle, ensureStyleHasGroup, renameStyleGroup} from '../util/styleSync'
+import {cloneDeep, get, set, pick, keys, map} from 'lodash'
+import {
+	indexLayers,
+	indexTree,
+	buildTreeData,
+	exportStyle,
+	ensureStyleHasGroup,
+	renameStyleGroup,
+	getGroupIdByName
+} from '../util/styleSync'
 
 Vue.use(Vuex)
 
@@ -35,6 +43,11 @@ export const store = new Vuex.Store({
 		treeSelected:[]
 	},
 	getters: {
+		getGroupsInfo: state => {
+			let names = keys(state.vTreeIndex.__groups);
+			let registry = getGroupIdByName(state.vStyle);
+			return map(names, name => ({name, id: registry[name]}))
+		},
 		getPopupFeatures: state => state.mapPopup.features,
 		getCurrentLayer: state => state.vLayersIndex[state.currentLayerId],
 		getLayer: state => layerId => state.vStyle.layers[state.vLayersIndex[layerId]],
@@ -64,7 +77,7 @@ export const store = new Vuex.Store({
 				state.treeSelected.push(layerId);
 			}
 			else {
-				pull(state.treeSelected, layerId);
+				state.treeSelected.splice(index, 1);
 			}
 		},
 		[types.SET_ALL_GROUPS_OPEN](state, payload){

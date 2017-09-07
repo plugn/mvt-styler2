@@ -19,7 +19,25 @@
 				<div class="keyline-bottom pin-bottom keyline-lighten0 space-left1 space-right1"></div>
 			</div>
 		</div>
-		<div class="micro clearfix col12 fill-dark"><a
+
+
+		<div v-if="treeSelected.length" class="micro clearfix col12 fill-dark pad0" style="padding-top: 4px;">
+			<div class="contain width14"><select
+					v-model="targetGroupIndex"
+					class="animate button button-select pad00y truncate micro line-height15 col12 fill-lighten0 pad2r">
+				<option :value="-1">Select group</option>
+				<option disabled="" value="---------">---------</option>
+				<option v-for="(group, index) in getGroupsInfo" :value="index" :key="index">{{group.name}}</option>
+			</select>
+				<div class="noevents width2 pin-right keyline-left ">
+					<div class="pin-top icon caret-down center-y"></div>
+				</div>
+			</div>
+			<button class="fill-slategrey fr width7 micro button round"
+				:class="{'disabled noevents':targetGroupIndex==-1}">Apply</button>
+		</div>
+
+		<div v-else="" class="micro clearfix col12 fill-dark"><a
 				@click.prevent="addNewLayer"
 				class="inline micro pad0 strong " href="#"><span
 				class="icon plus"></span>New layer</a>
@@ -66,6 +84,7 @@
 
 		data() {
 			return {
+				targetGroupIndex: -1,
 				icon: {
 					eye: 'noeye',
 					folder: 'folder'
@@ -85,14 +104,16 @@
 				'vStyle',
 				'vTree',
 				'isLoading',
-				'isSaving'
+				'isSaving',
+				'treeSelected'
 			]),
 			...mapGetters([
 				'getCurrentLayer',
 				'getLayer',
 				'getLayerIndex',
 				'getLayerByIndex',
-				'getTreeIndex'
+				'getTreeIndex',
+				'getGroupsInfo'
 			])
 		},
 

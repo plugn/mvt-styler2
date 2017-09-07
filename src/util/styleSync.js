@@ -73,8 +73,8 @@ export function buildTreeData(mvtStyle) {
 			return result;
 		}
 
-		let groupId = get(mvtStyle, groupsPath.concat(thisGroup, 'name'), null);
-		if (!groupId) {
+		let groupName = get(mvtStyle, groupsPath.concat(thisGroup, 'name'), null);
+		if (!groupName) {
 			return result;
 		}
 
@@ -82,7 +82,7 @@ export function buildTreeData(mvtStyle) {
 		if (thisGroup !== currentGroup) {
 			currentGroup = thisGroup;
 			groupItem = {
-				id: groupId,
+				id: groupName,
 				children: [_value]
 			};
 			result.push(groupItem)

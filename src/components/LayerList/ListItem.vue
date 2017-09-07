@@ -4,7 +4,7 @@
 		@click="setCurrentLayerId(model.id)">
 		<ul>
 			<div class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark "
-				 @click.shift.stop="toggleMeta()"
+				 @click.shift="toggleMeta()"
 				 :class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
 				 style="padding-left: 10px;">
 				<div class="space-top0 space-bottom0 pin-left noevents space-left1"
