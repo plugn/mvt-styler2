@@ -202,6 +202,10 @@ export const store = new Vuex.Store({
 			// vTree
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
+			if(mirrorSource.length===0){
+				let index = state.vTree.indexOf(mirrorSource);
+				state.vTree.splice(index, 1);
+			}
 
 			// vTree index
 			state.vTreeIndex = indexTree(state.vTree);
