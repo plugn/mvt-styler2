@@ -16,6 +16,7 @@ import {
 	map,
 	omit,
 	pickBy,
+	range,
 	reduce,
 	set,
 	transform,
@@ -253,3 +254,16 @@ export const newLayerTemplate = {
 	},
 	"interactive": true
 };
+
+/**
+ *
+ * @param from layerId
+ * @param to layerId
+ */
+export function layerRange(from, to) {
+	if (from > to) {
+		[from,to] = [to,from]
+	}
+
+	return range(from, to).concat(to);
+}

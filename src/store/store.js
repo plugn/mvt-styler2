@@ -56,7 +56,7 @@ export const store = new Vuex.Store({
 		getTreeIndex: state => layerId => state.vTreeIndex[layerId],
 		getTreeItem: state => layerId => {
 			let {groupIndex, leafIndex} = state.vTreeIndex[layerId],
-				branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex];
+				branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex].children;
 			return branch[leafIndex];
 		},
 		getTreeSelected: state => layerId => !(state.treeSelected.indexOf(layerId) === -1),
@@ -71,6 +71,9 @@ export const store = new Vuex.Store({
 		)
  	},
 	mutations: {
+		[types.SET_TREE_ITEM_SELECTED](state, payload) {
+			state.treeSelected = payload;
+		},
 		[types.TOGGLE_TREE_ITEM_SELECTED](state, layerId){
 			let index = state.treeSelected.indexOf(layerId);
 			if (index === -1) {
@@ -237,7 +240,8 @@ export const store = new Vuex.Store({
 
 		[types.GROUP_LAYER](state, layerId) {
 			let	{groupIndex, leafIndex} = state.vTreeIndex[layerId];
-			let	branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex];
+			// only groupIndex===-1 is supported
+			let	branch = -1=== groupIndex ? state.vTree : state.vTree[groupIndex].children;
 			let treeItem = branch[leafIndex];
 
 			if (groupIndex !== -1) {

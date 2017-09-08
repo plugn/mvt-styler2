@@ -1,8 +1,7 @@
 
 <template>
 	<div
-		@click.shift="toggleSelected()"
-		@click="setCurrentLayerId(model.id)"
+		@click="onClick($event)"
 		class="keyline-bottom keyline-dark2 col12 draggable clearfix animate contain dark"
 		:class="{'fill-dark': isCurrent, 'fill-dark2': !isCurrent, 'fill-lighten1':isSelected}"
 		style="padding-left: 20px;">
