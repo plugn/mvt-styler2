@@ -203,7 +203,7 @@ export const store = new Vuex.Store({
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
 			if (mirrorSource.length===0){
-				let dropIndex = state.vTree.indexOf(mirrorSource);
+				let dropIndex = state.vTree.indexOf( state.vTree[sourceGroupIndex] );
 				state.vTree.splice(dropIndex, 1);
 			}
 
