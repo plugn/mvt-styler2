@@ -191,7 +191,8 @@ export const store = new Vuex.Store({
 		},
 
 		[types.DRAGDROP_LAYER](state, {sourceIndex, sourceGroupIndex, targetIndex, targetGroupIndex}){
-			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
+			let mirrorSourceGroup = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex];
+			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : mirrorSourceGroup.children;
 			let mirrorTarget = targetGroupIndex === -1 ? state.vTree : state.vTree[targetGroupIndex].children;
 
 			let isMoveLocalFwd = targetGroupIndex === sourceGroupIndex && sourceIndex < targetIndex;
@@ -203,7 +204,7 @@ export const store = new Vuex.Store({
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
 			if (mirrorSource.length===0){
-				let dropIndex = state.vTree.indexOf( state.vTree[sourceGroupIndex] );
+				let dropIndex = state.vTree.indexOf( mirrorSourceGroup );
 				state.vTree.splice(dropIndex, 1);
 			}
 
@@ -289,7 +290,9 @@ export const store = new Vuex.Store({
 			let targetGroupIndex = state.vTreeIndex.__groups[targetGroup.name];
 // console.log(' *** sgI, sI, tgI', {sourceGroupIndex, sourceIndex, targetGroupIndex});
 
-			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
+			// let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
+			let mirrorSourceGroup = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex];
+			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : mirrorSourceGroup.children;
 			let mirrorTarget = targetGroupIndex === -1 ? state.vTree : state.vTree[targetGroupIndex].children;
 			let targetIndex = mirrorTarget.length;
 // console.log(' ### mS, mT, tI', {mirrorSource, mirrorTarget, targetIndex});
@@ -298,7 +301,7 @@ export const store = new Vuex.Store({
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
 			if (mirrorSource.length===0){
-				let dropIndex = state.vTree.indexOf(  state.vTree[sourceGroupIndex] );
+				let dropIndex = state.vTree.indexOf( mirrorSourceGroup );
 				state.vTree.splice(dropIndex, 1);
 			}
 			
