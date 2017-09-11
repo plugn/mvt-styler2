@@ -203,8 +203,8 @@ export const store = new Vuex.Store({
 			// vTree
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
-			if (mirrorSource.length===0){
-				let dropIndex = state.vTree.indexOf( mirrorSourceGroup );
+			if (mirrorSource.length === 0) {
+				let dropIndex = state.vTree.indexOf(mirrorSourceGroup);
 				state.vTree.splice(dropIndex, 1);
 			}
 
@@ -290,7 +290,6 @@ export const store = new Vuex.Store({
 			let targetGroupIndex = state.vTreeIndex.__groups[targetGroup.name];
 // console.log(' *** sgI, sI, tgI', {sourceGroupIndex, sourceIndex, targetGroupIndex});
 
-			// let mirrorSource = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex].children;
 			let mirrorSourceGroup = sourceGroupIndex === -1 ? state.vTree : state.vTree[sourceGroupIndex];
 			let mirrorSource = sourceGroupIndex === -1 ? state.vTree : mirrorSourceGroup.children;
 			let mirrorTarget = targetGroupIndex === -1 ? state.vTree : state.vTree[targetGroupIndex].children;
@@ -300,7 +299,7 @@ export const store = new Vuex.Store({
 			// vTree
 			let mirrorTakeOut = mirrorSource.splice(sourceIndex, 1)[0];
 			mirrorTarget.splice(targetIndex, 0, mirrorTakeOut);
-			if (mirrorSource.length===0){
+			if (mirrorSource.length === 0) {
 				let dropIndex = state.vTree.indexOf( mirrorSourceGroup );
 				state.vTree.splice(dropIndex, 1);
 			}
