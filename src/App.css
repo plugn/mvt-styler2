@@ -53,3 +53,33 @@ header.tc-navbar {
 .fill-slategrey {
 	background-color: #708090;
 }
+
+
+.fa.icon, .fa-20 {
+	font-size: 20px !important;
+}
+
+
+.fa-20:before {
+	/*content: '';*/
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	font-size: 12px;
+	color: inherit;
+	vertical-align: top;
+
+
+	/*
+	-webkit-background-size: 4320px 60px;
+	background-size: 4320px 60px;
+	*/
+	speak: none;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale
+}
