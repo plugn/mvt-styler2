@@ -8,15 +8,17 @@
 			:class="{'fill-dark': editMode}"
 			@mouseenter="hoverFolder=true"
 			@mouseleave="hoverFolder=false"
-		>
-			<a @click="toggle"
+		><a @click="toggle"
 				:class="{'caret-right': !open, 'caret-down': open}"
 				class="pin-topleft z1 icon pad00y"></a>
-			<div title="Group"
+			<!--
+			<a @click="toggle"
+				:class="{'fa-caret-right': !open, 'fa-caret-down': open}"
+				class="pin-topleft z1 fa" style="padding-top: 7px; padding-left: 6px;"></a>
+		--><div title="Group"
 				 class="keyline-bottom keyline-dark2 layer-folder block pad0x pad00y pointer micro">
 				<!--<span class="pin-topleft z1 icon inline folder" style="left: 12px; top: 2px;"></span>-->
-				<span class="pin-topleft z1 fa fa-20 fa-folder-o" style="left: 16px; top: 7px;"></span>
-					  <!--:class="{'fa-folder': !open, 'fa-folder-open': open}"></span>-->
+				<span class="pin-topleft z1 fa fa-20 fa-folder" style="left: 16px; top: 7px;"></span>
 				<div @click="toggle"
 					 :class="{'pad2r': hoverFolder}"
 					 class="pad0x micro" style="padding-left: 27px;">
