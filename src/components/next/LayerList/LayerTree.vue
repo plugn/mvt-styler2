@@ -4,7 +4,7 @@
 			<div class="clearfix">
 				<div class="space-left1 strong small fl x-width10 space-right1 contain">
 					<div class="contain col12 pointer">
-						<div class="small pad0y truncate space-right2 strong"><span @click="navTo('/next')">{{ projectName || vStyle.name || '' }}</span>
+						<div class="small pad0y truncate space-right2 strong"><span title="AppLayout" @click="navTo()">{{ projectName || vStyle.name || '' }}</span>
 							<button @click="editFullStyle" class="a pin-right pad0y icon pencil show-in-hover animate"></button>
 						</div>
 					</div>
@@ -64,16 +64,16 @@
 
 <script>
 	import LayerTreeItem from './LayerTreeItem.vue'
-	import {eventBus} from '../../main'
+	import {eventBus} from '../../../main'
 	import dragula from 'dragula'
-	import * as utils from '../../utils'
+	import * as utils from '../../../utils'
 	import {cloneDeep, get, set, pick, forOwn} from 'lodash'
-	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, ensureStyleHasGroup, objectDiff, newLayerTemplate} from '../../util/styleSync'
-	import mbStyle from '../../style.conf'
-	import * as types from '../../store/mutation-types'
+	import {buildTreeData, exportStyle, updateLayers, indexLayers, indexTree, ensureStyleHasGroup, objectDiff, newLayerTemplate} from '../../../util/styleSync'
+	import mbStyle from '../../../style.conf'
+	import * as types from '../../../store/mutation-types'
 	import {mapMutations, mapState, mapGetters} from 'vuex';
-	import storage from '../../util/storage'
-	import router from '../../router/'
+	import storage from '../../../util/storage'
+	import router from '../../../router/'
 
 
 	// drag-and-drop instance
