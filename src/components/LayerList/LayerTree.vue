@@ -6,11 +6,16 @@
 					<div class="contain col12 pointer">
 						<div class="small pad0y truncate space-right2 strong"><span>{{ projectName || vStyle.name || '' }}</span>
 							<button @click="editFullStyle" class="a pin-right pad0y icon pencil show-in-hover animate"></button>
-							<span @click="onLogoClick" class="pad0x quiet">{{ route.name }}</span>
 						</div>
 					</div>
 				</div>
+
+
 				<div id="card-publish-style" class="pad00y pad1x fr">
+<!--RESTYLE-->
+					<span @click="onLogoClick" class="a inline micro pad1x pad00r">{{ route.name }}</span>
+<!--/RESTYLE-->
+
 					<button @click="save"
 							class="mvt-save round width5 pad0x pad00y micro button fill-denim"
 							:class="{'loading fill-lighten0': isSaving}"
