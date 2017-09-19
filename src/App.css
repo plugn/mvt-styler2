@@ -46,6 +46,13 @@ header.tc-navbar {
 	padding-left: 20px;
 }
 
+.pad00l {
+	padding-left: 2px;
+}
+.pad00r {
+	padding-right: 2px
+}
+
 /* matching bracket color  */
 .ace-idle-fingers .ace_marker-layer .ace_bracket {
 	border: 1px solid #888 !important;
