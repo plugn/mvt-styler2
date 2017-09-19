@@ -7,7 +7,7 @@
 				 style="width:250px; min-width:220px;"
 				 v-resize="{height:false}" data-handle="tree-resizer">
 
-				<LayerTree :onLogoClick="onLogoClick" />
+				<LayerTreeNext :onLogoClick="onLogoClick" />
 
 			</div>
 			<div class="resizer" ref="tree-resizer"></div>
@@ -29,9 +29,13 @@
 
 <script>
 	import BaseLayout from './BaseLayout.vue'
+	import LayerTreeNext from './LayerList/LayerTreeNext.vue'
 
 	export default {
 		'name':		'NewLayout',
-		'extends':	BaseLayout
+		'extends':	BaseLayout,
+		components: {
+			LayerTreeNext
+		}
 	}
 </script>
