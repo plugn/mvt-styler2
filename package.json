@@ -20,9 +20,11 @@
     "postcss-nested": "^1.0.1",
     "vue": "^2.4.1",
     "vue-loader": "^10.3.0",
+    "vue-router": "^2.7.0",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.4.1",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "vuex-router-sync": "^4.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

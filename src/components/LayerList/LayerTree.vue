@@ -6,6 +6,7 @@
 					<div class="contain col12 pointer">
 						<div class="small pad0y truncate space-right2 strong"><span>{{ projectName || vStyle.name || '' }}</span>
 							<button @click="editFullStyle" class="a pin-right pad0y icon pencil show-in-hover animate"></button>
+							<span @click="onLogoClick" class="pad0x quiet">{{ route.name }}</span>
 						</div>
 					</div>
 				</div>
@@ -84,6 +85,10 @@
 			LayerTreeItem
 		},
 
+		props:{
+			onLogoClick: Function
+		},
+
 		data() {
 			return {
 				targetGroupIndex: -1,
@@ -107,7 +112,8 @@
 				'vTree',
 				'isLoading',
 				'isSaving',
-				'treeSelected'
+				'treeSelected',
+				'route'
 			]),
 			...mapGetters([
 				'getCurrentLayer',

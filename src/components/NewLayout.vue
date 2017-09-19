@@ -1,7 +1,6 @@
 <template>
 <div style="height: inherit;">
 	<div class="app-layout flex-col nodebug contain">
-		<!--<header class="keyline-bottom keyline-lighten0 title3d">mvt styler</header>-->
 
 		<div class="flex-row">
 			<div class="contain fill-dark2 dark"
@@ -16,8 +15,8 @@
 			<LayerEditor v-show="editorPaneShow" />
 
 			<div class="stretch fill-canvas" style="position: relative;">
-				<MapGL></MapGL>
-				<MapPopup></MapPopup>
+				<!--<MapGL></MapGL>-->
+				<!--<MapPopup></MapPopup>-->
 			</div>
 
 		</div>
@@ -32,7 +31,7 @@
 	import BaseLayout from './BaseLayout.vue'
 
 	export default {
-		'name':		'AppLayout',
+		'name':		'NewLayout',
 		'extends':	BaseLayout
 	}
 </script>

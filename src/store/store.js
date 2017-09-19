@@ -16,6 +16,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 	state: {
+		route: {},
 		vStyle: {},  // virtual style
 		vLayersIndex: {}, // layers index in sync with vStyle.layers
 
