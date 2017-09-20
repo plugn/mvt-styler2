@@ -1,5 +1,5 @@
 <template>
-	<div class="pin-left col12 fill-dark2 dark xpace-bottom3">
+	<div class="layer-tree-next">
 
 		<!--RESTYLE-->
 		<span @click="onLogoClick" class="a inline micro pad1x pad00r">{{ route.name }}</span>
