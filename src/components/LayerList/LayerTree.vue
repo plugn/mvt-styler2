@@ -81,8 +81,6 @@
 	import storage from '../../util/storage'
 
 
-	// drag-and-drop instance
-	let drake;
 
 	export default {
 		name: 'LayerTree',
@@ -96,6 +94,7 @@
 
 		data() {
 			return {
+				drake: null,
 				targetGroupIndex: -1,
 				icon: {
 					eye: 'noeye',
@@ -408,16 +407,17 @@
 					}
 				};
 
-				drake = dragula(options);
+				this.drake = dragula(options);
 				this.refreshContainers();
 
-				drake.on('drop', this.onDrop.bind(this));
+				this.drake.on('drop', this.onDrop.bind(this));
 			},
 			onDrop(el, target, source, sibling) {
-				drake.cancel();
 
-				let root = drake.containers[0],
-					rootList = utils.getList(drake.containers[0]);
+				this.drake.cancel();
+
+				let root = this.drake.containers[0],
+					rootList = utils.getList(root);
 
 				let sourceList =  utils.getList(source),
 					sourceIndex = sourceList.indexOf(el),
@@ -439,13 +439,14 @@
 			},
 
 			refreshContainers () {
-				if (!drake) { return; }
+				const vm  = this;
+				if (!vm.drake) { return; }
 
 				let uls = utils.byQS('.draghost', this.$el);
 
-				drake.containers.splice(0);
+				vm.drake.containers.splice(0);
 				Array.from(uls).forEach(function(ul) {
-					drake.containers.push(ul)
+					vm.drake.containers.push(ul)
 				});
 			}
 
