@@ -17,9 +17,12 @@ $sidebar-background0: rgb(32, 32, 32);
 $sidebar-background: #303030;
 
 //$sidebar-text: rgb(160, 160, 160);
-$sidebar-text: rgb(209, 209, 209);
+$sidebar-text: rgb(228, 228, 228);
 
 .app-layout.restyle {
+	.fill-dark003 {
+		background-color: rgba(255, 255, 255, .08);
+	}
 	.fill-dark2 {
 		//background-color: #ccc;
 		background-color: $sidebar-background;

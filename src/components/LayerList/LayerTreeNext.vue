@@ -1,6 +1,6 @@
 <template>
 	<div class="pin-left col12 fill-dark2 dark xpace-bottom3">
-		<div class="contain col12 clearfix pad0y fill-dark">
+		<div class="contain col12 clearfix pad0y fill-dark003">
 			<div class="clearfix">
 				<div class="space-left1 strong small fl x-width10 space-right1 contain">
 					<div class="contain col12 pointer">
@@ -28,7 +28,7 @@
 		</div>
 
 
-		<div v-if="treeSelected.length" class="micro clearfix col12 fill-dark pad0" style="padding-top: 4px;">
+		<div v-if="treeSelected.length" class="micro clearfix col12 fill-dark003 pad0" style="padding-top: 4px;">
 			<div class="contain width14"><select
 					v-model="targetGroupIndex"
 					class="animate button button-select pad00y truncate micro line-height15 col12 fill-lighten0 pad2r">
@@ -46,7 +46,7 @@
 					:class="{'disabled noevents':targetGroupIndex==-1}">Apply</button>
 		</div>
 
-		<div v-else="" class="micro clearfix col12 fill-dark"><a
+		<div v-else="" class="micro clearfix col12 fill-dark003"><a
 				@click.prevent="addNewLayer"
 				class="inline micro pad0 strong " href="#"><span
 				class="icon plus"></span>New layer</a>
