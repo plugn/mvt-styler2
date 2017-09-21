@@ -1,9 +1,9 @@
 <template>
 <div style="height: inherit;">
-	<div class="app-layout flex-col nodebug contain">
+	<div class="restyle app-layout flex-col nodebug contain">
 
 		<div class="flex-row">
-			<div class="contain fill-dark2 dark"
+			<div class="contain fill-navy-dark fill-dark2 dark"
 				 style="width:250px; min-width:220px;"
 				 v-resize="{height:false}" data-handle="tree-resizer">
 
@@ -39,3 +39,5 @@
 		}
 	}
 </script>
+
+<style src="../NewLayout.scss"></style>

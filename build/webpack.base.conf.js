@@ -70,10 +70,13 @@ module.exports = {
     loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
     postcss: {
       options: {
-        parser: require('postcss')
+        parser: require('postcss-scss')
       },
       plugins:[
+        require('postcss-strip-inline-comments'),
+		require('postcss-advanced-variables')({}),
         require('postcss-nested'),
+
         require('autoprefixer')({
           browsers: ['last 2 versions']
       })

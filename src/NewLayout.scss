@@ -1,0 +1,27 @@
+$grey1: #404040;
+$white: #fff;
+$link: #3887BE;
+$linkHover: #63b6e5;
+
+$fillBtn: #3887be;
+$fillGrey: #535353;
+$fillDark2: #313131;
+$fillLighten1: rgba(255, 255, 255, .16666);
+
+$stroke-btn: #3887be;
+
+
+$sidebar-selection: rgb(54, 54, 54);
+$sidebar-background: rgb(32, 32, 32);
+$sidebar-text: rgb(160, 160, 160);
+
+.app-layout.restyle {
+	.fill-dark2 {
+		//background-color: #ccc;
+		background-color: $sidebar-background;
+	}
+	.dark {
+		color: $sidebar-text !important;
+	}
+}
+
