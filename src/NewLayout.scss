@@ -12,16 +12,29 @@ $stroke-btn: #3887be;
 
 
 $sidebar-selection: rgb(54, 54, 54);
-$sidebar-background: rgb(32, 32, 32);
-$sidebar-text: rgb(160, 160, 160);
+$sidebar-background0: rgb(32, 32, 32);
+//$sidebar-background: rgb(48, 48, 48);
+$sidebar-background: #303030;
+
+//$sidebar-text: rgb(160, 160, 160);
+$sidebar-text: rgb(209, 209, 209);
 
 .app-layout.restyle {
 	.fill-dark2 {
 		//background-color: #ccc;
 		background-color: $sidebar-background;
 	}
-	.dark {
+	.dark,
+	.dark .a.active,
+	.dark .a.quiet,
+	.dark .a:hover {
 		color: $sidebar-text !important;
+	}
+
+	.tile__root {
+		.fill-dark {
+			background-color: $sidebar-selection;
+		}
 	}
 }
 
